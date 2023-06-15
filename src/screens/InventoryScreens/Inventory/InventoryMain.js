@@ -91,7 +91,7 @@ const InventoryMain = (props) => {
   };
 
   const callGetGongweiData = () => {
-    DB.transaction(tx => {
+    DB.transaction(tx => {k;[]
       tx.executeSql(`SELECT SUM("count") as sumCount FROM ${scandataTb} WHERE gongwei_id = ? AND row = ?`,
         [gongweiPos.id, rowPos],
         (tx, results) => {

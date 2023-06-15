@@ -1,13 +1,28 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { View, Text, TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Alert, DrawerLayoutAndroid, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Icon1 from 'react-native-vector-icons/FontAwesome5';
+import Icon2 from 'react-native-vector-icons/Feather';
+import Icon3 from 'react-native-vector-icons/Entypo';
+import Icon4 from 'react-native-vector-icons/Ionicons';
+import Icon5 from 'react-native-vector-icons/SimpleLineIcons';
 import Modal from 'react-native-modal';
 import { PROGRAM_NAME, SERVER_URL } from '../constants';
 
 const Header = (props) => {
+
+  let drawerRef = null;
+
   const { user, project } = useSelector(state => state.base);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [SidebarVisible, setSidebarVisible] = useState(false)
+  const [headerTitle, setHeaderTitle] = useState(false)
+
+  const screenWidth = Dimensions.get('window').width;
+  const screenWidthUnit = screenWidth / 360;
+  const screenHeight = Dimensions.get('window').height;
+  const screenHeightUnit = screenHeight / 640;
 
   const renderAvatarImage = () => {
     if (user?.picture != '' && user?.picture != null) {
@@ -43,6 +58,64 @@ const Header = (props) => {
 
   return (
     <View>
+      <DrawerLayoutAndroid
+        style={{
+          position: 'absolute',
+          width: screenWidth,
+          height: screenHeight,
+          zIndex: SidebarVisible ? 100 : 0,
+        }}
+        drawerBackgroundColor="rgba(0,0,0,0.5)"
+        ref={ref => (drawerRef = ref)}
+        onDrawerClose={() => setSidebarVisible(false)}
+        drawerWidth={screenWidth - 70}
+        drawerPosition="left"
+        renderNavigationView={() => (
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: '#fff',
+              zIndex: 1000000,
+            }}>
+            <View style={{ marginTop: 100, marginLeft: 30, width: 100, display: 'flex', }}>
+              <TouchableOpacity style={styles.section}>
+                <Icon1 name="project-diagram" size={30} color="black" style={{ marginRight: 10 }} />
+                <Text>项目管理</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.section}>
+                <Icon2 name="users" size={30} color="black" style={{ marginRight: 10 }} />
+                <Text>雇员管理</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.section}>
+                <Icon3 name="user" size={30} color="black" style={{ marginRight: 10 }} />
+                <Text>客户管理</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.section}>
+                <Icon2 name="user-check" size={30} color="black" style={{ marginRight: 10 }} />
+                <Text>考勤</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.section}>
+                <Icon4 name="logo-buffer" size={30} color="black" style={{ marginRight: 10 }} />
+                <Text>进行中项目</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.section}>
+                <Icon name="profile" size={30} color="black" style={{ marginRight: 10 }} />
+                <Text>个人信息</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.section}>
+                <Icon2 name="settings" size={30} color="black" style={{ marginRight: 10 }} />
+                <Text>设置</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ marginTop: 100, marginLeft: 30, width: 100, display: 'flex', }}>
+              <TouchableOpacity style={styles.section}>
+                <Icon5 name="logout" size={30} color="black" style={{ marginRight: 10 }} />
+                <Text>登出</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}>
+      </DrawerLayoutAndroid>
       <Modal isVisible={isModalVisible}>
         <View style={styles.modalView}>
           <TouchableOpacity
@@ -107,10 +180,18 @@ const Header = (props) => {
           padding: 5,
         }}
       >
-        <Image
-          style={styles.menuIcon}
-          source={require('../assets/images/menuIcon.png')}
-        />
+        <TouchableOpacity
+          style={{ zIndex: SidebarVisible ? 0 : 1000 }}
+          onPress={() => {
+            drawerRef.openDrawer();
+            setSidebarVisible(true);
+          }}
+        >
+          <Image
+            style={styles.menuIcon}
+            source={require('../assets/images/menuIcon.png')}
+          />
+        </TouchableOpacity>
         <Text
           style={{
             fontSize: 20,
@@ -173,6 +254,13 @@ const styles = StyleSheet.create({
   menuIcon: {
     width: 30,
     height: 30,
+  },
+
+  section: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
   },
 
   modalView: {
