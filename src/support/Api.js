@@ -85,7 +85,7 @@ class Api {
           Alert.alert(
             PROGRAM_NAME,
             '登录有效期已过。请重新登录。',
-            [{ text: '是(Y)', onPress: () => this.props?.navigation.push('Login') }],
+            [{ text: '是(Y)', onPress: () => console.log("fewfwef") }],
             { cancelable: false },
           );
         } else if (response.status === 500) {
@@ -114,6 +114,71 @@ class Api {
         );
       });
 
+    return result;
+  }
+
+  async getProjectList(data) {
+    let result = await this.postApi('getProjectList', data);
+    return result;
+  }
+
+  async getSettingList() {
+    let result = await this.postApi('getSettingList', {});
+    return result;
+  }
+
+  async getLeaderList(data) {
+    let result = await this.postApi('getLeaderList', data);
+    return result;
+  }
+
+  async getSchedulerList(data) {
+    let result = await this.postApi('getSchedulerList', data);
+    return result;
+  }
+
+  async addProject(data) {
+    let result = await this.postApi('addProject', data);
+    return result;
+  }
+
+  async updateProject(data) {
+    let result = await this.postApi('updateProject', data);
+    return result;
+  }
+
+  async startProject(data) {
+    let result = await this.postApi('startProject', data);
+    return result;
+  }
+
+  async addGongwei(data) {
+    let result = await this.postApi('addGongwei', data);
+    return result;
+  }
+
+  async updateGongwei(data) {
+    let result = await this.postApi('updateGongwei', data);
+    return result;
+  }
+
+  async deleteGongwei(data) {
+    let result = await this.postApi('deleteGongwei', data);
+    return result;
+  }
+
+  async projectmemberList(data) {
+    let result = await this.postApi('projectmemberList', data);
+    return result;
+  }
+
+  async endProject(data) {
+    let result = await this.postApi('endProject', data);
+    return result;
+  }
+
+  async getGongweiList(data) {
+    let result = await this.postApi('getGongweiList', data);
     return result;
   }
 

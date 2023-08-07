@@ -91,7 +91,7 @@ const InventoryMain = (props) => {
   };
 
   const callGetGongweiData = () => {
-    DB.transaction(tx => {k;[]
+    DB.transaction(tx => {
       tx.executeSql(`SELECT SUM("count") as sumCount FROM ${scandataTb} WHERE gongwei_id = ? AND row = ?`,
         [gongweiPos.id, rowPos],
         (tx, results) => {
@@ -139,7 +139,7 @@ const InventoryMain = (props) => {
         } else {
           Alert.alert(
             PROGRAM_NAME,
-            '条形码不存在',
+            '条11形码不存在',
             [
               { text: '是(Y)', onPress: () => project.quantity_min == project.quantity_max && insertRowConfirm() },
               { text: '不(N)', onPress: () => skuRef.current.focus() },
@@ -152,8 +152,8 @@ const InventoryMain = (props) => {
         setPipeiItem(null)
         if (project.quantity_min == project.quantity_max) {
           insertRowConfirm(null);
+          skuRef.current.focus()
         }
-        skuRef.current.focus()
       }
     }
   }

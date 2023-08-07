@@ -8,6 +8,7 @@ import Icon3 from 'react-native-vector-icons/Entypo';
 import Icon4 from 'react-native-vector-icons/Ionicons';
 import Icon5 from 'react-native-vector-icons/SimpleLineIcons';
 import Modal from 'react-native-modal';
+
 import { PROGRAM_NAME, SERVER_URL } from '../constants';
 
 const Header = (props) => {
@@ -78,7 +79,9 @@ const Header = (props) => {
               zIndex: 1000000,
             }}>
             <View style={{ marginTop: 100, marginLeft: 30, width: 100, display: 'flex', }}>
-              <TouchableOpacity style={styles.section}>
+              <TouchableOpacity style={styles.section}
+                onPress={() => props.navigation.push('PromanageDashboard')}
+              >
                 <Icon1 name="project-diagram" size={30} color="black" style={{ marginRight: 10 }} />
                 <Text>项目管理</Text>
               </TouchableOpacity>
@@ -86,7 +89,9 @@ const Header = (props) => {
                 <Icon2 name="users" size={30} color="black" style={{ marginRight: 10 }} />
                 <Text>雇员管理</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.section}>
+              <TouchableOpacity
+                onPress={() => props.navigation.push('ClientDashboard')}
+                style={styles.section}>
                 <Icon3 name="user" size={30} color="black" style={{ marginRight: 10 }} />
                 <Text>客户管理</Text>
               </TouchableOpacity>
@@ -94,7 +99,9 @@ const Header = (props) => {
                 <Icon2 name="user-check" size={30} color="black" style={{ marginRight: 10 }} />
                 <Text>考勤</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.section}>
+              <TouchableOpacity style={styles.section}
+                onPress={() => props.navigation.push('Inventory')}
+              >
                 <Icon4 name="logo-buffer" size={30} color="black" style={{ marginRight: 10 }} />
                 <Text>进行中项目</Text>
               </TouchableOpacity>

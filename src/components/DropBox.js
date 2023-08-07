@@ -5,6 +5,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 const DropBox = ({ open, setOpen, onOpen, value, setValue, items, setItems, searchable, zIndex, zIndexInverse, listMode }) => {
   return (
     <DropDownPicker
+      placeholder='选择'
       zIndex={zIndex}
       zIndexInverse={zIndexInverse}
       open={open}
