@@ -10,6 +10,7 @@ import { setColumnPos, setRowPos } from '../../../reducers/BaseReducer';
 import { DB, tbName } from '../../../hooks/dbHooks';
 import InvEndModal from '../../../components/InvEndModal';
 
+
 const InventoryLayer = (props) => {
     const dispatch = useDispatch();
     const { user, project, gongweiPos, rowPos } = useSelector(state => state.base);

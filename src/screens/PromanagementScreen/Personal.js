@@ -31,10 +31,10 @@ const Personal = (props) => {
     const renderItem = ({ item }) => {
         return (
             <View style={{ ...styles.maincontent, flexDirection: 'row', backgroundColor: '#F2F2F2', borderBottomColor: "#BCBCBC", borderBottomWidth: 1 }}>
-                <Text style={{ width: '25%' }}>{item.name}</Text>
-                <Text style={{ width: '25%' }}>{item.rolelist.id}</Text>
-                <Text style={{ width: '25%' }}>{item.step}</Text>
-                <Text style={{ width: '25%' }}>{item.position}</Text>
+                <Text style={styles.textcontent}>{item.name}</Text>
+                <Text style={styles.textcontent}>{item.rolelist.id}</Text>
+                <Text style={styles.textcontent}>{item.step}</Text>
+                <Text style={styles.textcontent}>{item.position}</Text>
             </View>
         );
     };
@@ -43,14 +43,14 @@ const Personal = (props) => {
         <View style={styles.allcontent}>
             <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
             <View style={{ width: '100%', alignItems: 'center', marginBottom: 10 }}>
-                <Text style={{ fontSize: 17, color: 'black', fontWeight: "bold" }}>人员状态</Text>
+                <Text style={{ fontSize: 16, color: 'black', fontWeight: "bold" }}>人员状态</Text>
             </View>
             <View style={{ paddingHorizontal: 30 }}>
                 <View style={styles.maincontent}>
-                    <Text style={{ width: '25%' }}>名字</Text>
-                    <Text style={{ width: '25%' }}>权限</Text>
-                    <Text style={{ width: '25%' }}>STEP</Text>
-                    <Text style={{ width: '25%' }}>位置</Text>
+                    <Text style={styles.textheader}>名字</Text>
+                    <Text style={styles.textheader}>权限</Text>
+                    <Text style={styles.textheader}>STEP</Text>
+                    <Text style={styles.textheader}>位置</Text>
                 </View>
                 <FlatList
                     data={data}
@@ -86,6 +86,17 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         width: '90%',
         alignSelf: 'center'
+    },
+    textheader: {
+        fontSize: 14,
+        color: "black",
+        width: "25%",
+        fontWeight: "bold"
+    },
+    textcontent: {
+        fontSize: 12,
+        color: "black",
+        width: "25%"
     }
 });
 

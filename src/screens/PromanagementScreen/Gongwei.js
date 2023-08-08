@@ -73,9 +73,9 @@ const Gongwei = (props) => {
     const renderItem = ({ item }) => {
         return (
             <View style={{ ...styles.maincontent, flexDirection: 'row', backgroundColor: '#F2F2F2', borderBottomColor: "#BCBCBC", borderBottomWidth: 1 }}>
-                <Text style={{ width: '30%' }}>{item.pianqu}</Text>
-                <Text style={{ width: '35%' }}>{item.startgongwei}~{item.endgongwei}</Text>
-                <Text style={{ width: '25%' }}>{parseInt(item.endgongwei) - parseInt(item.startgongwei) + 1}</Text>
+                <Text style={{ width: '30%', fontSize: 14, color: '#000000' }}>{item.pianqu}</Text>
+                <Text style={{ width: '35%', fontSize: 14, color: '#000000' }}>{item.startgongwei}~{item.endgongwei}</Text>
+                <Text style={{ width: '25%', fontSize: 14, color: '#000000' }}>{parseInt(item.endgongwei) - parseInt(item.startgongwei) + 1}</Text>
                 <TouchableOpacity onPress={() => { setisEditVisible(true), setSelectedUpdate(item), setEditvalue(item.pianqu) }} style={{ width: '15%' }}>
                     <Icon name="edit" size={30} style={{ alignSelf: 'flex-end', }} />
                 </TouchableOpacity>
@@ -87,14 +87,14 @@ const Gongwei = (props) => {
         <View style={styles.allcontent}>
             <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
             <View style={{ width: '100%', alignItems: 'center', marginBottom: 10 }}>
-                <Text style={{ fontSize: 17, color: 'black', fontWeight: "bold" }}>工位设定</Text>
+                <Text style={{ fontSize: 16, color: 'black', fontWeight: "bold" }}>工位设定</Text>
             </View>
             <View style={{ paddingHorizontal: 30 }}>
                 <View style={styles.maincontent}>
-                    <Text style={{ width: '30%' }}>片区号码</Text>
-                    <Text style={{ width: '35%' }}>工位号码</Text>
-                    <Text style={{ width: '25%' }}>工位数</Text>
-                    <Text style={{ width: '15%' }}>改变</Text>
+                    <Text style={{ width: '30%', fontSize: 14, color: '#000000' }}>片区号码</Text>
+                    <Text style={{ width: '35%', fontSize: 14, color: '#000000' }}>工位号码</Text>
+                    <Text style={{ width: '25%', fontSize: 14, color: '#000000' }}>工位数</Text>
+                    <Text style={{ width: '15%', fontSize: 14, color: '#000000' }}>改变</Text>
                 </View>
                 <FlatList
                     data={data}
@@ -124,13 +124,13 @@ const Gongwei = (props) => {
                 <View style={styles.modalContainer}>
                     <View style={{ ...styles.modalContent, height: 250 }}>
                         <View style={styles.modalheader}>
-                            <Text>提示</Text>
+                            <Text style={{ fontSize: 18, color: '#000000', fontWeight: "bold" }}>提示</Text>
                             <TouchableOpacity onPress={() => setisEditVisible(false)}>
-                                <Icon name="close" size={20} style={{ marginRight: 10 }} />
+                                <Icon name="close" size={20} style={{ marginRight: 10, color: 'black' }} />
                             </TouchableOpacity>
                         </View>
                         <View style={{ ...styles.modalMain, height: '20%' }}>
-                            <Text>片区号码</Text>
+                            <Text style={{ fontSize: 14, color: '#000000' }}>片区号码</Text>
                         </View>
                         <View style={{ height: 35, marginBottom: 30 }}>
                             <TextInput
@@ -164,13 +164,13 @@ const Gongwei = (props) => {
                 <View style={styles.modalContainer}>
                     <View style={{ ...styles.modalContent, height: 350 }}>
                         <View style={{ ...styles.modalheader, height: '15%', marginBottom: '15%' }}>
-                            <Text style={{ fontSize: 17, alignSelf: 'center' }}>提示</Text>
+                            <Text style={{ alignSelf: 'center', fontSize: 18, color: '#000000', fontWeight: "bold" }}>提示</Text>
                             <TouchableOpacity onPress={() => setisAddVisible(false)}>
-                                <Icon name="close" size={20} style={{ marginRight: 10 }} />
+                                <Icon name="close" size={20} style={{ marginRight: 10, color: 'black' }} />
                             </TouchableOpacity>
                         </View>
                         <View style={styles.modalMain}>
-                            <Text>片区号码</Text>
+                            <Text style={{ fontSize: 14, color: '#000000' }}>片区号码</Text>
                         </View>
                         <View style={{ height: 35, marginBottom: 10, width: '50%' }}>
                             <TextInput
@@ -184,13 +184,13 @@ const Gongwei = (props) => {
                                     color: '#000000',
                                 }}
                                 multiline={true}
-                                onChangeText={(val)=>setAddvalue(val)}
+                                onChangeText={(val) => setAddvalue(val)}
                             />
                         </View>
                         <View style={{ flexDirection: 'row', height: '30%' }}>
                             <View style={{ width: '50%' }}>
                                 <View style={{ ...styles.modalMain, height: '25%' }}>
-                                    <Text>工位:从</Text>
+                                    <Text style={{ fontSize: 14, color: '#000000'}}>工位:从</Text>
                                 </View>
                                 <View style={{ height: 35, marginBottom: 10, width: '100%' }}>
                                     <TextInput
@@ -204,13 +204,13 @@ const Gongwei = (props) => {
                                             color: '#000000',
                                         }}
                                         multiline={true}
-                                        onChangeText={(val)=>setAddstart(val)}
+                                        onChangeText={(val) => setAddstart(val)}
                                     />
                                 </View>
                             </View>
                             <View style={{ width: '50%' }}>
                                 <View style={{ ...styles.modalMain, height: '25%' }}>
-                                    <Text>工位:至</Text>
+                                    <Text style={{ fontSize: 14, color: '#000000' }}>工位:至</Text>
                                 </View>
                                 <View style={{ height: 35, marginBottom: 10, width: '100%' }}>
                                     <TextInput
@@ -223,7 +223,7 @@ const Gongwei = (props) => {
                                             backgroundColor: '#F2F2F2',
                                             color: '#000000',
                                         }}
-                                        onChangeText={(val)=>setAddend(val)}
+                                        onChangeText={(val) => setAddend(val)}
                                         multiline={true}
                                     />
                                 </View>
@@ -246,7 +246,7 @@ const Gongwei = (props) => {
                 <View style={styles.modalContainer}>
                     <View style={{ ...styles.modalContent, height: 350 }}>
                         <View style={{ ...styles.modalheader, height: '15%', marginBottom: '15%' }}>
-                            <Text style={{ fontSize: 17, alignSelf: 'center' }}>提示</Text>
+                            <Text style={{ alignSelf: 'center', fontSize: 18, color: '#000000', fontWeight: "bold" }}>提示</Text>
                             <TouchableOpacity onPress={() => setisDeleteVisible(false)}>
                                 <Icon name="close" size={20} style={{ marginRight: 10 }} />
                             </TouchableOpacity>
@@ -254,9 +254,9 @@ const Gongwei = (props) => {
                         <View style={{ flexDirection: 'row', height: '33%' }}>
                             <View style={{ width: '50%' }}>
                                 <View style={{ ...styles.modalMain, height: '25%' }}>
-                                    <Text>工位:从</Text>
+                                    <Text style={{ fontSize: 14, color: '#000000' }}>工位:从</Text>
                                 </View>
-                                <View style={{ height: 35,  width: '100%' }}>
+                                <View style={{ height: 35, width: '100%' }}>
                                     <TextInput
                                         value={deletestart}
                                         autoFocus={true}
@@ -267,14 +267,14 @@ const Gongwei = (props) => {
                                             backgroundColor: '#F2F2F2',
                                             color: '#000000',
                                         }}
-                                        onChangeText={(val)=>setDeletestart(val)}
+                                        onChangeText={(val) => setDeletestart(val)}
                                         multiline={true}
                                     />
                                 </View>
                             </View>
                             <View style={{ width: '50%' }}>
                                 <View style={{ ...styles.modalMain, height: '25%' }}>
-                                    <Text>工位:至</Text>
+                                    <Text style={{ fontSize: 14, color: '#000000' }}>工位:至</Text>
                                 </View>
                                 <View style={{ height: 35, marginBottom: 10, width: '100%' }}>
                                     <TextInput
@@ -287,7 +287,7 @@ const Gongwei = (props) => {
                                             backgroundColor: '#F2F2F2',
                                             color: '#000000',
                                         }}
-                                        onChangeText={(val)=>setDeleteEnd(val)}
+                                        onChangeText={(val) => setDeleteEnd(val)}
                                         multiline={true}
                                     />
                                 </View>

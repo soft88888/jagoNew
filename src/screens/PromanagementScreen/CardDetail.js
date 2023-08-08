@@ -499,14 +499,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'red',
+
+ 
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: 'red',
     borderRadius: 10,
     padding: 20,
     width: '90%',
-    height: '30%',
+    height:100
   },
   closeButton: {
     marginTop: 10,

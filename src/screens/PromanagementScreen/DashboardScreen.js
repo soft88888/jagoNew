@@ -316,26 +316,24 @@ const DashboardScreen = (props) => {
     return (
       <View>
         <TouchableOpacity onPress={() => handleDetail(item)} style={styles.scrollContent}>
-          <View style={{ width: '10%' }}>
-            <Icon2 name="radio-button-on" size={10} color={result} style={{ marginRight: 2 }} />
+          <View style={{ width: '10%',height:'60%' }}>
+            <Icon2 name="radio-button-on" size={10} color={result} style={{ marginRight: 2, marginLeft: 10}} />
           </View>
           <View style={{ width: '90%' }}>
             <View style={{ ...styles.scrollContentTop, paddingLeft: 5 }}>
-
-              <Text>{item.client_name}</Text>
-              <Text>{item.store_name}</Text>
-              <Text>{item.leader_name}</Text>
-
+              <Text style={styles.itemText}>{item.client_name}</Text>
+              <Text style={styles.itemText}>{item.store_name}</Text>
+              <Text style={styles.itemText}>{item.leader_name}</Text>
             </View>
             <Svg height="1" width={Dimensions.get('window').width * 0.9 * 0.9}>
               <Line x1="0" y1="0" x2={Dimensions.get('window').width * 0.9 * 0.9} y2="0" stroke="black" />
             </Svg>
             <View style={styles.scrollContentTop}>
-              <Text>华北 - 河北</Text>
+              <Text style={styles.itemText}>华北 - 河北</Text>
               {
                 item.start_time != null ?
-                  <Text>{item.start_time}</Text> :
-                  <Text>{item.pro_starttime}</Text>
+                  <Text style={styles.itemText}>{item.start_time}</Text> :
+                  <Text style={styles.itemText}>{item.pro_starttime}</Text>
               }
             </View>
           </View>
@@ -417,347 +415,348 @@ const DashboardScreen = (props) => {
         visible={isVisible}
         animationType="slide"
         transparent={true}
+        style={{ backgroundColor: 'red' }}
       >
-        <ScrollView>
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={{ color: '#282828', fontFamily: 'bold', fontSize: 20 }}>项目追加</Text>
-                <TouchableOpacity onPress={() => setisVisible(false)}>
-                  <Icon name="close" size={30} style={{ marginRight: 10 }} />
-                </TouchableOpacity>
-              </View>
-              <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '5%', height: '8%' }}>
-                <View style={{ width: '95%' }}>
-                  <Text style={{ paddingLeft: 10 }}>客户名称*庳存类型</Text>
-                  <View style={{ width: '100%', height: '68%' }}>
-                    <DropBox
-                      zIndex={3000}
-                      zIndexInverse={1000}
-                      open={settingListOpen}
-                      setOpen={setSettingListOpen}
-                      value={settingId}
-                      setValue={setSettingId}
-                      items={settingList}
-                      setItems={setSettingList}
-                      searchable={true}
-                      listMode='MODAL'
-                    />
-                  </View>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={{ color: '#282828', fontSize: 18 }}>项目追加</Text>
+              <TouchableOpacity onPress={() => setisVisible(false)}>
+                <Icon name="close" size={30} style={{ marginRight: 10, color: '#000000' }} />
+              </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '5%', height: '8%' }}>
+              <View style={{ width: '95%' }}>
+                <Text style={styles.modalText}>客户名称*庳存类型</Text>
+                <View style={{ width: '100%', height: '68%' }}>
+                  <DropBox
+                    zIndex={3000}
+                    zIndexInverse={1000}
+                    open={settingListOpen}
+                    setOpen={setSettingListOpen}
+                    value={settingId}
+                    setValue={setSettingId}
+                    items={settingList}
+                    setItems={setSettingList}
+                    searchable={true}
+                    listMode='MODAL'
+                    style={{ fontsi: 12, color: 'red' }}
+                  />
                 </View>
-              </View>
-              <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>客户编码</Text>
-                  <View style={{ width: '100%', height: '60%' }}>
-                    <TextInput
-                      value={clientId}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={{
-                        ...CStyles.InputStyle,
-                        backgroundColor: '#F2F2F2',
-                        color: '#000000'
-                      }}
-                      editable={false}
-                      multiline={true}
-                    />
-                  </View>
-                </View>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>品牌</Text>
-                  <View style={{ width: '100%', height: '60%' }}>
-                    <TextInput
-                      value={brand}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={CStyles.InputStyle}
-                      multiline={true}
-                      onChangeText={setBrand}
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>门店名称*</Text>
-                  <View style={{ width: '100%', height: '60%' }}>
-                    <TextInput
-                      value={storename}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={CStyles.InputStyle}
-                      multiline={true}
-                      onChangeText={setStorename}
-                    />
-                  </View>
-                </View>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>门店编码</Text>
-                  <View style={{ width: '100%', height: '60%' }}>
-                    <TextInput
-                      value={storeid}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={CStyles.InputStyle}
-                      multiline={true}
-                      onChangeText={setStoreid}
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>门店联系人</Text>
-                  <View style={{ width: '100%', height: '60%' }}>
-                    <TextInput
-                      value={storelinkname}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={CStyles.InputStyle}
-                      multiline={true}
-                      onChangeText={setStorelinkname}
-                    />
-                  </View>
-                </View>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>门店联系电话</Text>
-                  <View style={{ width: '100%', height: '60%' }}>
-                    <TextInput
-                      value={storelinkphone}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={CStyles.InputStyle}
-                      multiline={true}
-                      onChangeText={setStorelinkphone}
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>门店经理</Text>
-                  <View style={{ width: '100%', height: '60%' }}>
-                    <TextInput
-                      value={storemanager}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={CStyles.InputStyle}
-                      multiline={true}
-                      onChangeText={setStoremanager}
-                    />
-                  </View>
-                </View>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>客户现场代表</Text>
-                  <View style={{ width: '100%', height: '60%' }}>
-                    <TextInput
-                      value={clientstoreleader}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={CStyles.InputStyle}
-                      multiline={true}
-                      onChangeText={setClientstoreleader}
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>门店地址*</Text>
-                  <View style={{ width: '100%', height: '60%' }}>
-                    <TextInput
-                      value={storeaddress}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={CStyles.InputStyle}
-                      multiline={true}
-                      onChangeText={setStoreaddress}
-                    />
-                  </View>
-                </View>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>参考库存</Text>
-                  <View style={{ width: '100%', height: '60%' }}>
-                    <TextInput
-                      value={estimated}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={CStyles.InputStyle}
-                      multiline={true}
-                      onChangeText={setEstimated}
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>排班人</Text>
-                  <View style={{ width: '100%', height: '68%' }}>
-                    <DropBox
-                      zIndex={3000}
-                      zIndexInverse={1000}
-                      open={schdulerListOpen}
-                      setOpen={setSchdulerListOpen}
-                      value={schduleid}
-                      setValue={setSchduleid}
-                      items={schdulerList}
-                      setItems={setSchdulerList}
-                      searchable={true}
-                      listMode='MODAL'
-                    />
-                  </View>
-                </View>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>领队</Text>
-                  <View style={{ width: '100%', height: '68%' }}>
-                    <DropBox
-                      zIndex={3000}
-                      zIndexInverse={1000}
-                      open={leaderListOpen}
-                      setOpen={setLeaderListOpen}
-                      value={leaderid}
-                      setValue={setLeaderid}
-                      items={leaderList}
-                      setItems={setLeaderList}
-                      searchable={true}
-                      listMode='MODAL'
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>建议起始日期*</Text>
-                  <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
-                    <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(1) }}>
-                      <Icon name="calendar" size={25} style={{ marginRight: 10 }} />
-                    </TouchableOpacity>
-                    <TextInput
-                      value={preferstarttime}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={{
-                        ...CStyles.InputStyle,
-                        backgroundColor: '#ffffff',
-                        color: '#000000'
-                      }}
-                      editable={false}
-                      multiline={true}
-                    />
-                  </View>
-                </View>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>建议结束日期*</Text>
-                  <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
-                    <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(2) }}>
-                      <Icon name="calendar" size={25} style={{ marginRight: 10 }} />
-                    </TouchableOpacity>
-                    <TextInput
-                      value={preferendtime}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={{
-                        ...CStyles.InputStyle,
-                        backgroundColor: '#ffffff',
-                        color: '#000000'
-                      }}
-                      editable={false}
-                      multiline={true}
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>盘点起始日期</Text>
-                  <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
-                    <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(3) }}>
-                      <Icon name="calendar" size={25} style={{ marginRight: 10 }} />
-                    </TouchableOpacity>
-                    <TextInput
-                      value={prostarttime}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={{
-                        ...CStyles.InputStyle,
-                        backgroundColor: '#ffffff',
-                        color: '#000000'
-                      }}
-                      editable={false}
-                      multiline={true}
-                    />
-                  </View>
-                </View>
-                <View style={{ width: '45%' }}>
-                  <Text style={{ paddingLeft: 10 }}>盘点结束日期</Text>
-                  <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
-                    <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(4) }}>
-                      <Icon name="calendar" size={25} style={{ marginRight: 10 }} />
-                    </TouchableOpacity>
-                    <TextInput
-                      value={proendtime}
-                      autoFocus={true}
-                      placeholder={''}
-                      selectTextOnFocus={true}
-                      style={{
-                        ...CStyles.InputStyle,
-                        backgroundColor: '#ffffff',
-                        color: '#000000'
-                      }}
-                      editable={false}
-                      multiline={true}
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
-                <View style={{ width: '95%' }}>
-                  <Text style={{ paddingLeft: 10 }}>省</Text>
-                  <View style={{ width: '100%', height: '60%' }}>
-                    <DropBox
-                      zIndex={3000}
-                      zIndexInverse={1000}
-                      open={adressListOpen}
-                      setOpen={setAdressListOpen}
-                      value={adress}
-                      setValue={setAdress}
-                      items={adressList}
-                      setItems={setAdressList}
-                      searchable={true}
-                      listMode='MODAL'
-                    // listMode='SCROLLVIEW'
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={{ marginTop: '2%', justifyContent: 'center', width: '100%', alignItems: 'center' }}>
-                <Button
-                  ButtonTitle={'追加'}
-                  BtnPress={() => addProject()}
-                  type={'yellowBtn'}
-                  BTnWidth={300}
-                />
               </View>
             </View>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>客户编码</Text>
+                <View style={{ width: '100%', height: '60%' }}>
+                  <TextInput
+                    value={clientId}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={{
+                      ...CStyles.InputStyle,
+                      backgroundColor: '#F2F2F2',
+                      color: '#000000'
+                    }}
+                    editable={false}
+                    multiline={true}
+                  />
+                </View>
+              </View>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>品牌</Text>
+                <View style={{ width: '100%', height: '60%' }}>
+                  <TextInput
+                    value={brand}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={CStyles.InputStyle}
+                    multiline={true}
+                    onChangeText={setBrand}
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>门店名称*</Text>
+                <View style={{ width: '100%', height: '60%' }}>
+                  <TextInput
+                    value={storename}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={CStyles.InputStyle}
+                    multiline={true}
+                    onChangeText={setStorename}
+                  />
+                </View>
+              </View>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>门店编码</Text>
+                <View style={{ width: '100%', height: '60%' }}>
+                  <TextInput
+                    value={storeid}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={CStyles.InputStyle}
+                    multiline={true}
+                    onChangeText={setStoreid}
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>门店联系人</Text>
+                <View style={{ width: '100%', height: '60%' }}>
+                  <TextInput
+                    value={storelinkname}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={CStyles.InputStyle}
+                    multiline={true}
+                    onChangeText={setStorelinkname}
+                  />
+                </View>
+              </View>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>门店联系电话</Text>
+                <View style={{ width: '100%', height: '60%' }}>
+                  <TextInput
+                    value={storelinkphone}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={CStyles.InputStyle}
+                    multiline={true}
+                    onChangeText={setStorelinkphone}
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>门店经理</Text>
+                <View style={{ width: '100%', height: '60%' }}>
+                  <TextInput
+                    value={storemanager}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={CStyles.InputStyle}
+                    multiline={true}
+                    onChangeText={setStoremanager}
+                  />
+                </View>
+              </View>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>客户现场代表</Text>
+                <View style={{ width: '100%', height: '60%' }}>
+                  <TextInput
+                    value={clientstoreleader}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={CStyles.InputStyle}
+                    multiline={true}
+                    onChangeText={setClientstoreleader}
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>门店地址*</Text>
+                <View style={{ width: '100%', height: '60%' }}>
+                  <TextInput
+                    value={storeaddress}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={CStyles.InputStyle}
+                    multiline={true}
+                    onChangeText={setStoreaddress}
+                  />
+                </View>
+              </View>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>参考库存</Text>
+                <View style={{ width: '100%', height: '60%' }}>
+                  <TextInput
+                    value={estimated}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={CStyles.InputStyle}
+                    multiline={true}
+                    onChangeText={setEstimated}
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>排班人</Text>
+                <View style={{ width: '100%', height: '68%' }}>
+                  <DropBox
+                    zIndex={3000}
+                    zIndexInverse={1000}
+                    open={schdulerListOpen}
+                    setOpen={setSchdulerListOpen}
+                    value={schduleid}
+                    setValue={setSchduleid}
+                    items={schdulerList}
+                    setItems={setSchdulerList}
+                    searchable={true}
+                    listMode='MODAL'
+                  />
+                </View>
+              </View>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>领队</Text>
+                <View style={{ width: '100%', height: '68%' }}>
+                  <DropBox
+                    zIndex={3000}
+                    zIndexInverse={1000}
+                    open={leaderListOpen}
+                    setOpen={setLeaderListOpen}
+                    value={leaderid}
+                    setValue={setLeaderid}
+                    items={leaderList}
+                    setItems={setLeaderList}
+                    searchable={true}
+                    listMode='MODAL'
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>建议起始日期*</Text>
+                <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
+                  <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(1) }}>
+                    <Icon name="calendar" size={25} style={{ marginRight: 10, color: '#000000' }} />
+                  </TouchableOpacity>
+                  <TextInput
+                    value={preferstarttime}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={{
+                      ...CStyles.InputStyle,
+                      backgroundColor: '#ffffff',
+                      color: '#000000'
+                    }}
+                    editable={false}
+                    multiline={true}
+                  />
+                </View>
+              </View>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>建议结束日期*</Text>
+                <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
+                  <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(2) }}>
+                    <Icon name="calendar" size={25} style={{ marginRight: 10, color: '#000000' }} />
+                  </TouchableOpacity>
+                  <TextInput
+                    value={preferendtime}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={{
+                      ...CStyles.InputStyle,
+                      backgroundColor: '#ffffff',
+                      color: '#000000'
+                    }}
+                    editable={false}
+                    multiline={true}
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>盘点起始日期</Text>
+                <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
+                  <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(3) }}>
+                    <Icon name="calendar" size={25} style={{ marginRight: 10, color: '#000000' }} />
+                  </TouchableOpacity>
+                  <TextInput
+                    value={prostarttime}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={{
+                      ...CStyles.InputStyle,
+                      backgroundColor: '#ffffff',
+                      color: '#000000'
+                    }}
+                    editable={false}
+                    multiline={true}
+                  />
+                </View>
+              </View>
+              <View style={{ width: '45%' }}>
+                <Text style={styles.modalText}>盘点结束日期</Text>
+                <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
+                  <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(4) }}>
+                    <Icon name="calendar" size={25} style={{ marginRight: 10, color: '#000000' }} />
+                  </TouchableOpacity>
+                  <TextInput
+                    value={proendtime}
+                    autoFocus={true}
+                    placeholder={''}
+                    selectTextOnFocus={true}
+                    style={{
+                      ...CStyles.InputStyle,
+                      backgroundColor: '#ffffff',
+                      color: '#000000'
+                    }}
+                    editable={false}
+                    multiline={true}
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
+              <View style={{ width: '95%' }}>
+                <Text style={styles.modalText}>省</Text>
+                <View style={{ width: '100%', height: '60%' }}>
+                  <DropBox
+                    zIndex={3000}
+                    zIndexInverse={1000}
+                    open={adressListOpen}
+                    setOpen={setAdressListOpen}
+                    value={adress}
+                    setValue={setAdress}
+                    items={adressList}
+                    setItems={setAdressList}
+                    searchable={true}
+                    listMode='MODAL'
+                  // listMode='SCROLLVIEW'
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={{ marginTop: '2%', justifyContent: 'center', width: '100%', alignItems: 'center' }}>
+              <Button
+                ButtonTitle={'追加'}
+                BtnPress={() => addProject()}
+                type={'yellowBtn'}
+                BTnWidth={300}
+              />
+            </View>
           </View>
-        </ScrollView>
-      </Modal>
+        </View>
+
+      </Modal >
       <View style={styles.searchbarContent}>
-        <Icon name="search1" size={20} style={{ marginRight: 10 }} />
+        <Icon name="search1" size={20} style={{ marginRight: 10, color: '#000000' }} />
         <TextInput
           ref={skuRef}
           value={element}
@@ -776,7 +775,7 @@ const DashboardScreen = (props) => {
       </View>
       <View style={styles.calendarContent}>
         <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(0) }}>
-          <Icon name="calendar" size={20} style={{ marginRight: 10 }} />
+          <Icon name="calendar" size={20} style={{ marginRight: 10, color: '#000000' }} />
         </TouchableOpacity>
         <TextInput
           ref={skuRef}
@@ -833,7 +832,7 @@ const DashboardScreen = (props) => {
         onEndReachedThreshold={0.5}
         ListFooterComponent={renderFooter}
       />
-    </View>
+    </View >
   );
 }
 
@@ -884,13 +883,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+
   },
   modalContent: {
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 20,
     width: '95%',
-    height: '97%',
+    height: 700,
+
   },
   closeButton: {
     marginTop: 10,
@@ -899,6 +900,15 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: 'blue',
   },
+  itemText: {
+    fontSize: 12,
+    color: '#000000'
+  },
+  modalText: {
+    fontSize: 12,
+    color: '#282828',
+    paddingLeft: 10
+  }
 });
 
 export default DashboardScreen;

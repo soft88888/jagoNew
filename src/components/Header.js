@@ -78,46 +78,50 @@ const Header = (props) => {
               backgroundColor: '#fff',
               zIndex: 1000000,
             }}>
-            <View style={{ marginTop: 100, marginLeft: 30, width: 100, display: 'flex', }}>
+            <View style={styles.headercontent}>
+              <Image style={styles.drawavatar} source={require('../assets/images/icon.png')} />
+              <Text style={{ fontSize: 24, color: '#012964', marginTop: '17%' }}>GongXing 盘点</Text>
+            </View>
+            <View style={{ marginTop: 30, marginLeft: 30, width: 100, display: 'flex', }}>
               <TouchableOpacity style={styles.section}
                 onPress={() => props.navigation.push('PromanageDashboard')}
               >
-                <Icon1 name="project-diagram" size={30} color="black" style={{ marginRight: 10 }} />
-                <Text>项目管理</Text>
+                <Image style={styles.drawIcon} source={require('../assets/images/project-icon.png')} />
+                <Text style={styles.contentText}>项目管理</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.section}>
-                <Icon2 name="users" size={30} color="black" style={{ marginRight: 10 }} />
-                <Text>雇员管理</Text>
+                <Image style={styles.drawIcon} source={require('../assets/images/members-icon.png')} />
+                <Text style={styles.contentText}>雇员管理</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => props.navigation.push('ClientDashboard')}
                 style={styles.section}>
-                <Icon3 name="user" size={30} color="black" style={{ marginRight: 10 }} />
-                <Text>客户管理</Text>
+                <Image style={styles.drawIcon} source={require('../assets/images/raphael_customer.png')} />
+                <Text style={styles.contentText}>客户管理</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.section}>
-                <Icon2 name="user-check" size={30} color="black" style={{ marginRight: 10 }} />
-                <Text>考勤</Text>
+                <Image style={styles.drawIcon} source={require('../assets/images/mdi_user-multiple-check-outline.png')} />
+                <Text style={styles.contentText}>考勤</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.section}
                 onPress={() => props.navigation.push('Inventory')}
               >
-                <Icon4 name="logo-buffer" size={30} color="black" style={{ marginRight: 10 }} />
-                <Text>进行中项目</Text>
+                <Image style={styles.drawIcon} source={require('../assets/images/uil_layers.png')} />
+                <Text style={styles.contentText}>进行中项目</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.section}>
-                <Icon name="profile" size={30} color="black" style={{ marginRight: 10 }} />
-                <Text>个人信息</Text>
+                <Image style={styles.drawIcon} source={require('../assets/images/Group.png')} />
+                <Text style={styles.contentText}>个人信息</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.section}>
-                <Icon2 name="settings" size={30} color="black" style={{ marginRight: 10 }} />
-                <Text>设置</Text>
+                <Image style={styles.drawIcon} source={require('../assets/images/ant-design_setting-outlined.png')} />
+                <Text style={styles.contentText}>设置</Text>
               </TouchableOpacity>
             </View>
             <View style={{ marginTop: 100, marginLeft: 30, width: 100, display: 'flex', }}>
               <TouchableOpacity style={styles.section}>
-                <Icon5 name="logout" size={30} color="black" style={{ marginRight: 10 }} />
-                <Text>登出</Text>
+                <Image style={styles.drawIcon} source={require('../assets/images/logout.png')} />
+                <Text style={styles.contentText}>登出</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -252,12 +256,30 @@ const Header = (props) => {
 }
 
 const styles = StyleSheet.create({
+  headercontent: {
+    width: '90%',
+    height: 100,
+    borderBottomWidth: 1,
+    borderBottomColor: '#878787',
+    alignSelf: 'center',
+    flexDirection: 'row'
+  },
+  drawavatar: {
+    width: 70,
+    height: 70,
+    borderRadius: 17.5,
+    marginTop: '10%'
+  },
   avatar: {
     width: 35,
     height: 35,
     borderRadius: 17.5,
   },
-
+  drawIcon: {
+    color: '#838383',
+    marginRight: 10,
+    width: 32
+  },
   menuIcon: {
     width: 30,
     height: 30,
@@ -303,6 +325,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
   },
+  contentText: {
+    fontSize: 14,
+    color: '#000000'
+  }
 });
 
 export default Header;

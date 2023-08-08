@@ -46,13 +46,13 @@ const Main = (props) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <View style={styles.modalheader}>
-              <Text>提示</Text>
+              <Text style={{ fontSize: 18, color: '##282828', fontWeight: "bold" }}>提示</Text>
               <TouchableOpacity onPress={() => setisVisible(false)}>
-                <Icon name="close" size={20} style={{ marginRight: 10 }} />
+                <Icon name="close" size={20} style={{ marginRight: 10, color:"black"}} />
               </TouchableOpacity>
             </View>
             <View style={styles.modalMain}>
-              <Text>你想停止这个项目吗?</Text>
+              <Text style={{ fontSize: 18, color: '##282828' }}>你想停止这个项目吗?</Text>
             </View>
             <View style={styles.modalBottom}>
               <Button

@@ -17,9 +17,9 @@ const Infor = (props) => {
   const renderItem = ({ item }) => {
     return (
       <View style={styles.textinputContent}>
-        <Text style={{ width: '50%' }}>{item.name}:</Text>
+        <Text style={{ width: '50%', color: '#282828', fontSize: 12 }}>{item.name}:</Text>
         <View style={{ width: '50%' }}>
-          <Text>{item.value}</Text>
+          <Text style={{ color: '#282828', fontSize: 12 }}>{item.value}</Text>
         </View>
       </View>
     );
@@ -103,15 +103,11 @@ const Infor = (props) => {
     props.navigation.push('PromanageMain')
   };
 
-  const onStart = async () => {
-    setisVisible(true)
-  }
-
   return (
     <View style={styles.allcontent}>
       <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
       <TouchableOpacity onPress={() => props.navigation.push('PromanageInforEdit')}>
-        <Icon name="edit" size={30} style={{ alignSelf: 'flex-end', marginRight: 30, marginBottom: 10 }} />
+        <Icon name="edit" size={30} style={{ alignSelf: 'flex-end', marginRight: 30, marginBottom: 10, color: '#000000' }} />
       </TouchableOpacity>
       <FlatList
         data={data}

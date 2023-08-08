@@ -93,7 +93,7 @@ const InforEdit = (props) => {
       default:
         break;
     }
-   
+
     setCalendarVisible(false);
   };
 
@@ -127,7 +127,7 @@ const InforEdit = (props) => {
     }
   };
 
-  const fetchData = async() => {
+  const fetchData = async () => {
     getAddressList();
     var AllList = await ApiObject.getSettingList();
     setSettingAllList(AllList);
@@ -231,13 +231,13 @@ const InforEdit = (props) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <View style={styles.modalheader}>
-              <Text>提示</Text>
+              <Text style={styles.modalText}>提示</Text>
               <TouchableOpacity onPress={() => setisVisible(false)}>
-                <Icon name="close" size={20} style={{ marginRight: 10 }} />
+                <Icon name="close" size={20} style={{ marginRight: 10,color: '#282828' }} />
               </TouchableOpacity>
             </View>
             <View style={styles.modalMain}>
-              <Text>您会保留输入的用户信息吗?</Text>
+              <Text style={styles.modalText}>您会保留输入的用户信息吗?</Text>
             </View>
             <View style={styles.modalBottom}>
               <Button
@@ -262,7 +262,7 @@ const InforEdit = (props) => {
         transparent={true}
       >
         <View style={styles.modalContainer}>
-          <View style={{...styles.modalContent,height:'50%',width:'95%'}}>
+          <View style={{ ...styles.modalContent, height: '50%', width: '95%' }}>
             <CalendarPicker onDateChange={handleDateSelect} />
             <TouchableOpacity
               style={styles.closeButton}
@@ -276,7 +276,7 @@ const InforEdit = (props) => {
       <ScrollView style={{ marginBottom: 20 }}>
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '5%', height: '8%' }}>
           <View style={{ width: '95%' }}>
-            <Text style={{ paddingLeft: 10 }}>客户名称*庳存类型</Text>
+            <Text style={styles.itemText}>客户名称*庳存类型</Text>
             <View style={{ width: '100%', height: '68%' }}>
               <DropBox
                 zIndex={3000}
@@ -295,7 +295,7 @@ const InforEdit = (props) => {
         </View>
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>客户编码</Text>
+            <Text style={styles.itemText}>客户编码</Text>
             <View style={{ width: '100%', height: '60%' }}>
               <TextInput
                 value={clientId}
@@ -313,7 +313,7 @@ const InforEdit = (props) => {
             </View>
           </View>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>品牌</Text>
+            <Text style={styles.itemText}>品牌</Text>
             <View style={{ width: '100%', height: '60%' }}>
               <TextInput
                 value={brand}
@@ -329,7 +329,7 @@ const InforEdit = (props) => {
         </View>
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>门店名称*</Text>
+            <Text style={styles.itemText}>门店名称*</Text>
             <View style={{ width: '100%', height: '60%' }}>
               <TextInput
                 value={storename}
@@ -343,7 +343,7 @@ const InforEdit = (props) => {
             </View>
           </View>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>门店编码</Text>
+            <Text style={styles.itemText}>门店编码</Text>
             <View style={{ width: '100%', height: '60%' }}>
               <TextInput
                 value={storeid}
@@ -359,7 +359,7 @@ const InforEdit = (props) => {
         </View>
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>门店联系人</Text>
+            <Text style={styles.itemText}>门店联系人</Text>
             <View style={{ width: '100%', height: '60%' }}>
               <TextInput
                 value={storelinkname}
@@ -373,7 +373,7 @@ const InforEdit = (props) => {
             </View>
           </View>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>门店联系电话</Text>
+            <Text style={styles.itemText}>门店联系电话</Text>
             <View style={{ width: '100%', height: '60%' }}>
               <TextInput
                 value={storelinkphone}
@@ -389,7 +389,7 @@ const InforEdit = (props) => {
         </View>
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>门店经理</Text>
+            <Text style={styles.itemText}>门店经理</Text>
             <View style={{ width: '100%', height: '60%' }}>
               <TextInput
                 value={storemanager}
@@ -403,7 +403,7 @@ const InforEdit = (props) => {
             </View>
           </View>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>客户现场代表</Text>
+            <Text style={styles.itemText}>客户现场代表</Text>
             <View style={{ width: '100%', height: '60%' }}>
               <TextInput
                 value={clientstoreleader}
@@ -419,7 +419,7 @@ const InforEdit = (props) => {
         </View>
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>门店地址*</Text>
+            <Text style={styles.itemText}>门店地址*</Text>
             <View style={{ width: '100%', height: '60%' }}>
               <TextInput
                 value={storeaddress}
@@ -433,7 +433,7 @@ const InforEdit = (props) => {
             </View>
           </View>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>参考库存</Text>
+            <Text style={styles.itemText}>参考库存</Text>
             <View style={{ width: '100%', height: '60%' }}>
               <TextInput
                 value={estimated}
@@ -449,7 +449,7 @@ const InforEdit = (props) => {
         </View>
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>排班人</Text>
+            <Text style={styles.itemText}>排班人</Text>
             <View style={{ width: '100%', height: '68%' }}>
               <DropBox
                 zIndex={3000}
@@ -466,7 +466,7 @@ const InforEdit = (props) => {
             </View>
           </View>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>领队</Text>
+            <Text style={styles.itemText}>领队</Text>
             <View style={{ width: '100%', height: '68%' }}>
               <DropBox
                 zIndex={3000}
@@ -485,10 +485,10 @@ const InforEdit = (props) => {
         </View>
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>建议起始日期*</Text>
+            <Text style={styles.itemText}>建议起始日期*</Text>
             <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
               <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(1) }}>
-                <Icon name="calendar" size={25} style={{ marginRight: 10 }} />
+                <Icon name="calendar" size={25} style={{ marginRight: 10, color: '#282828' }} />
               </TouchableOpacity>
               <TextInput
                 value={preferstarttime}
@@ -506,10 +506,10 @@ const InforEdit = (props) => {
             </View>
           </View>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>建议结束日期*</Text>
+            <Text style={styles.itemText}>建议结束日期*</Text>
             <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
               <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(2) }}>
-                <Icon name="calendar" size={25} style={{ marginRight: 10 }} />
+                <Icon name="calendar" size={25} style={{ marginRight: 10, color: '#282828' }} />
               </TouchableOpacity>
               <TextInput
                 value={preferendtime}
@@ -529,10 +529,10 @@ const InforEdit = (props) => {
         </View>
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>盘点起始日期</Text>
+            <Text style={styles.itemText}>盘点起始日期</Text>
             <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
               <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(3) }}>
-                <Icon name="calendar" size={25} style={{ marginRight: 10 }} />
+                <Icon name="calendar" size={25} style={{ marginRight: 10, color: '#282828' }} />
               </TouchableOpacity>
               <TextInput
                 value={prostarttime}
@@ -550,10 +550,10 @@ const InforEdit = (props) => {
             </View>
           </View>
           <View style={{ width: '45%' }}>
-            <Text style={{ paddingLeft: 10 }}>盘点结束日期</Text>
+            <Text style={styles.itemText}>盘点结束日期</Text>
             <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
               <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(4) }}>
-                <Icon name="calendar" size={25} style={{ marginRight: 10 }} />
+                <Icon name="calendar" size={25} style={{ marginRight: 10, color: '#282828' }} />
               </TouchableOpacity>
               <TextInput
                 value={proendtime}
@@ -573,7 +573,7 @@ const InforEdit = (props) => {
         </View>
         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
           <View style={{ width: '95%' }}>
-            <Text style={{ paddingLeft: 10 }}>省</Text>
+            <Text style={styles.itemText}>省</Text>
             <View style={{ width: '100%', height: '60%' }}>
               <DropBox
                 zIndex={3000}
@@ -591,7 +591,7 @@ const InforEdit = (props) => {
             </View>
           </View>
         </View>
-        <View style={{ marginTop: '3%', justifyContent: 'center', width: '95%', alignItems: 'center', alignSelf: 'center' }}>
+        <View style={{ marginTop: '1%', justifyContent: 'center', width: '95%', alignItems: 'center', alignSelf: 'center' }}>
           <Button
             ButtonTitle={'保存'}
             BtnPress={() => setisVisible(true)}
@@ -673,6 +673,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
+  },
+  itemText: {
+    fontSize: 12,
+    color: '#282828',
+    paddingLeft: 10
+  },
+  modalText: {
+    fontSize: 18,
+    color: '#282828',
   }
 });
 

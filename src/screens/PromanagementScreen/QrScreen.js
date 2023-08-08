@@ -19,7 +19,7 @@ const QrScreen = (props) => {
                 <QRCode value={qrcode} size={250} />
             </View>
             <View style={{ position: 'relative', marginTop: '100%', alignSelf: 'center' }}>
-                <Text style={{ fontSize: 17, color: 'black' }}>{qrcode}</Text>
+                <Text style={{ fontSize: 20, color: 'black' }}>{qrcode}</Text>
             </View>
         </View>
     )
