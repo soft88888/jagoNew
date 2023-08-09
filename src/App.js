@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { LogBox } from 'react-native';
+import { LogBox, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store';
@@ -14,6 +14,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        <StatusBar backgroundColor="#F2F2F2" barStyle="light-content" />
         <AppNavigation />
         <ScreenLoading />
       </PersistGate>

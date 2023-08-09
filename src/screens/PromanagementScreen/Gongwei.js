@@ -96,11 +96,19 @@ const Gongwei = (props) => {
                     <Text style={{ width: '25%', fontSize: 14, color: '#000000' }}>工位数</Text>
                     <Text style={{ width: '15%', fontSize: 14, color: '#000000' }}>改变</Text>
                 </View>
-                <FlatList
-                    data={data}
-                    renderItem={renderItem}
-                    onEndReachedThreshold={0.5}
-                />
+                <View>
+                    {
+                        data.length == 0 ?
+                            <View>
+                                <Text style={{ fontsi: 12, color: 'black', marginTop: 30, alignSelf: 'center' }}>没有数据</Text>
+                            </View> :
+                            <FlatList
+                                data={data}
+                                renderItem={renderItem}
+                                onEndReachedThreshold={0.5}
+                            />
+                    }
+                </View>
             </View>
             <View style={styles.buttonWraper}>
                 <Button
@@ -190,7 +198,7 @@ const Gongwei = (props) => {
                         <View style={{ flexDirection: 'row', height: '30%' }}>
                             <View style={{ width: '50%' }}>
                                 <View style={{ ...styles.modalMain, height: '25%' }}>
-                                    <Text style={{ fontSize: 14, color: '#000000'}}>工位:从</Text>
+                                    <Text style={{ fontSize: 14, color: '#000000' }}>工位:从</Text>
                                 </View>
                                 <View style={{ height: 35, marginBottom: 10, width: '100%' }}>
                                     <TextInput

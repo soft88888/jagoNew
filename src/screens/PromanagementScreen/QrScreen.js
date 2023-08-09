@@ -18,7 +18,7 @@ const QrScreen = (props) => {
             <View style={styles.container}>
                 <QRCode value={qrcode} size={250} />
             </View>
-            <View style={{ position: 'relative', marginTop: '100%', alignSelf: 'center' }}>
+            <View style={{ position: 'relative', marginTop: '10%', alignSelf: 'center' }}>
                 <Text style={{ fontSize: 20, color: 'black' }}>{qrcode}</Text>
             </View>
         </View>
@@ -32,10 +32,16 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
     container: {
-        flex: 1,
         alignItems: 'center',
         marginTop: '20%',
         backgroundColor: '#F2F2F2',
+        borderColor: '#DEEBFD',
+        borderWidth: 2,
+        width: 270,
+        height: 270,
+        justifyContent: 'center',
+        alignSelf: 'center',
+        borderRadius: 5
     },
 });
 

@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Alert, DrawerLayoutAndroid, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import Icon1 from 'react-native-vector-icons/FontAwesome5';
-import Icon2 from 'react-native-vector-icons/Feather';
-import Icon3 from 'react-native-vector-icons/Entypo';
-import Icon4 from 'react-native-vector-icons/Ionicons';
-import Icon5 from 'react-native-vector-icons/SimpleLineIcons';
 import Modal from 'react-native-modal';
+import ApiObject from '../support/Api';
+import { setAccessToken, setUser } from '../reducers/BaseReducer';
 
 import { PROGRAM_NAME, SERVER_URL } from '../constants';
 
 const Header = (props) => {
 
   let drawerRef = null;
+  const dispatch = useDispatch();
 
   const { user, project } = useSelector(state => state.base);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -24,6 +22,25 @@ const Header = (props) => {
   const screenWidthUnit = screenWidth / 360;
   const screenHeight = Dimensions.get('window').height;
   const screenHeightUnit = screenHeight / 640;
+
+  const signOutCheck = () => {
+    Alert.alert(
+      PROGRAM_NAME,
+      '你真的退出了吗？',
+      [
+        { text: '是(Y)', onPress: () => signOut() },
+        { text: '否(N)', onPress: () => { } },
+      ],
+      { cancelable: true },
+    );
+  };
+
+  const signOut = async () => {
+    await ApiObject.logoutAction();
+    dispatch(setUser({}));
+    dispatch(setAccessToken(''));
+    props.navigation.navigate('Login');
+  };
 
   const renderAvatarImage = () => {
     if (user?.picture != '' && user?.picture != null) {
@@ -75,7 +92,7 @@ const Header = (props) => {
           <View
             style={{
               flex: 1,
-              backgroundColor: '#fff',
+              backgroundColor: '#F2F2F2',
               zIndex: 1000000,
             }}>
             <View style={styles.headercontent}>
@@ -109,17 +126,23 @@ const Header = (props) => {
                 <Image style={styles.drawIcon} source={require('../assets/images/uil_layers.png')} />
                 <Text style={styles.contentText}>进行中项目</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.section}>
+              <TouchableOpacity style={styles.section}
+                onPress={() => props.navigation.push('UserInfo')}
+              >
                 <Image style={styles.drawIcon} source={require('../assets/images/Group.png')} />
                 <Text style={styles.contentText}>个人信息</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.section}>
+              <TouchableOpacity style={styles.section}
+                onPress={() => props.navigation.push('SystemInfo')}
+              >
                 <Image style={styles.drawIcon} source={require('../assets/images/ant-design_setting-outlined.png')} />
                 <Text style={styles.contentText}>设置</Text>
               </TouchableOpacity>
             </View>
             <View style={{ marginTop: 100, marginLeft: 30, width: 100, display: 'flex', }}>
-              <TouchableOpacity style={styles.section}>
+              <TouchableOpacity style={styles.section}
+                onPress={() => signOutCheck()}
+              >
                 <Image style={styles.drawIcon} source={require('../assets/images/logout.png')} />
                 <Text style={styles.contentText}>登出</Text>
               </TouchableOpacity>

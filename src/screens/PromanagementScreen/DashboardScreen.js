@@ -205,10 +205,7 @@ const DashboardScreen = (props) => {
     const month = (currentDate.getMonth() + 1).toString();
     const day = currentDate.getDate().toString();
     setSelectedDate(`${year}:${month}:${day}`)
-    // currentDate.setMonth(currentDate.getMonth() - 1);
-    var data = await ApiObject.getProjectList({
-      starttime: `${year}-${month}-${day}`
-    });
+
 
     var AllList = await ApiObject.getSettingList();
     setSettingAllList(AllList);
@@ -263,9 +260,27 @@ const DashboardScreen = (props) => {
     //   setPage((prevPage) => prevPage + 1);
     //   setLoading(false);
     // }, 1500);
-    setData(data)
-    setfirstData(data)
+
   };
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        var data = await ApiObject.getProjectList({
+          starttime: selectedDate
+        });
+        setData(data)
+        setfirstData(data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+
+  }, [selectedDate])
+
 
   const handleLoadMore = () => {
     // if (!loading) {
@@ -316,8 +331,8 @@ const DashboardScreen = (props) => {
     return (
       <View>
         <TouchableOpacity onPress={() => handleDetail(item)} style={styles.scrollContent}>
-          <View style={{ width: '10%',height:'60%' }}>
-            <Icon2 name="radio-button-on" size={10} color={result} style={{ marginRight: 2, marginLeft: 10}} />
+          <View style={{ width: '10%', height: '60%' }}>
+            <Icon2 name="radio-button-on" size={10} color={result} style={{ marginRight: 2, marginLeft: 10 }} />
           </View>
           <View style={{ width: '90%' }}>
             <View style={{ ...styles.scrollContentTop, paddingLeft: 5 }}>
@@ -397,9 +412,9 @@ const DashboardScreen = (props) => {
     }
     else {
       setData(firstdata.filter((item) =>
-        item.client_name == val ||
-        item.store_name == val ||
-        item.leader_name == val
+        (item.client_name != null && item.client_name.includes(val) == true) ||
+        (item.store_name != null && item.store_name.includes(val) == true) ||
+        (item.leader_name != null && item.leader_name.includes(val) == true)
       ))
     }
   }
@@ -776,22 +791,31 @@ const DashboardScreen = (props) => {
       <View style={styles.calendarContent}>
         <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(0) }}>
           <Icon name="calendar" size={20} style={{ marginRight: 10, color: '#000000' }} />
+        </TouchableOpacity >
+        <TouchableOpacity style={{
+          ...CStyles.InputStyle,
+          backgroundColor: '#ffffff',
+          color: '#000000',
+          paddingLeft: 0,
+        }}
+          onPress={() => { setCalendarVisible(true), setCalendarType(0) }}
+        >
+          <TextInput
+            ref={skuRef}
+            value={selectedDate}
+            autoFocus={true}
+            editable={false}
+            onChangeText={calendarchange}
+            placeholder={''}
+            selectTextOnFocus={true}
+            style={{
+              backgroundColor: '#ffffff',
+              color: '#000000',
+              fontSize: 10,
+            }}
+            multiline={false}
+          />
         </TouchableOpacity>
-        <TextInput
-          ref={skuRef}
-          value={selectedDate}
-          autoFocus={true}
-          editable={false}
-          onChangeText={calendarchange}
-          placeholder={''}
-          selectTextOnFocus={true}
-          style={{
-            ...CStyles.InputStyle,
-            backgroundColor: '#ffffff',
-            color: '#000000'
-          }}
-          multiline={false}
-        />
         <Modal
           visible={isCalendarVisible}
           animationType="slide"
@@ -824,14 +848,21 @@ const DashboardScreen = (props) => {
           />
         </View>
       </View>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
-        onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={renderFooter}
-      />
+      {
+        data.length == 0 ?
+          <View>
+            <Text style={{ fontsi: 12, color: 'black', alignSelf: 'center', marginTop: 30 }}>没有数据</Text>
+          </View>
+          :
+          <FlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id.toString()}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={renderFooter}
+          />
+      }
     </View >
   );
 }

@@ -186,7 +186,7 @@ export default class SystemInfo extends Component {
             airplaneEnable, airplaneStateLoading,
         } = this.state
         return (
-            <ScrollView style={styles.container}>
+            <View style={styles.container}>
                 <View style={{ position: 'relative' }}>
                     <View style={{}}>
                         <Header {...this.props} BtnPress={this.BackBtnPress} title={'我的信息'} proNoName={true} />
@@ -236,7 +236,7 @@ export default class SystemInfo extends Component {
                         </View>
                     </View>
                 </View>
-            </ScrollView>
+            </View>
         )
     }
 }
@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#E5E7E8',
+        zIndex: -1000000
     },
     card: {
         padding: 8,

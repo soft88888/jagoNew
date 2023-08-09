@@ -15,7 +15,6 @@ const CardDetail = (props) => {
   const dispatch = useDispatch();
   const { projectItem } = useSelector((state) => state.base);
   const [isEditable, setIsEditable] = useState(false);
-  const [data, setData] = useState([]);
   const [isVisible, setisVisible] = useState(false)
 
   const [clientName, setClientName] = useState(projectItem?.client_name)
@@ -37,11 +36,6 @@ const CardDetail = (props) => {
   const [prostarttime, setProstarttime] = useState(projectItem?.pro_starttime);
   const [proendtime, setProendtime] = useState(projectItem?.pro_endtime);
 
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const updateProject = async () => {
     if (storename == '' || preferendtime == '' || preferstarttime == ''
       || storeaddress == ""
@@ -59,75 +53,7 @@ const CardDetail = (props) => {
     }
   }
 
-  const fetchData = () => {
-    let data = [
-      {
-        name: '客户名称',
-        value: "海贝"
-      },
-      {
-        name: '客户编码',
-        value: "00001"
-      },
-      {
-        name: '庳存类型',
-        value: "A"
-      },
-      {
-        name: '门店名称',
-        value: "压力测试4"
-      },
-      {
-        name: '门店编码',
-        value: "00004"
-      },
-      {
-        name: '品牌',
-        value: "海贝"
-      },
-      {
-        name: '门店联系人',
-        value: "郝红叶"
-      },
-      {
-        name: '门店联系电话',
-        value: "12345678901"
-      },
-      {
-        name: '门店经理',
-        value: "郝红叶"
-      },
-      {
-        name: '客户现场代表',
-        value: "郝红叶"
-      },
-      {
-        name: '客户门店地址',
-        value: "海贝"
-      },
-      {
-        name: '参考库存',
-        value: "海贝"
-      },
-      {
-        name: '排班人',
-        value: "海贝"
-      },
-      {
-        name: '领队',
-        value: "海贝"
-      },
-      {
-        name: '建议起始日期',
-        value: "2023-03-11 10:04"
-      },
-      {
-        name: '建议结束日期',
-        value: "2023-03-11 10:04"
-      },
-    ]
-    setData(data)
-  };
+
 
   const BackBtnPress = async () => {
     props.navigation.push('PromanageDashboard')
@@ -138,7 +64,7 @@ const CardDetail = (props) => {
   }
 
   return (
-    <ScrollView style={styles.allcontent}>
+    <View style={styles.allcontent}>
       <Modal
         visible={isVisible}
         animationType="slide"
@@ -147,13 +73,13 @@ const CardDetail = (props) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <View style={styles.modalheader}>
-              <Text>提示</Text>
+              <Text style={{ fontSize: 18, color: '#282828', fontWeight: "bold" }}>提示</Text>
               <TouchableOpacity onPress={() => setisVisible(false)}>
-                <Icon name="close" size={20} style={{ marginRight: 10 }} />
+                <Icon name="close" size={20} color={'black'} style={{ marginRight: 10 }} />
               </TouchableOpacity>
             </View>
             <View style={styles.modalMain}>
-              <Text>你想开始这个项目吗?</Text>
+              <Text style={{ fontSize: 18, color: '#282828' }}>你想开始这个项目吗?</Text>
             </View>
             <View style={styles.modalBottom}>
               <Button
@@ -174,282 +100,284 @@ const CardDetail = (props) => {
       </Modal>
       <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
       <Icon name="edit" size={30} style={{ alignSelf: 'flex-end', marginRight: 30, marginBottom: 10 }} />
-      <View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>客户名称:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={clientName}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setClientName}
-            />
+      <ScrollView>
+        <View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>客户名称:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={clientName}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setClientName}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>客户编码:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={clientId}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setClientId}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>庳存类型:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={inventoryType}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setInventoryType}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>门店名称:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={storename}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setStorename}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>门店编码:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={storeid}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setStoreid}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>品牌:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={brand}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setBrand}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>门店联系人:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={storelinkname}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setStorelinkname}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>门店联系电话:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={storelinkphone}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setStorelinkphone}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>门店经理:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={storemanager}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setStoremanager}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>客户现场代表:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={clientstoreleader}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setClientstoreleader}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>客户门店地址:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={storeaddress}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setStoreaddress}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>参考库存:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={estimated}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setEstimated}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>排班人:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={schduleid}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setSchduleid}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>领队:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={leaderid}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setLeaderid}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>建议起始日期:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={preferstarttime}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setPreferstarttime}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>建议结束日期:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={preferendtime}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setPreferendtime}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>盘点起始日期:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={prostarttime}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setProstarttime}
+              />
+            </View>
+          </View>
+          <View style={styles.textinputContent}>
+            <Text style={{ width: '50%' }}>盘点结束日期:</Text>
+            <View style={{ width: '50%' }}>
+              <TextInput
+                value={proendtime}
+                editable={isEditable}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={CStyles.InputStyle}
+                multiline={false}
+                onChangeText={setProendtime}
+              />
+            </View>
           </View>
         </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>客户编码:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={clientId}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setClientId}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>庳存类型:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={inventoryType}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setInventoryType}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>门店名称:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={storename}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setStorename}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>门店编码:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={storeid}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setStoreid}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>品牌:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={brand}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setBrand}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>门店联系人:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={storelinkname}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setStorelinkname}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>门店联系电话:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={storelinkphone}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setStorelinkphone}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>门店经理:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={storemanager}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setStoremanager}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>客户现场代表:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={clientstoreleader}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setClientstoreleader}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>客户门店地址:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={storeaddress}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setStoreaddress}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>参考库存:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={estimated}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setEstimated}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>排班人:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={schduleid}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setSchduleid}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>领队:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={leaderid}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setLeaderid}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>建议起始日期:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={preferstarttime}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setPreferstarttime}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>建议结束日期:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={preferendtime}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setPreferendtime}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>盘点起始日期:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={prostarttime}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setProstarttime}
-            />
-          </View>
-        </View>
-        <View style={styles.textinputContent}>
-          <Text style={{ width: '50%' }}>盘点结束日期:</Text>
-          <View style={{ width: '50%' }}>
-            <TextInput
-              value={proendtime}
-              editable={isEditable}
-              autoFocus={true}
-              placeholder={''}
-              selectTextOnFocus={true}
-              style={CStyles.InputStyle}
-              multiline={false}
-              onChangeText={setProendtime}
-            />
-          </View>
-        </View>
-      </View>
-      {/* <FlatList
+        {/* <FlatList
         data={data}
         renderItem={renderItem}
       /> */}
+      </ScrollView>
       <View style={{ justifyContent: 'center', flexDirection: 'row', paddingVertical: 10 }}>
         <Button
           ButtonTitle={'开始'}
@@ -458,7 +386,7 @@ const CardDetail = (props) => {
           BTnWidth={300}
         />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -499,16 +427,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
 
- 
+
   },
   modalContent: {
-    backgroundColor: 'red',
+    backgroundColor: 'white',
     borderRadius: 10,
     padding: 20,
     width: '90%',
-    height:100
+    height: 300
   },
   closeButton: {
     marginTop: 10,

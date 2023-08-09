@@ -18,7 +18,7 @@ const SettingMain = (props) => {
     } else if (id == 4) {
       props.navigation.navigate('SettingMain');
     } else if (id == 6) {
-      props.navigation.push('Management');
+     
     }
   };
 

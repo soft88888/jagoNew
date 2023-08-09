@@ -245,7 +245,7 @@ const AppStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Management',
+    initialRouteName: 'PromanageDashboard',
     defaultNavigationOptions: {
       ...TransitionPresets.SlideFromRightIOS,
     },

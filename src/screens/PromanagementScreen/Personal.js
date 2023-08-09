@@ -19,7 +19,7 @@ const Personal = (props) => {
         const result = await ApiObject.projectmemberList({
             id: projectItem.id,
         })
-        setData(result)
+        setData(result.members)
     };
 
     const BackBtnPress = async () => {
@@ -52,11 +52,20 @@ const Personal = (props) => {
                     <Text style={styles.textheader}>STEP</Text>
                     <Text style={styles.textheader}>位置</Text>
                 </View>
-                <FlatList
-                    data={data}
-                    renderItem={renderItem}
-                    onEndReachedThreshold={0.5}
-                />
+                <View>
+                    {
+                        data.length == 0 ?
+                            <View>
+                                <Text style={{ fontsi: 12, color: 'black', alignSelf: 'center', marginTop: 30 }}>没有数据</Text>
+                            </View>
+                            :
+                            <FlatList
+                                data={data}
+                                renderItem={renderItem}
+                                onEndReachedThreshold={0.5}
+                            />
+                    }
+                </View>
             </View>
         </View>
     );

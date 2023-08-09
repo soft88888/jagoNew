@@ -35,7 +35,7 @@ const Login = (props) => {
       Alert.alert(
         PROGRAM_NAME,
         '登录成功。',
-        [{ text: '是(OK)', onPress: () => props.navigation.navigate('Management') }],
+        [{ text: '是(OK)', onPress: () => props.navigation.navigate('PromanageDashbardScreen') }],
         { cancelable: false },
       );
     }

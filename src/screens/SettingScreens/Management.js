@@ -112,8 +112,6 @@ const SettingMain = (props) => {
           removeClippedSubviews={false}
         />
       </View>
-
-      <FooterBar screenNavigate={screenNavigate} activeBtn={6} />
     </View>
   );
 }
