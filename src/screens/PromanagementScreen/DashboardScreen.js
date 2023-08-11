@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Modal, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, ActivityIndicator, Dimensions, TextInput } from 'react-native';
+import { View, Modal, Text, StyleSheet, TouchableOpacity, Alert, FlatList, ActivityIndicator, Dimensions, TextInput } from 'react-native';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 import DropBox from '../../components/DropBox';
@@ -12,6 +12,7 @@ import moment from 'moment';
 import { Svg, Line } from 'react-native-svg';
 import ApiObject from '../../support/Api';
 import { subDays } from 'date-fns';
+import { PROGRAM_NAME } from '../../constants';
 import { setProjectItem, setqrcode } from '../../reducers/BaseReducer';
 
 const DashboardScreen = (props) => {
@@ -156,7 +157,38 @@ const DashboardScreen = (props) => {
     if (storename == '' || preferendtime == '' || preferstarttime == ''
       || storeaddress == ""
     ) {
-
+      if (storename == "") {
+        Alert.alert(
+          PROGRAM_NAME,
+          '请正确输入门店名称.',
+          [{ text: '是(ok)', onPress: () => { } }],
+          { cancelable: false },
+        );
+      }
+      else if (preferendtime == '') {
+        Alert.alert(
+          PROGRAM_NAME,
+          '请正确输入建议结束日期.',
+          [{ text: '是(ok)', onPress: () => { } }],
+          { cancelable: false },
+        );
+      }
+      else if (preferstarttime == '') {
+        Alert.alert(
+          PROGRAM_NAME,
+          '请正确输入建议起始日期.',
+          [{ text: '是(ok)', onPress: () => { } }],
+          { cancelable: false },
+        );
+      }
+      else if (storeaddress == '') {
+        Alert.alert(
+          PROGRAM_NAME,
+          '请正确输入门店地址.',
+          [{ text: '是(ok)', onPress: () => { } }],
+          { cancelable: false },
+        );
+      }
     }
     else {
       const result = await ApiObject.addProject({
@@ -188,11 +220,10 @@ const DashboardScreen = (props) => {
         user_ids: '',
       })
       if (result == '') {
-        setisVisible(false)
+        setisVisible(false);
+        fetchDatalater();
       }
-
     }
-
   }
 
   const fetchData = async () => {
@@ -264,21 +295,20 @@ const DashboardScreen = (props) => {
   };
 
 
+  const fetchDatalater = async () => {
+    try {
+      var data = await ApiObject.getProjectList({
+        starttime: selectedDate
+      });
+      setData(data)
+      setfirstData(data)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        var data = await ApiObject.getProjectList({
-          starttime: selectedDate
-        });
-        setData(data)
-        setfirstData(data)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-
+    fetchDatalater();
   }, [selectedDate])
 
 
