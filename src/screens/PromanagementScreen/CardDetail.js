@@ -99,12 +99,14 @@ const CardDetail = (props) => {
         </View>
       </Modal>
       <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
-      <Icon name="edit" size={30} style={{ alignSelf: 'flex-end', marginRight: 30, marginBottom: 10 }} />
+      <TouchableOpacity onPress={() => props.navigation.push('PromanageInforEdit')}>
+        <Icon name="edit" size={30} style={{ alignSelf: 'flex-end', marginRight: 30, marginBottom: 10 }} />
+      </TouchableOpacity>
       <ScrollView>
         <View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>客户名称:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>客户名称:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={clientName}
                 editable={isEditable}
@@ -118,8 +120,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>客户编码:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>客户编码:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={clientId}
                 editable={isEditable}
@@ -133,8 +135,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>庳存类型:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>庳存类型:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={inventoryType}
                 editable={isEditable}
@@ -148,8 +150,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>门店名称:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>门店名称:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={storename}
                 editable={isEditable}
@@ -163,8 +165,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>门店编码:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>门店编码:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={storeid}
                 editable={isEditable}
@@ -178,8 +180,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>品牌:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>品牌:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={brand}
                 editable={isEditable}
@@ -193,8 +195,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>门店联系人:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>门店联系人:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={storelinkname}
                 editable={isEditable}
@@ -208,8 +210,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>门店联系电话:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>门店联系电话:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={storelinkphone}
                 editable={isEditable}
@@ -223,8 +225,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>门店经理:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>门店经理:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={storemanager}
                 editable={isEditable}
@@ -238,8 +240,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>客户现场代表:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>客户现场代表:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={clientstoreleader}
                 editable={isEditable}
@@ -253,8 +255,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>客户门店地址:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>客户门店地址:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={storeaddress}
                 editable={isEditable}
@@ -268,8 +270,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>参考库存:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>参考库存:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={estimated}
                 editable={isEditable}
@@ -283,8 +285,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>排班人:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>排班人:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={schduleid}
                 editable={isEditable}
@@ -298,8 +300,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>领队:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>领队:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={leaderid}
                 editable={isEditable}
@@ -313,8 +315,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>建议起始日期:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>建议起始日期:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={preferstarttime}
                 editable={isEditable}
@@ -328,8 +330,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>建议结束日期:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>建议结束日期:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={preferendtime}
                 editable={isEditable}
@@ -343,8 +345,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>盘点起始日期:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>盘点起始日期:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={prostarttime}
                 editable={isEditable}
@@ -358,8 +360,8 @@ const CardDetail = (props) => {
             </View>
           </View>
           <View style={styles.textinputContent}>
-            <Text style={{ width: '50%' }}>盘点结束日期:</Text>
-            <View style={{ width: '50%' }}>
+            <Text style={{ color: '#000000', fontSize: 12, width: '50%' }}>盘点结束日期:</Text>
+            <View style={{ color: '#000000', fontSize: 12, width: '50%' }}>
               <TextInput
                 value={proendtime}
                 editable={isEditable}

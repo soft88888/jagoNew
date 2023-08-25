@@ -32,7 +32,7 @@ const Personal = (props) => {
         return (
             <View style={{ ...styles.maincontent, flexDirection: 'row', backgroundColor: '#F2F2F2', borderBottomColor: "#BCBCBC", borderBottomWidth: 1 }}>
                 <Text style={styles.textcontent}>{item.name}</Text>
-                <Text style={styles.textcontent}>{item.rolelist.id}</Text>
+                <Text style={styles.textcontent}>{item?.rolelist?.id}</Text>
                 <Text style={styles.textcontent}>{item.step}</Text>
                 <Text style={styles.textcontent}>{item.position}</Text>
             </View>

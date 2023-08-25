@@ -8,6 +8,7 @@ import CStyles from '../../styles/CommonStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import CalendarPicker from 'react-native-calendar-picker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment';
 import { Svg, Line } from 'react-native-svg';
 import ApiObject from '../../support/Api';
@@ -33,6 +34,8 @@ const DashboardScreen = (props) => {
   const [firstdata, setfirstData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
 
 
   // Modal 
@@ -79,6 +82,22 @@ const DashboardScreen = (props) => {
   const [methodtype, setMethodtype] = useState('');
   const [userids, setUserids] = useState('');
 
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isDateTimePickerVisible, setDateTimePickerVisibility] = useState(false);
+
+  const [isValid, setIsValid] = useState(true);
+
+  const handleNumericInput = (text) => {
+    const numericText = text.replace(/[^0-9]/g, '');
+    setEstimated(numericText);
+  };
+
+  const handlePhoneNumberChange = (text) => {
+    setStorelinkphone(text);
+    // Regular expression to match a valid phone number format
+    const phonePattern = /^[0-9]{10}$/;
+    setIsValid(phonePattern.test(text));
+  };
 
 
   useEffect(() => {
@@ -88,15 +107,15 @@ const DashboardScreen = (props) => {
 
   useEffect(() => {
     if (listValue == 0) {
-      setData(firstdata)
+      setData(firstdata.sort(compareItemsByCreatedAt))
     }
     else {
-      setData(firstdata.filter((item) => item.state_id === listValue))
+      setData((firstdata.filter((item) => item.state_id === listValue)).sort(compareItemsByCreatedAt))
     }
   }, [listValue]);
 
   useEffect(() => {
-    if (settingAllList.length > 0) {
+    if (settingAllList?.length > 0) {
       if (settingId == 0) {
         setClientId('');
       }
@@ -155,7 +174,7 @@ const DashboardScreen = (props) => {
   const addProject = async () => {
 
     if (storename == '' || preferendtime == '' || preferstarttime == ''
-      || storeaddress == ""
+      || storeaddress == "" || isValid == true
     ) {
       if (storename == "") {
         Alert.alert(
@@ -185,6 +204,14 @@ const DashboardScreen = (props) => {
         Alert.alert(
           PROGRAM_NAME,
           '请正确输入门店地址.',
+          [{ text: '是(ok)', onPress: () => { } }],
+          { cancelable: false },
+        );
+      }
+      else if (isValid) {
+        Alert.alert(
+          PROGRAM_NAME,
+          '请输入正确的电话号码格式.',
           [{ text: '是(ok)', onPress: () => { } }],
           { cancelable: false },
         );
@@ -294,18 +321,64 @@ const DashboardScreen = (props) => {
 
   };
 
+  const compareItemsByCreatedAt = (itemA, itemB) => {
+    const dateA = moment(itemA.created_at);
+    const dateB = moment(itemB.created_at);
+    return dateB.diff(dateA); // 최신순으로 정렬
+  };
 
   const fetchDatalater = async () => {
     try {
       var data = await ApiObject.getProjectList({
         starttime: selectedDate
       });
-      setData(data)
-      setfirstData(data)
+      setData(data.sort(compareItemsByCreatedAt))
+      setfirstData(data.sort(compareItemsByCreatedAt))
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      var schdluerAlllist = await ApiObject.getSchedulerList({
+        client_id: clientId
+      });
+
+      setSchdulerAllList(schdluerAlllist);
+
+      let schedulerlist = [];
+
+      for (let i = 0; i < schdluerAlllist.length; i++) {
+        let temp = {};
+        temp.label = schdluerAlllist[i].name;
+        temp.value = schdluerAlllist[i].id;
+        schedulerlist.push(temp);
+      }
+      setSchdulerList(schedulerlist)
+      setSchduleid(schedulerlist[0].value)
+
+      var leaderAlllist = await ApiObject.getLeaderList({
+        client_id: clientId
+      });
+
+      setLeaderAllList(leaderAlllist);
+
+      let leaderlist = [];
+      for (let i = 0; i < leaderAlllist.length; i++) {
+        let temp = {};
+        temp.label = leaderAlllist[i].name;
+        temp.value = leaderAlllist[i].id;
+        leaderlist.push(temp);
+      }
+      setLeaderList(leaderlist)
+      setLeaderid(leaderlist[0].value)
+    }
+
+    // Call the async function
+    fetchData();
+  }, [clientId])
+
 
   useEffect(() => {
     fetchDatalater();
@@ -392,33 +465,41 @@ const DashboardScreen = (props) => {
       ? extractYearAndMonth(date)
       : { year: null, month: null, day: null };
 
-    switch (calendarType) {
-      case 0:
-        setSelectedDate(`${year}:${month}:${day}`)
-        break;
-      case 1:
-        setPreferstarttime(`${year}:${month}:${day}`)
-        break;
-      case 2:
-        setPreferendtime(`${year}:${month}:${day}`)
-        break;
-      case 3:
-        setProstarttime(`${year}:${month}:${day}`)
-        break;
-      case 4:
-        setProendtime(`${year}:${month}:${day}`)
-        break;
-      default:
-        break;
-    }
+    setSelectedDate(`${year}:${month}:${day}`)
 
     setCalendarVisible(false);
     var result = await ApiObject.getProjectList({
       starttime: `${year.toString()}-${month.toString()}-${day.toString()}`
     });
-    setData(result)
-    setfirstData(result)
+    setData(result.sort(compareItemsByCreatedAt))
+    setfirstData(result.sort(compareItemsByCreatedAt))
   };
+
+  const handleDatetimeSelect = async (dateString) => {
+    const date = new Date(dateString);
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    switch (calendarType) {
+      case 1:
+        setPreferstarttime(`${year}:${month}:${day} ${hour}:${minute}`)
+        break;
+      case 2:
+        setPreferendtime(`${year}:${month}:${day} ${hour}:${minute}`)
+        break;
+      case 3:
+        setProstarttime(`${year}:${month}:${day} ${hour}:${minute}`)
+        break;
+      case 4:
+        setProendtime(`${year}:${month}:${day} ${hour}:${minute}`)
+        break;
+      default:
+        break;
+    }
+  }
 
   const BackBtnPress = async () => {
     props.navigation.push('Inventory');
@@ -438,14 +519,14 @@ const DashboardScreen = (props) => {
   const elementchange = (val) => {
     setElement(val);
     if (val == "") {
-      setData(firstdata)
+      setData(firstdata.sort(compareItemsByCreatedAt))
     }
     else {
       setData(firstdata.filter((item) =>
         (item.client_name != null && item.client_name.includes(val) == true) ||
         (item.store_name != null && item.store_name.includes(val) == true) ||
         (item.leader_name != null && item.leader_name.includes(val) == true)
-      ))
+      ).sort(compareItemsByCreatedAt))
     }
   }
 
@@ -456,6 +537,15 @@ const DashboardScreen = (props) => {
   return (
     <View style={styles.allcontent}>
       <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
+      <DateTimePickerModal
+        isVisible={isDateTimePickerVisible}
+        mode="datetime"
+        onConfirm={(dateTime) => {
+          handleDatetimeSelect(dateTime)
+          setDateTimePickerVisibility(false);
+        }}
+        onCancel={() => setDateTimePickerVisibility(false)}
+      />
       <Modal
         visible={isVisible}
         animationType="slide"
@@ -505,7 +595,7 @@ const DashboardScreen = (props) => {
                       color: '#000000'
                     }}
                     editable={false}
-                    multiline={true}
+                    multiline={false}
                   />
                 </View>
               </View>
@@ -518,7 +608,7 @@ const DashboardScreen = (props) => {
                     placeholder={''}
                     selectTextOnFocus={true}
                     style={CStyles.InputStyle}
-                    multiline={true}
+                    multiline={false}
                     onChangeText={setBrand}
                   />
                 </View>
@@ -534,7 +624,7 @@ const DashboardScreen = (props) => {
                     placeholder={''}
                     selectTextOnFocus={true}
                     style={CStyles.InputStyle}
-                    multiline={true}
+                    multiline={false}
                     onChangeText={setStorename}
                   />
                 </View>
@@ -548,7 +638,7 @@ const DashboardScreen = (props) => {
                     placeholder={''}
                     selectTextOnFocus={true}
                     style={CStyles.InputStyle}
-                    multiline={true}
+                    multiline={false}
                     onChangeText={setStoreid}
                   />
                 </View>
@@ -564,7 +654,7 @@ const DashboardScreen = (props) => {
                     placeholder={''}
                     selectTextOnFocus={true}
                     style={CStyles.InputStyle}
-                    multiline={true}
+                    multiline={false}
                     onChangeText={setStorelinkname}
                   />
                 </View>
@@ -578,8 +668,9 @@ const DashboardScreen = (props) => {
                     placeholder={''}
                     selectTextOnFocus={true}
                     style={CStyles.InputStyle}
-                    multiline={true}
-                    onChangeText={setStorelinkphone}
+                    multiline={false}
+                    onChangeText={handlePhoneNumberChange}
+                    keyboardType="numeric"
                   />
                 </View>
               </View>
@@ -594,7 +685,7 @@ const DashboardScreen = (props) => {
                     placeholder={''}
                     selectTextOnFocus={true}
                     style={CStyles.InputStyle}
-                    multiline={true}
+                    multiline={false}
                     onChangeText={setStoremanager}
                   />
                 </View>
@@ -608,7 +699,7 @@ const DashboardScreen = (props) => {
                     placeholder={''}
                     selectTextOnFocus={true}
                     style={CStyles.InputStyle}
-                    multiline={true}
+                    multiline={false}
                     onChangeText={setClientstoreleader}
                   />
                 </View>
@@ -624,7 +715,7 @@ const DashboardScreen = (props) => {
                     placeholder={''}
                     selectTextOnFocus={true}
                     style={CStyles.InputStyle}
-                    multiline={true}
+                    multiline={false}
                     onChangeText={setStoreaddress}
                   />
                 </View>
@@ -638,8 +729,9 @@ const DashboardScreen = (props) => {
                     placeholder={''}
                     selectTextOnFocus={true}
                     style={CStyles.InputStyle}
-                    multiline={true}
-                    onChangeText={setEstimated}
+                    multiline={false}
+                    onChangeText={handleNumericInput}
+                    keyboardType="numeric"
                   />
                 </View>
               </View>
@@ -684,7 +776,7 @@ const DashboardScreen = (props) => {
               <View style={{ width: '45%' }}>
                 <Text style={styles.modalText}>建议起始日期*</Text>
                 <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
-                  <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(1) }}>
+                  <TouchableOpacity onPress={() => { setDateTimePickerVisibility(true), setCalendarType(1) }}>
                     <Icon name="calendar" size={25} style={{ marginRight: 10, color: '#000000' }} />
                   </TouchableOpacity>
                   <TextInput
@@ -695,17 +787,19 @@ const DashboardScreen = (props) => {
                     style={{
                       ...CStyles.InputStyle,
                       backgroundColor: '#ffffff',
-                      color: '#000000'
+                      color: '#000000',
+                      fontSize: 11,
+                      paddingLeft: 8
                     }}
                     editable={false}
-                    multiline={true}
+                    multiline={false}
                   />
                 </View>
               </View>
               <View style={{ width: '45%' }}>
                 <Text style={styles.modalText}>建议结束日期*</Text>
                 <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
-                  <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(2) }}>
+                  <TouchableOpacity onPress={() => { setDateTimePickerVisibility(true), setCalendarType(2) }}>
                     <Icon name="calendar" size={25} style={{ marginRight: 10, color: '#000000' }} />
                   </TouchableOpacity>
                   <TextInput
@@ -716,10 +810,12 @@ const DashboardScreen = (props) => {
                     style={{
                       ...CStyles.InputStyle,
                       backgroundColor: '#ffffff',
-                      color: '#000000'
+                      color: '#000000',
+                      fontSize: 11,
+                      paddingLeft: 8
                     }}
                     editable={false}
-                    multiline={true}
+                    multiline={false}
                   />
                 </View>
               </View>
@@ -728,7 +824,7 @@ const DashboardScreen = (props) => {
               <View style={{ width: '45%' }}>
                 <Text style={styles.modalText}>盘点起始日期</Text>
                 <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
-                  <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(3) }}>
+                  <TouchableOpacity onPress={() => { setDateTimePickerVisibility(true), setCalendarType(3) }}>
                     <Icon name="calendar" size={25} style={{ marginRight: 10, color: '#000000' }} />
                   </TouchableOpacity>
                   <TextInput
@@ -739,17 +835,19 @@ const DashboardScreen = (props) => {
                     style={{
                       ...CStyles.InputStyle,
                       backgroundColor: '#ffffff',
-                      color: '#000000'
+                      color: '#000000',
+                      fontSize: 11,
+                      paddingLeft: 8
                     }}
                     editable={false}
-                    multiline={true}
+                    multiline={false}
                   />
                 </View>
               </View>
               <View style={{ width: '45%' }}>
                 <Text style={styles.modalText}>盘点结束日期</Text>
                 <View style={{ flexDirection: 'row', width: '100%', height: '100%', alignItems: 'flex-start' }}>
-                  <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(4) }}>
+                  <TouchableOpacity onPress={() => { setDateTimePickerVisibility(true), setCalendarType(4) }}>
                     <Icon name="calendar" size={25} style={{ marginRight: 10, color: '#000000' }} />
                   </TouchableOpacity>
                   <TextInput
@@ -760,10 +858,12 @@ const DashboardScreen = (props) => {
                     style={{
                       ...CStyles.InputStyle,
                       backgroundColor: '#ffffff',
-                      color: '#000000'
+                      color: '#000000',
+                      fontSize: 11,
+                      paddingLeft: 8
                     }}
                     editable={false}
-                    multiline={true}
+                    multiline={false}
                   />
                 </View>
               </View>
@@ -819,7 +919,7 @@ const DashboardScreen = (props) => {
         </TouchableOpacity>
       </View>
       <View style={styles.calendarContent}>
-        <TouchableOpacity onPress={() => { setCalendarVisible(true), setCalendarType(0) }}>
+        <TouchableOpacity onPress={() => { setCalendarVisible(true) }}>
           <Icon name="calendar" size={20} style={{ marginRight: 10, color: '#000000' }} />
         </TouchableOpacity >
         <TouchableOpacity style={{
@@ -828,7 +928,7 @@ const DashboardScreen = (props) => {
           color: '#000000',
           paddingLeft: 0,
         }}
-          onPress={() => { setCalendarVisible(true), setCalendarType(0) }}
+          onPress={() => { setCalendarVisible(true) }}
         >
           <TextInput
             ref={skuRef}
@@ -879,7 +979,7 @@ const DashboardScreen = (props) => {
         </View>
       </View>
       {
-        data.length == 0 ?
+        data?.length == 0 ?
           <View>
             <Text style={{ fontsi: 12, color: 'black', alignSelf: 'center', marginTop: 30 }}>没有数据</Text>
           </View>

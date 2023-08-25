@@ -100,6 +100,7 @@ export default (styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 5,
+        color:'black'
     },
     TextStyle:{
         color:TEXT_DEFAULT_COLOR,

@@ -48,6 +48,7 @@ import PromanageInforEditScreen from './PromanagementScreen/InforEdit';
 import PromanageGongweiScreen from './PromanagementScreen/Gongwei';
 import PromanageReportScreen from './PromanagementScreen/Report';
 import PromanagePersonalScreen from './PromanagementScreen/Personal';
+import PromanagePromasterScreen from './PromanagementScreen/Promaster';
 
 const AppStack = createStackNavigator(
   {
@@ -239,6 +240,12 @@ const AppStack = createStackNavigator(
     },
     PromanagePersonal: {
       screen: PromanagePersonalScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    PromanagePromaster: {
+      screen: PromanagePromasterScreen,
       navigationOptions: {
         headerShown: false,
       },

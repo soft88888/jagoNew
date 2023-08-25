@@ -1,18 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Modal, Text, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator, Dimensions, TextInput } from 'react-native';
+import { View, Modal, Text, StyleSheet, TouchableOpacity, FlatList, Alert, Dimensions, TextInput } from 'react-native';
 import Header from '../../components/Header';
 import ApiObject from '../../support/Api';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Button from '../../components/Button';
 import CStyles from '../../styles/CommonStyles';
 import { de } from 'date-fns/locale';
+import { PROGRAM_NAME } from '../../constants';
 
 const Gongwei = (props) => {
 
-    const dispatch = useDispatch();
     const { projectItem } = useSelector((state) => state.base);
-    const [isEditable, setIsEditable] = useState(false);
     const [data, setData] = useState([]);
     const [isEditVisible, setisEditVisible] = useState(false)
     const [isDeleteVisible, setisDeleteVisible] = useState(false)
@@ -30,6 +29,18 @@ const Gongwei = (props) => {
     }, []);
 
 
+    const handleCalculate = (val) => {
+        const value = parseFloat(val);
+        if (isNaN(value)) {
+            Alert.alert(
+                PROGRAM_NAME,
+                '请输入有效的数值.',
+                [{ text: '是(ok)', onPress: () => { } }],
+                { cancelable: false },
+            );
+        }
+    };
+
     const fetchData = async () => {
         const result = await ApiObject.getGongweiList({
             id: projectItem.id,
@@ -42,32 +53,65 @@ const Gongwei = (props) => {
     };
 
     const handleUpdate = async () => {
-        await ApiObject.updateGongwei({
-            id: projectItem.id,
-            pianqu: editvalue,
-            start_gongwei: selectedUpdate.startgongwei,
-            end_gongwei: selectedUpdate.endgongwei
-        })
-        setisEditVisible(false)
+        if (editvalue == "") {
+            Alert.alert(
+                PROGRAM_NAME,
+                '请输入一区号码.',
+                [{ text: '是(ok)', onPress: () => { } }],
+                { cancelable: false },
+            );
+        }
+        else {
+            await ApiObject.updateGongwei({
+                id: projectItem.id,
+                pianqu: editvalue,
+                start_gongwei: selectedUpdate.startgongwei,
+                end_gongwei: selectedUpdate.endgongwei
+            })
+            fetchData();
+            setisEditVisible(false)
+        }
     }
 
     const handleAdd = async () => {
-        await ApiObject.addGongwei({
-            id: projectItem.id,
-            pianqu: addvalue,
-            start_gongwei: addstart,
-            end_gongwei: addend
-        })
-        setisAddVisible(false)
+        if (addstart == "" || addend == "") {
+            Alert.alert(
+                PROGRAM_NAME,
+                '请输入工作.',
+                [{ text: '是(ok)', onPress: () => { } }],
+                { cancelable: false },
+            );
+        }
+        else {
+            await ApiObject.addGongwei({
+                id: projectItem.id,
+                pianqu: addvalue,
+                start_gongwei: addstart,
+                end_gongwei: addend
+            })
+            fetchData();
+            setisAddVisible(false)
+        }
     }
 
     const handleDelete = async () => {
-        await ApiObject.deleteGongwei({
-            id: projectItem.id,
-            start_gongwei: deletestart,
-            end_gongwei: deleteEnd
-        })
-        setisDeleteVisible(false)
+        if (deletestart == "" || deleteEnd == "") {
+            Alert.alert(
+                PROGRAM_NAME,
+                '请输入工作.',
+                [{ text: '是(ok)', onPress: () => { } }],
+                { cancelable: false },
+            );
+        }
+        else {
+            await ApiObject.deleteGongwei({
+                id: projectItem.id,
+                start_gongwei: deletestart,
+                end_gongwei: deleteEnd
+            })
+            fetchData();
+            setisDeleteVisible(false)
+        }
     }
 
     const renderItem = ({ item }) => {
@@ -152,7 +196,7 @@ const Gongwei = (props) => {
                                     color: '#000000',
                                 }}
                                 onChangeText={(val) => setEditvalue(val)}
-                                multiline={true}
+                                multiline={false}
                             />
                         </View>
                         <Button
@@ -191,7 +235,7 @@ const Gongwei = (props) => {
                                     backgroundColor: '#F2F2F2',
                                     color: '#000000',
                                 }}
-                                multiline={true}
+                                multiline={false}
                                 onChangeText={(val) => setAddvalue(val)}
                             />
                         </View>
@@ -211,8 +255,9 @@ const Gongwei = (props) => {
                                             backgroundColor: '#F2F2F2',
                                             color: '#000000',
                                         }}
-                                        multiline={true}
-                                        onChangeText={(val) => setAddstart(val)}
+                                        multiline={false}
+                                        keyboardType="numeric"
+                                        onChangeText={(val) => { setAddstart(val), handleCalculate(val) }}
                                     />
                                 </View>
                             </View>
@@ -231,8 +276,8 @@ const Gongwei = (props) => {
                                             backgroundColor: '#F2F2F2',
                                             color: '#000000',
                                         }}
-                                        onChangeText={(val) => setAddend(val)}
-                                        multiline={true}
+                                        onChangeText={(val) => { setAddend(val), handleCalculate(val) }}
+                                        multiline={false}
                                     />
                                 </View>
                             </View>
@@ -275,8 +320,8 @@ const Gongwei = (props) => {
                                             backgroundColor: '#F2F2F2',
                                             color: '#000000',
                                         }}
-                                        onChangeText={(val) => setDeletestart(val)}
-                                        multiline={true}
+                                        onChangeText={(val) => { setDeletestart(val), handleCalculate(val) }}
+                                        multiline={false}
                                     />
                                 </View>
                             </View>
@@ -295,8 +340,8 @@ const Gongwei = (props) => {
                                             backgroundColor: '#F2F2F2',
                                             color: '#000000',
                                         }}
-                                        onChangeText={(val) => setDeleteEnd(val)}
-                                        multiline={true}
+                                        onChangeText={(val) => { setDeleteEnd(val), handleCalculate(val) }}
+                                        multiline={false}
                                     />
                                 </View>
                             </View>

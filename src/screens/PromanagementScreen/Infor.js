@@ -81,11 +81,11 @@ const Infor = (props) => {
       },
       {
         name: '排班人',
-        value: projectItem?.scheduler_id.toString()
+        value: projectItem?.scheduler_name.toString()
       },
       {
         name: '领队',
-        value: projectItem?.leader_id
+        value: projectItem?.leader_name
       },
       {
         name: '建议起始日期',
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: 'black',
+    borderBottomColor: '#5e5e56',
     width: '90%',
     alignSelf: 'center'
   },

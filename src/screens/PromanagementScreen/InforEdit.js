@@ -9,10 +9,12 @@ import Button from '../../components/Button';
 import CalendarPicker from 'react-native-calendar-picker';
 import { ScrollView } from 'react-native-gesture-handler';
 import moment from 'moment';
+import { useSelector, useDispatch } from 'react-redux';
 
 const InforEdit = (props) => {
 
   const [isEditable, setIsEditable] = useState(false);
+  const { projectItem } = useSelector((state) => state.base);
   const [data, setData] = useState([]);
   const [isVisible, setisVisible] = useState(false)
   const [isCalendarVisible, setCalendarVisible] = useState(false);
@@ -102,7 +104,7 @@ const InforEdit = (props) => {
   }, []);
 
   useEffect(() => {
-    if (settingAllList.length > 0) {
+    if (settingAllList?.length > 0) {
       if (settingId == 0) {
         setClientId('');
       }
@@ -176,7 +178,12 @@ const InforEdit = (props) => {
   };
 
   const BackBtnPress = async () => {
-    props.navigation.push('PromanageInfor')
+    if (projectItem.state_id == 3) {
+      props.navigation.push('PromanageInfor')
+    }
+    else {
+      props.navigation.push('PromanageCard')
+    }
   };
 
 
@@ -233,7 +240,7 @@ const InforEdit = (props) => {
             <View style={styles.modalheader}>
               <Text style={styles.modalText}>提示</Text>
               <TouchableOpacity onPress={() => setisVisible(false)}>
-                <Icon name="close" size={20} style={{ marginRight: 10,color: '#282828' }} />
+                <Icon name="close" size={20} style={{ marginRight: 10, color: '#282828' }} />
               </TouchableOpacity>
             </View>
             <View style={styles.modalMain}>
@@ -308,7 +315,7 @@ const InforEdit = (props) => {
                   color: '#000000'
                 }}
                 editable={false}
-                multiline={true}
+                multiline={false}
               />
             </View>
           </View>
@@ -321,7 +328,7 @@ const InforEdit = (props) => {
                 placeholder={''}
                 selectTextOnFocus={true}
                 style={CStyles.InputStyle}
-                multiline={true}
+                multiline={false}
                 onChangeText={setBrand}
               />
             </View>
@@ -337,7 +344,7 @@ const InforEdit = (props) => {
                 placeholder={''}
                 selectTextOnFocus={true}
                 style={CStyles.InputStyle}
-                multiline={true}
+                multiline={false}
                 onChangeText={setStorename}
               />
             </View>
@@ -351,7 +358,7 @@ const InforEdit = (props) => {
                 placeholder={''}
                 selectTextOnFocus={true}
                 style={CStyles.InputStyle}
-                multiline={true}
+                multiline={false}
                 onChangeText={setStoreid}
               />
             </View>
@@ -367,7 +374,7 @@ const InforEdit = (props) => {
                 placeholder={''}
                 selectTextOnFocus={true}
                 style={CStyles.InputStyle}
-                multiline={true}
+                multiline={false}
                 onChangeText={setStorelinkname}
               />
             </View>
@@ -381,7 +388,7 @@ const InforEdit = (props) => {
                 placeholder={''}
                 selectTextOnFocus={true}
                 style={CStyles.InputStyle}
-                multiline={true}
+                multiline={false}
                 onChangeText={setStorelinkphone}
               />
             </View>
@@ -397,7 +404,7 @@ const InforEdit = (props) => {
                 placeholder={''}
                 selectTextOnFocus={true}
                 style={CStyles.InputStyle}
-                multiline={true}
+                multiline={false}
                 onChangeText={setStoremanager}
               />
             </View>
@@ -411,7 +418,7 @@ const InforEdit = (props) => {
                 placeholder={''}
                 selectTextOnFocus={true}
                 style={CStyles.InputStyle}
-                multiline={true}
+                multiline={false}
                 onChangeText={setClientstoreleader}
               />
             </View>
@@ -427,7 +434,7 @@ const InforEdit = (props) => {
                 placeholder={''}
                 selectTextOnFocus={true}
                 style={CStyles.InputStyle}
-                multiline={true}
+                multiline={false}
                 onChangeText={setStoreaddress}
               />
             </View>
@@ -441,7 +448,7 @@ const InforEdit = (props) => {
                 placeholder={''}
                 selectTextOnFocus={true}
                 style={CStyles.InputStyle}
-                multiline={true}
+                multiline={false}
                 onChangeText={setEstimated}
               />
             </View>
@@ -501,7 +508,7 @@ const InforEdit = (props) => {
                   color: '#000000'
                 }}
                 editable={false}
-                multiline={true}
+                multiline={false}
               />
             </View>
           </View>
@@ -522,7 +529,7 @@ const InforEdit = (props) => {
                   color: '#000000'
                 }}
                 editable={false}
-                multiline={true}
+                multiline={false}
               />
             </View>
           </View>
@@ -545,7 +552,7 @@ const InforEdit = (props) => {
                   color: '#000000'
                 }}
                 editable={false}
-                multiline={true}
+                multiline={false}
               />
             </View>
           </View>
@@ -566,7 +573,7 @@ const InforEdit = (props) => {
                   color: '#000000'
                 }}
                 editable={false}
-                multiline={true}
+                multiline={false}
               />
             </View>
           </View>

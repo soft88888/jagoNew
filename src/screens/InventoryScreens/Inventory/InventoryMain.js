@@ -284,7 +284,7 @@ const InventoryMain = (props) => {
               placeholder={''}
               selectTextOnFocus={true}
               style={CStyles.InputStyle}
-              multiline={true}
+              multiline={false}
             />
             <Button
               disabled={!skuInputFocus}

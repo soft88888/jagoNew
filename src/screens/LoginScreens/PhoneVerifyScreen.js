@@ -30,7 +30,6 @@ const PhoneVerifyScreen = (props) => {
 
   const registerFun = async () => {
     dispatch(setScreenLoading(true));
-
     const result = await ApiObject.verifyAction({ code: verifyCode, phone: phoneNumber });
     if (result) {
       dispatch(setAccessToken(result.access_token));
@@ -39,7 +38,7 @@ const PhoneVerifyScreen = (props) => {
       Alert.alert(
         PROGRAM_NAME,
         '验证成功。',
-        [{ text: '是(OK)', onPress: () => props.navigation.navigate('Inventory') }],
+        [{ text: '是(OK)', onPress: () => props.navigation.navigate('PromanageDashboard') }],
         { cancelable: false },
       );
     }

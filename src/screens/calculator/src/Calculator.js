@@ -175,7 +175,7 @@ const Calculators = ({ resultFun, showLiveResult, scientific: showScientific, cu
             onContentSizeChange={x => {
             }}
             style={styles.expression}
-            multiline={true}
+            multiline={false}
             value={expr.join("")}
             textAlign="right"
             textAlignVertical="bottom"

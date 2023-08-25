@@ -26,7 +26,7 @@ const Main = (props) => {
     props.navigation.push('PromanageDashboard')
   };
 
-  const endProject = async () =>{
+  const endProject = async () => {
     await ApiObject.endProject({
       id: projectItem.id
     })
@@ -48,7 +48,7 @@ const Main = (props) => {
             <View style={styles.modalheader}>
               <Text style={{ fontSize: 18, color: '##282828', fontWeight: "bold" }}>提示</Text>
               <TouchableOpacity onPress={() => setisVisible(false)}>
-                <Icon name="close" size={20} style={{ marginRight: 10, color:"black"}} />
+                <Icon name="close" size={20} style={{ marginRight: 10, color: "black" }} />
               </TouchableOpacity>
             </View>
             <View style={styles.modalMain}>
@@ -92,7 +92,7 @@ const Main = (props) => {
       <View style={styles.main}>
         <Button
           ButtonTitle={'导入主档'}
-          BtnPress={() => alert()}
+          BtnPress={() => props.navigation.push('PromanagePromaster')}
           type={'yellowBtn'}
           BTnWidth={300}
           BTnHeight={"85%"}
