@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Modal, Text, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator, Dimensions, TextInput } from 'react-native';
+import { View, Modal, Text, StyleSheet, TouchableOpacity, Alert, ActivityIndicator, Dimensions, TextInput } from 'react-native';
 import ApiObject from '../../support/Api';
 import Header from '../../components/Header';
 import CStyles from '../../styles/CommonStyles';
@@ -10,11 +10,15 @@ import CalendarPicker from 'react-native-calendar-picker';
 import { ScrollView } from 'react-native-gesture-handler';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
+import { PROGRAM_NAME } from '../../constants';
+import { setProjectItem } from '../../reducers/BaseReducer';
 
 const InforEdit = (props) => {
 
+  const dispatch = useDispatch();
+
   const [isEditable, setIsEditable] = useState(false);
-  const { projectItem } = useSelector((state) => state.base);
+  const { projectItem, proselectedDate } = useSelector((state) => state.base);
   const [data, setData] = useState([]);
   const [isVisible, setisVisible] = useState(false)
   const [isCalendarVisible, setCalendarVisible] = useState(false);
@@ -24,8 +28,9 @@ const InforEdit = (props) => {
 
   const [settingList, setSettingList] = useState([]);
   const [settingAllList, setSettingAllList] = useState([]);
-  const [settingListOpen, setSettingListOpen] = useState(false);
+
   const [settingId, setSettingId] = useState(0);
+  const [settingvalue, setsettingvalue] = useState('')
 
   const [schdulerList, setSchdulerList] = useState([]);
   const [schdulerAllList, setSchdulerAllList] = useState([]);
@@ -35,24 +40,24 @@ const InforEdit = (props) => {
   const [leaderList, setLeaderList] = useState([]);
   const [leaderAllList, setLeaderAllList] = useState([]);
   const [leaderListOpen, setLeaderListOpen] = useState(false);
-  const [leaderid, setLeaderid] = useState('');
+  const [leaderid, setLeaderid] = useState(projectItem?.leader_id);
 
-  const [brand, setBrand] = useState('');
-  const [storename, setStorename] = useState('');
-  const [storeid, setStoreid] = useState('');
-  const [storelinkname, setStorelinkname] = useState('');
-  const [storelinkphone, setStorelinkphone] = useState('');
-  const [storemanager, setStoremanager] = useState('')
+  const [brand, setBrand] = useState(projectItem?.brand);
+  const [storename, setStorename] = useState(projectItem?.store_name);
+  const [storeid, setStoreid] = useState(projectItem?.store_id);
+  const [storelinkname, setStorelinkname] = useState(projectItem?.store_link_name);
+  const [storelinkphone, setStorelinkphone] = useState(projectItem?.store_link_phone);
+  const [storemanager, setStoremanager] = useState(projectItem?.store_manager)
   const [clientId, setClientId] = useState('');
-  const [clientstoreleader, setClientstoreleader] = useState('');
-  const [storeaddress, setStoreaddress] = useState('');
-  const [estimated, setEstimated] = useState('');
+  const [clientstoreleader, setClientstoreleader] = useState(projectItem?.client_store_leader);
+  const [storeaddress, setStoreaddress] = useState(projectItem?.store_address);
+  const [estimated, setEstimated] = useState(projectItem?.estimated);
 
-  const [preferstarttime, setPreferstarttime] = useState('');
-  const [preferendtime, setPreferendtime] = useState('');
-  const [prostarttime, setProstarttime] = useState('');
-  const [proendtime, setProendtime] = useState('');
-  const [adress, setAdress] = useState('');
+  const [preferstarttime, setPreferstarttime] = useState(projectItem?.prefer_starttime);
+  const [preferendtime, setPreferendtime] = useState(projectItem?.prefer_endtime);
+  const [prostarttime, setProstarttime] = useState(projectItem?.pro_starttime);
+  const [proendtime, setProendtime] = useState(projectItem?.pro_endtime);
+  const [adress, setAdress] = useState(projectItem?.adress);
   const [adressList, setAdressList] = useState([]);
   const [adressListOpen, setAdressListOpen] = useState(false);
   const [workingarea, setWorkingarea] = useState('');
@@ -63,6 +68,19 @@ const InforEdit = (props) => {
   const [secondvisitestimated, setSecondvisitestimated] = useState('');
   const [methodtype, setMethodtype] = useState('');
   const [userids, setUserids] = useState('');
+  const [isValid, setIsValid] = useState(true);
+
+  const handleNumericInput = (text) => {
+    const numericText = text.replace(/[^0-9]/g, '');
+    setEstimated(numericText);
+  };
+
+  const handlePhoneNumberChange = (text) => {
+    setStorelinkphone(text);
+    // Regular expression to match a valid phone number format
+    const phonePattern = /^[0-9]{10}$/;
+    setIsValid(phonePattern.test(text));
+  };
 
   const extractYearAndMonth = (date) => {
     const year = moment(date).format('YYYY');
@@ -103,16 +121,6 @@ const InforEdit = (props) => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (settingAllList?.length > 0) {
-      if (settingId == 0) {
-        setClientId('');
-      }
-      else {
-        setClientId(settingAllList.filter((item) => item.id == settingId)[0].client_id.toString())
-      }
-    }
-  }, [settingId])
 
   const getAddressList = async () => {
     var results = await ApiObject.getAddressList();
@@ -132,18 +140,16 @@ const InforEdit = (props) => {
   const fetchData = async () => {
     getAddressList();
     var AllList = await ApiObject.getSettingList();
-    setSettingAllList(AllList);
-    let list = [];
+    var client_id;
     for (let i = 0; i < AllList.length; i++) {
-      let temp = {};
-      temp.label = AllList[i].client_name.replace(" ", "") + "_" + AllList[i].inventory_type;
-      temp.value = AllList[i].id;
-      list.push(temp);
+      if (AllList[i].id == projectItem.setting_id) {
+        client_id = AllList[i].client_id;
+        setClientId(AllList[i].client_id.toString())
+        setsettingvalue(AllList[i].client_name.replace(" ", "") + "_" + AllList[i].inventory_type)
+      }
     }
-    setSettingList(list)
-    setSettingId(list[0].value)
     var schdluerAlllist = await ApiObject.getSchedulerList({
-      client_id: list[0].value
+      client_id: client_id.toString()
     });
 
     setSchdulerAllList(schdluerAlllist);
@@ -160,7 +166,7 @@ const InforEdit = (props) => {
     setSchduleid(schedulerlist[0].value)
 
     var leaderAlllist = await ApiObject.getLeaderList({
-      client_id: list[0].value
+      client_id: client_id
     });
 
     setLeaderAllList(leaderAlllist);
@@ -191,12 +197,50 @@ const InforEdit = (props) => {
     if (storename == '' || preferendtime == '' || preferstarttime == ''
       || storeaddress == ""
     ) {
-
+      if (storename == "") {
+        Alert.alert(
+          PROGRAM_NAME,
+          '请正确输入门店名称.',
+          [{ text: '是(ok)', onPress: () => { } }],
+          { cancelable: false },
+        );
+      }
+      else if (preferendtime == '') {
+        Alert.alert(
+          PROGRAM_NAME,
+          '请正确输入建议结束日期.',
+          [{ text: '是(ok)', onPress: () => { } }],
+          { cancelable: false },
+        );
+      }
+      else if (preferstarttime == '') {
+        Alert.alert(
+          PROGRAM_NAME,
+          '请正确输入建议起始日期.',
+          [{ text: '是(ok)', onPress: () => { } }],
+          { cancelable: false },
+        );
+      }
+      else if (storeaddress == '') {
+        Alert.alert(
+          PROGRAM_NAME,
+          '请正确输入门店地址.',
+          [{ text: '是(ok)', onPress: () => { } }],
+          { cancelable: false },
+        );
+      }
+      // else if (isValid) {
+      //   Alert.alert(
+      //     PROGRAM_NAME,
+      //     '请输入正确的电话号码格式.',
+      //     [{ text: '是(ok)', onPress: () => { } }],
+      //     { cancelable: false },
+      //   );
+      // }
     }
     else {
-      setisVisible(false);
-      await ApiObject.updateProject({
-        setting_id: settingId,
+      const result = await ApiObject.updateProject({
+        setting_id: projectItem.setting_id,
         brand: brand,
         store_name: storename,
         store_id: storeid,
@@ -213,7 +257,7 @@ const InforEdit = (props) => {
         pro_starttime: prostarttime,
         pro_endtime: proendtime,
         adress: '',
-
+        id: projectItem.id,
         working_area: '',
         visiter_name: '',
         first_visit_date: '',
@@ -223,6 +267,20 @@ const InforEdit = (props) => {
         method_type: '',
         user_ids: '',
       })
+      if (result == '') {
+        setisVisible(false);
+        var data = await ApiObject.getProjectList({
+          starttime: proselectedDate
+        });
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+          if (element.id == projectItem.id) {
+            await dispatch(setProjectItem(element));
+          }
+        }
+        setisVisible(false);
+        BackBtnPress()
+      }
       // props.navigation.push('PromanageMain')
     }
   }
@@ -280,22 +338,25 @@ const InforEdit = (props) => {
           </View>
         </View>
       </Modal>
+      <Text style={{ alignSelf: 'center', marginBottom: 1 }}>{projectItem.id}</Text>
       <ScrollView style={{ marginBottom: 20 }}>
-        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '5%', height: '8%' }}>
+
+        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '1%', height: '8%' }}>
           <View style={{ width: '95%' }}>
             <Text style={styles.itemText}>客户名称*庳存类型</Text>
             <View style={{ width: '100%', height: '68%' }}>
-              <DropBox
-                zIndex={3000}
-                zIndexInverse={1000}
-                open={settingListOpen}
-                setOpen={setSettingListOpen}
-                value={settingId}
-                setValue={setSettingId}
-                items={settingList}
-                setItems={setSettingList}
-                searchable={true}
-                listMode='MODAL'
+              <TextInput
+                value={settingvalue}
+                autoFocus={true}
+                placeholder={''}
+                selectTextOnFocus={true}
+                style={{
+                  ...CStyles.InputStyle,
+                  backgroundColor: '#F2F2F2',
+                  color: '#000000'
+                }}
+                editable={false}
+                multiline={false}
               />
             </View>
           </View>
@@ -389,7 +450,8 @@ const InforEdit = (props) => {
                 selectTextOnFocus={true}
                 style={CStyles.InputStyle}
                 multiline={false}
-                onChangeText={setStorelinkphone}
+                onChangeText={handlePhoneNumberChange}
+                keyboardType="numeric"
               />
             </View>
           </View>
@@ -449,7 +511,8 @@ const InforEdit = (props) => {
                 selectTextOnFocus={true}
                 style={CStyles.InputStyle}
                 multiline={false}
-                onChangeText={setEstimated}
+                onChangeText={handleNumericInput}
+                keyboardType="numeric"
               />
             </View>
           </View>
@@ -505,7 +568,8 @@ const InforEdit = (props) => {
                 style={{
                   ...CStyles.InputStyle,
                   backgroundColor: '#ffffff',
-                  color: '#000000'
+                  color: '#000000',
+                  paddingLeft: 10
                 }}
                 editable={false}
                 multiline={false}
@@ -526,7 +590,8 @@ const InforEdit = (props) => {
                 style={{
                   ...CStyles.InputStyle,
                   backgroundColor: '#ffffff',
-                  color: '#000000'
+                  color: '#000000',
+                  paddingLeft: 10
                 }}
                 editable={false}
                 multiline={false}
@@ -549,7 +614,8 @@ const InforEdit = (props) => {
                 style={{
                   ...CStyles.InputStyle,
                   backgroundColor: '#ffffff',
-                  color: '#000000'
+                  color: '#000000',
+                  paddingLeft: 10
                 }}
                 editable={false}
                 multiline={false}
@@ -570,7 +636,8 @@ const InforEdit = (props) => {
                 style={{
                   ...CStyles.InputStyle,
                   backgroundColor: '#ffffff',
-                  color: '#000000'
+                  color: '#000000',
+                  paddingLeft: 10
                 }}
                 editable={false}
                 multiline={false}

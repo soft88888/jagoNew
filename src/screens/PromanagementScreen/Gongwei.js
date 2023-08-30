@@ -130,6 +130,7 @@ const Gongwei = (props) => {
     return (
         <View style={styles.allcontent}>
             <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
+            <Text style={{ alignSelf: 'center', marginBottom: 2 }}>{projectItem.id}</Text>
             <View style={{ width: '100%', alignItems: 'center', marginBottom: 10 }}>
                 <Text style={{ fontSize: 16, color: 'black', fontWeight: "bold" }}>工位设定</Text>
             </View>

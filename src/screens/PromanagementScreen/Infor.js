@@ -106,6 +106,7 @@ const Infor = (props) => {
   return (
     <View style={styles.allcontent}>
       <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
+      <Text style={{ alignSelf: 'center', marginBottom: 2 }}>{projectItem.id}</Text>
       <TouchableOpacity onPress={() => props.navigation.push('PromanageInforEdit')}>
         <Icon name="edit" size={30} style={{ alignSelf: 'flex-end', marginRight: 30, marginBottom: 10, color: '#000000' }} />
       </TouchableOpacity>

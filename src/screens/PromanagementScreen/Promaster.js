@@ -162,6 +162,7 @@ const Promaster = (props) => {
     return (
         <View style={styles.allcontent}>
             <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
+            <Text style={{ alignSelf: 'center', marginBottom: 2 }}>{projectItem.id}</Text>
             <View style={{ width: '100%', alignItems: 'flex-start', marginBottom: 10, marginLeft: '10%' }}>
                 <Text style={{ fontSize: 16, color: 'black', fontWeight: "bold" }}>通用主档</Text>
             </View>

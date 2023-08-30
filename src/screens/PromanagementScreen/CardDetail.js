@@ -99,6 +99,7 @@ const CardDetail = (props) => {
         </View>
       </Modal>
       <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
+      <Text style={{ alignSelf: 'center', marginBottom: 2 }}>{projectItem.id}</Text>
       <TouchableOpacity onPress={() => props.navigation.push('PromanageInforEdit')}>
         <Icon name="edit" size={30} style={{ alignSelf: 'flex-end', marginRight: 30, marginBottom: 10 }} />
       </TouchableOpacity>
@@ -323,7 +324,7 @@ const CardDetail = (props) => {
                 autoFocus={true}
                 placeholder={''}
                 selectTextOnFocus={true}
-                style={CStyles.InputStyle}
+                style={{ ...CStyles.InputStyle, paddingLeft: 12}}
                 multiline={false}
                 onChangeText={setPreferstarttime}
               />
@@ -338,7 +339,7 @@ const CardDetail = (props) => {
                 autoFocus={true}
                 placeholder={''}
                 selectTextOnFocus={true}
-                style={CStyles.InputStyle}
+                style={{ ...CStyles.InputStyle, paddingLeft: 12}}
                 multiline={false}
                 onChangeText={setPreferendtime}
               />
@@ -353,7 +354,7 @@ const CardDetail = (props) => {
                 autoFocus={true}
                 placeholder={''}
                 selectTextOnFocus={true}
-                style={CStyles.InputStyle}
+                style={{ ...CStyles.InputStyle, paddingLeft: 12}}
                 multiline={false}
                 onChangeText={setProstarttime}
               />
@@ -368,7 +369,7 @@ const CardDetail = (props) => {
                 autoFocus={true}
                 placeholder={''}
                 selectTextOnFocus={true}
-                style={CStyles.InputStyle}
+                style={{ ...CStyles.InputStyle, paddingLeft: 12}}
                 multiline={false}
                 onChangeText={setProendtime}
               />

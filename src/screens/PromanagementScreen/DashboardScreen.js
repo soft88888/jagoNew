@@ -14,7 +14,7 @@ import { Svg, Line } from 'react-native-svg';
 import ApiObject from '../../support/Api';
 import { subDays } from 'date-fns';
 import { PROGRAM_NAME } from '../../constants';
-import { setProjectItem, setqrcode } from '../../reducers/BaseReducer';
+import { setProjectItem, setqrcode, setProSelectDate } from '../../reducers/BaseReducer';
 
 const DashboardScreen = (props) => {
 
@@ -34,8 +34,6 @@ const DashboardScreen = (props) => {
   const [firstdata, setfirstData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
-  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
 
 
   // Modal 
@@ -405,9 +403,11 @@ const DashboardScreen = (props) => {
     await dispatch(setProjectItem(item));
     if (item.state_id == 3) {
       await dispatch(setqrcode(item?.qrcode));
+      await dispatch(setProSelectDate(selectedDate));
       props.navigation.push('PromanageMain')
     }
     else {
+      await dispatch(setProSelectDate(selectedDate));
       props.navigation.push('PromanageCard')
     }
   }

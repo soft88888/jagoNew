@@ -13,7 +13,6 @@ const Main = (props) => {
 
   useEffect(() => {
     fetchData();
-    console.log("--------------", projectItem)
   }, []);
 
   const [isVisible, setisVisible] = useState(false)

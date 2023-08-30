@@ -27,11 +27,15 @@ const BaseReducer = createSlice({
     diffBia: '',
     useZudang: 0,
     projectItem: {},
-    qrcode: ''
+    qrcode: '',
+    proselectedDate: ''
   },
   reducers: {
     setqrcode(state, action) {
       state.qrcode = action.payload
+    },
+    setProSelectDate(state, action) {
+      state.proselectedDate = action.payload
     },
     setProjectItem(state, action) {
       state.projectItem = action.payload
@@ -121,7 +125,8 @@ export const {
   setDiffBia,
   setZudang,
   setProjectItem,
-  setqrcode
+  setqrcode,
+  setProSelectDate
 } = BaseReducer.actions
 
 const persistConfig = {

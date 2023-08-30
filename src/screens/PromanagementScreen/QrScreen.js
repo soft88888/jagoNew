@@ -15,6 +15,7 @@ const QrScreen = (props) => {
     return (
         <View style={styles.allcontent}>
             <Header {...props} BtnPress={BackBtnPress} title={'项目'} proNoName={true} />
+            <Text style={{ alignSelf: 'center', marginBottom: 2 }}>{projectItem.id}</Text>
             <View style={styles.container}>
                 <QRCode value={qrcode} size={250} />
             </View>
