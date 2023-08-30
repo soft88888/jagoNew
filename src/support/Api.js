@@ -117,92 +117,95 @@ class Api {
     return result;
   }
 
-  // async uploadpostApi(apiUrl, data ) {
- 
-    
-  //     .then(async (response) => {
-  //       if (response.status === 200) {
-  //         let responseJson = await response.json();
-  //         console.log("hhhhh3333333333", responseJson)
-  //         if (responseJson.status) {
-  //           result = responseJson.data;
-  //         } else {
-  //           switch (responseJson.error) {
-  //             case 'verifyNo':
-  //               props.navigation.navigate('PhoneVerifyScreen');
-  //               break;
 
-  //             case 'endInvGongwei':
-  //             case 'endRevGongwei':
-  //             case 'otherUserGongwei':
-  //               await new Promise(resolve => {
-  //                 Alert.alert(
-  //                   PROGRAM_NAME,
-  //                   responseJson.message ?? 'Error!!',
-  //                   [
-  //                     { text: '是(Y)', onPress: () => { result = 'reApiForce'; resolve(); } },
-  //                     { text: '不(N)', onPress: () => resolve() },
-  //                   ],
-  //                   { cancelable: false },
-  //                 );
-  //               });
-  //               break;
+  async uploadpostApi(response) {
+    var result = null;
+    if (response.status === 200) {
 
-  //             case 'loginFailed':
-  //             case 'projectEnd':
-  //             case 'projectNo':
-  //             case 'projectUnAuth':
-  //             case 'projectIsNotOpen':
-  //             case 'projectBlock':
-  //             case 'duplicatePhone':
-  //             case 'verifyCodeFailed':
-  //             case 'noPhone':
-  //             case 'userUpdateFailed':
-  //             default:
-  //               Alert.alert(
-  //                 PROGRAM_NAME,
-  //                 responseJson.message ?? 'Error!!',
-  //                 [{ text: '是(Y)', onPress: () => { } }],
-  //                 { cancelable: false },
-  //               );
-  //               break;
-  //           }
-  //         }
-  //       } else if (response.status === 401) {
-  //         Alert.alert(
-  //           PROGRAM_NAME,
-  //           '登录有效期已过。请重新登录。',
-  //           [{ text: '是(Y)', onPress: () => console.log("fewfwef") }],
-  //           { cancelable: false },
-  //         );
-  //       } else if (response.status === 500) {
-  //         Alert.alert(
-  //           PROGRAM_NAME,
-  //           'Server Error!',
-  //           [{ text: '是(Y)', onPress: () => { } }],
-  //           { cancelable: false },
-  //         );
-  //       } else {
-  //         Alert.alert(
-  //           PROGRAM_NAME,
-  //           response.status,
-  //           [{ text: '是(Y)', onPress: () => { } }],
-  //           { cancelable: false },
-  //         );
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       // 网络不给力。请稍后再试。
-  //       Alert.alert(
-  //         PROGRAM_NAME,
-  //         error.message ?? 'Error!',
-  //         [{ text: '是(Y)', onPress: () => { } }],
-  //         { cancelable: false },
-  //       );
-  //     });
+      let responseJson = response.data;
+      if (responseJson.status) {
+        result = responseJson.data;
+      } else {
+        switch (responseJson.error) {
+          case 'verifyNo':
+            props.navigation.navigate('PhoneVerifyScreen');
+            break;
 
-  //   return result;
-  // }
+          case 'endInvGongwei':
+          case 'endRevGongwei':
+          case 'otherUserGongwei':
+            await new Promise(resolve => {
+              Alert.alert(
+                PROGRAM_NAME,
+                responseJson.message ?? 'Error!!',
+                [
+                  { text: '是(Y)', onPress: () => { result = 'reApiForce'; resolve(); } },
+                  { text: '不(N)', onPress: () => resolve() },
+                ],
+                { cancelable: false },
+              );
+            });
+            result = "error";
+            break;
+
+          case 'loginFailed':
+          case 'projectEnd':
+          case 'projectNo':
+          case 'projectUnAuth':
+          case 'projectIsNotOpen':
+          case 'projectBlock':
+          case 'duplicatePhone':
+          case 'verifyCodeFailed':
+          case 'noPhone':
+          case 'userUpdateFailed':
+          default:
+            if (typeof (responseJson.message) == 'string') {
+              Alert.alert(
+                PROGRAM_NAME,
+                responseJson.message ?? 'Error!!',
+                [{ text: '是(Y)', onPress: () => { } }],
+                { cancelable: false },
+              );
+            }
+            else {
+              Alert.alert(
+                PROGRAM_NAME,
+                JSON.stringify(responseJson.message),
+                [{ text: '是(Y)', onPress: () => { } }],
+                { cancelable: false },
+              );
+            }
+            result = "error";
+            break;
+        }
+      }
+    } else if (response.status === 401) {
+      result = "error";
+      Alert.alert(
+        PROGRAM_NAME,
+        '登录有效期已过。请重新登录。',
+        [{ text: '是(Y)', onPress: () => console.log("fewfwef") }],
+        { cancelable: false },
+      );
+    } else if (response.status === 500) {
+      result = "error";
+      Alert.alert(
+        PROGRAM_NAME,
+        'Server Error!',
+        [{ text: '是(Y)', onPress: () => { } }],
+        { cancelable: false },
+      );
+    } else {
+      result = "error";
+      Alert.alert(
+        PROGRAM_NAME,
+        response.status,
+        [{ text: '是(Y)', onPress: () => { } }],
+        { cancelable: false },
+      );
+    }
+    return result;
+  }
 
   async getProjectList(data) {
     let result = await this.postApi('getProjectList', data);

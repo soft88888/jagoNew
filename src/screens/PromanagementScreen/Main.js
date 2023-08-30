@@ -13,7 +13,7 @@ const Main = (props) => {
 
   useEffect(() => {
     fetchData();
-
+    console.log("--------------", projectItem)
   }, []);
 
   const [isVisible, setisVisible] = useState(false)
@@ -71,6 +71,7 @@ const Main = (props) => {
           </View>
         </View>
       </Modal>
+      <Text style={{ alignSelf: 'center', marginBottom: 10 }}>{projectItem.id}</Text>
       <View style={styles.main}>
         <Button
           ButtonTitle={'项目信息'}

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Modal, Text, StyleSheet, TouchableOpacity, FlatList, Dimensions, FilePicker } from 'react-native';
+import { View, Modal, Text, StyleSheet, TouchableOpacity, FlatList, Dimensions, Alert } from 'react-native';
 import Header from '../../components/Header';
 import ApiObject from '../../support/Api';
 import DocumentPicker from 'react-native-document-picker';
@@ -9,6 +9,7 @@ import Icon2 from 'react-native-vector-icons/EvilIcons';
 import Button from '../../components/Button';
 import ProgressBar from 'react-native-progress/Bar';
 import axios from 'axios';
+import { PROGRAM_NAME } from '../../constants';
 
 const Promaster = (props) => {
 
@@ -21,10 +22,6 @@ const Promaster = (props) => {
     const [disabled1, setDisabled1] = useState(false)
     const [disabled2, setDisabled2] = useState(false)
 
-    useEffect(() => {
-
-    }, []);
-
 
     const handlePickFile = async (type) => {
         try {
@@ -33,6 +30,7 @@ const Promaster = (props) => {
                 allowMultiple: false
             });
             if (type == 1) {
+                console.log("---------------", result[0])
                 setFile1(result[0])
             }
             else {
@@ -55,34 +53,51 @@ const Promaster = (props) => {
             formData.append('id', projectItem.id);
             formData.append('addfile_name', file1);
 
-            await axios.post('http://39.97.209.255:8000/api/inventorymasterimport', formData, {
-                onUploadProgress: (progressEvent) => {
-                    const loaded = progressEvent.loaded;
-                    const total = progressEvent.total;
-                    const progress = loaded / total;
-                    setProgress(progress);
-                },
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: accessToken,
-                },
-            }).then(async (response) => {
-                if (response.status === 200) {
-                    setDisabled1(false);
-                    setStatus(2)
-                    setProgress(0)
-                    setTimeout(() => {
-                        setStatus(0)
-                    }, 2000);
-                } else {
-                    setDisabled1(false);
-                    setStatus(3)
-                    setProgress(0)
-                    setTimeout(() => {
-                        setStatus(0)
-                    }, 2000);
-                }
-            })
+            try {
+                await axios.post('http://39.97.209.255:8000/api/inventorymasterimport', formData, {
+                    onUploadProgress: (progressEvent) => {
+                        const loaded = progressEvent.loaded;
+                        const total = progressEvent.total;
+                        const progress = loaded / total;
+                        setProgress(progress);
+                    },
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: accessToken,
+                    },
+                }).then(async (response) => {
+                    var result = await ApiObject.uploadpostApi(response)
+                    if (result == "error") {
+                        setDisabled1(false);
+                        setStatus(3)
+                        setProgress(0)
+                        setTimeout(() => {
+                            setStatus(0)
+                        }, 2000);
+                    }
+                    else {
+                        setDisabled1(false);
+                        setStatus(2)
+                        setProgress(0)
+                        setTimeout(() => {
+                            setStatus(0)
+                        }, 2000);
+                    }
+                })
+            } catch (error) {
+                Alert.alert(
+                    PROGRAM_NAME,
+                    error.message ?? 'Error!',
+                    [{ text: '是(Y)', onPress: () => { } }],
+                    { cancelable: false },
+                );
+                setDisabled1(false);
+                setStatus(3)
+                setProgress(0)
+                setTimeout(() => {
+                    setStatus(0)
+                }, 2000);
+            }
         }
         else {
             setDisabled2(true);
@@ -90,34 +105,51 @@ const Promaster = (props) => {
             formData.append('id', projectItem.id);
             formData.append('addfile_name', file2);
 
-            await axios.post('http://39.97.209.255:8000/api/generalmasterimport', formData, {
-                onUploadProgress: (progressEvent) => {
-                    const loaded = progressEvent.loaded;
-                    const total = progressEvent.total;
-                    const progress = loaded / total;
-                    setProgress(progress);
-                },
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: accessToken,
-                },
-            }).then(async (response) => {
-                if (response.status === 200) {
-                    setDisabled2(false);
-                    setStatus(2)
-                    setProgress(0)
-                    setTimeout(() => {
-                        setStatus(0)
-                    }, 2000);
-                } else {
-                    setDisabled2(false);
-                    setStatus(3)
-                    setProgress(0)
-                    setTimeout(() => {
-                        setStatus(0)
-                    }, 2000);
-                }
-            })
+            try {
+                await axios.post('http://39.97.209.255:8000/api/generalmasterimport', formData, {
+                    onUploadProgress: (progressEvent) => {
+                        const loaded = progressEvent.loaded;
+                        const total = progressEvent.total;
+                        const progress = loaded / total;
+                        setProgress(progress);
+                    },
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: accessToken,
+                    },
+                }).then(async (response) => {
+                    var result = await ApiObject.uploadpostApi(response)
+                    if (result == "error") {
+                        setDisabled2(false);
+                        setStatus(3)
+                        setProgress(0)
+                        setTimeout(() => {
+                            setStatus(0)
+                        }, 2000);
+                    }
+                    else {
+                        setDisabled2(false);
+                        setStatus(2)
+                        setProgress(0)
+                        setTimeout(() => {
+                            setStatus(0)
+                        }, 2000);
+                    }
+                })
+            } catch (error) {
+                Alert.alert(
+                    PROGRAM_NAME,
+                    error.message ?? 'Error!',
+                    [{ text: '是(Y)', onPress: () => { } }],
+                    { cancelable: false },
+                );
+                setDisabled2(false);
+                setStatus(3)
+                setProgress(0)
+                setTimeout(() => {
+                    setStatus(0)
+                }, 2000);
+            }
         }
     };
 
@@ -132,6 +164,10 @@ const Promaster = (props) => {
             <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
             <View style={{ width: '100%', alignItems: 'flex-start', marginBottom: 10, marginLeft: '10%' }}>
                 <Text style={{ fontSize: 16, color: 'black', fontWeight: "bold" }}>通用主档</Text>
+            </View>
+            <View style={styles.mark}>
+                {file1 && <Text>选取的文件:   {file1.name}</Text>}
+                {!file1 && <Text>没有选择文件</Text>}
             </View>
             <TouchableOpacity onPress={() => handlePickFile(1)}>
                 <View style={styles.uploadbutton}>
@@ -152,6 +188,10 @@ const Promaster = (props) => {
             <View style={{ marginTop: 30, width: '100%' }}>
                 <View style={{ width: '100%', alignItems: 'flex-start', marginBottom: 10, marginLeft: '10%' }}>
                     <Text style={{ fontSize: 16, color: 'black', fontWeight: "bold" }}>库存主档</Text>
+                </View>
+                <View style={styles.mark}>
+                    {file2 && <Text>选取的文件:   {file2.name}</Text>}
+                    {!file2 && <Text>没有选择文件</Text>}
                 </View>
                 <TouchableOpacity onPress={() => handlePickFile(2)}>
                     <View style={styles.uploadbutton}>
@@ -221,6 +261,13 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    mark: {
+        width: '90%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        margin: 20
     },
     markcontent: {
         height: '30%'

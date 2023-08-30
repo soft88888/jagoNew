@@ -54,13 +54,13 @@ const MasterFile = (props) => {
 
   useEffect(() => {
     setRow(useZudang)
-   }, [])
+  }, [])
 
   const genMtDown = async () => {
     dispatch(setScreenLoading(true));
 
     var data = await ApiObject.getGeneralList({ qrcode: project.qrcode });
-    if (data) {
+    if (data && data != null && data != "" && data.length > 0) {
       await insertGenMt(user.id, data);
 
       var date = new Date();
@@ -78,7 +78,7 @@ const MasterFile = (props) => {
     dispatch(setScreenLoading(true));
 
     var data = await ApiObject.getCategoryList({ qrcode: project.qrcode });
-    if (data) {
+    if (data && data != null && data != "" && data.length > 0) {
       await insertCatMt(user.id, data);
 
       var date = new Date();
@@ -96,7 +96,7 @@ const MasterFile = (props) => {
     dispatch(setScreenLoading(true));
 
     var data = await ApiObject.getInventoryList({ qrcode: project.qrcode });
-    if (data) {
+    if (data && data != null && data != "" && data.length > 0) {
       await insertInvMt(user.id, data);
 
       var date = new Date();
@@ -114,7 +114,7 @@ const MasterFile = (props) => {
     dispatch(setScreenLoading(true));
 
     var data = await ApiObject.getPianGongList({ qrcode: project.qrcode });
-    if (data) {
+    if (data && data != null && data != "" && data.length > 0) {
       await insertGongMt(user.id, data);
 
       var date = new Date();
