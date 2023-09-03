@@ -23,6 +23,7 @@ const InventoryMain = (props) => {
   const [calScreen, setCalScreen] = useState(false);
   const [skuInputFocus, setSkuInputFocus] = useState(true);
   const [countInputFocus, setCountInputFocus] = useState(false);
+  const [camera, setCamera] = useState(false)
 
   const [count, setCount] = useState('');
   const [commoditySku, setCommoditySku] = useState('');
@@ -139,10 +140,10 @@ const InventoryMain = (props) => {
         } else {
           Alert.alert(
             PROGRAM_NAME,
-            '条11形码不存在',
+            '条形码不存在',
             [
               { text: '是(Y)', onPress: () => project.quantity_min == project.quantity_max && insertRowConfirm() },
-              { text: '不(N)', onPress: () => skuRef.current.focus() },
+              { text: '不(N)', onPress: () => { if (camera) skuRef.current.focus(); } },
             ],
             { cancelable: false },
           );
@@ -152,10 +153,11 @@ const InventoryMain = (props) => {
         setPipeiItem(null)
         if (project.quantity_min == project.quantity_max) {
           insertRowConfirm(null);
-          skuRef.current.focus()
+          if (camera) skuRef.current.focus();
         }
       }
     }
+    setCamera(false);
   }
 
   const insertRowConfirm = (pipeiItemVal = pipeiItem) => {
@@ -168,7 +170,7 @@ const InventoryMain = (props) => {
       );
     } else {
       insertRow(pipeiItemVal);
-      skuRef.current.focus();
+      if (camera) skuRef.current.focus();
       maxSkuCountCheck();
     }
   }
@@ -218,7 +220,7 @@ const InventoryMain = (props) => {
         ],
         (txn, results) => {
           setPipeiItem(null);
-          setCommoditySku('');
+          if (camera) setCommoditySku('');
           setPihao('');
           setCount(project.quantity_min == project.quantity_max ? project.quantity_min : '');
           setQuantityClose(true);
@@ -243,6 +245,7 @@ const InventoryMain = (props) => {
   };
 
   const skuScanOKFunc = (val) => {
+    setCamera(true);
     setCommoditySku(val);
     setCodeInputMethod(SCAN_INPUT);
     countRef.current.focus();

@@ -45,7 +45,17 @@ const AreaValue = (props) => {
                   {
                     text: '是(Y)',
                     onPress: async () => {
-                      setPianquList(await getPianquList(user.id));
+                      const listresult = await getPianquList(user.id)
+                      if (listresult.length > 0) {
+                        setPianquList(await getPianquList(user.id));
+                      }
+                      else {
+                        let list =
+                          [{ "label": "卖场", "value": "卖场" },
+                          { "label": "库房", "value": "库房" },
+                          ];
+                        setPianquList(list);
+                      }
                       setPianqushow(true);
                     },
                   },
@@ -116,7 +126,7 @@ const AreaValue = (props) => {
         { cancelable: false },
       );
     } else {
-      var result = await ApiObject.newGongweiAdd({ qrcode: project.qrcode, pianqu: pianqu, gongwei: Number(gongwei.toString().slice(0,16)) });
+      var result = await ApiObject.newGongweiAdd({ qrcode: project.qrcode, pianqu: pianqu, gongwei: Number(gongwei.toString().slice(0, 16)) });
       if (result !== null) {
         DB.transaction((txn) => {
           txn.executeSql(
@@ -124,10 +134,10 @@ const AreaValue = (props) => {
             [
               result,
               pianqu,
-              Number(gongwei.toString().slice(0,16))
+              Number(gongwei.toString().slice(0, 16))
             ],
             async (txn, results) => {
-              gongWeiWorkCheck({ id: result, pianqu: pianqu, gongwei: Number(gongwei.toString().slice(0,16)) });
+              gongWeiWorkCheck({ id: result, pianqu: pianqu, gongwei: Number(gongwei.toString().slice(0, 16)) });
               setPianqushow(false);
             },
           );

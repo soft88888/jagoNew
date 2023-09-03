@@ -6,7 +6,7 @@ import QRCode from 'react-native-qrcode-svg';
 
 const QrScreen = (props) => {
 
-    const { qrcode } = useSelector((state) => state.base);
+    const { qrcode, projectItem } = useSelector((state) => state.base);
 
     const BackBtnPress = () => {
         props.navigation.push('PromanageMain')

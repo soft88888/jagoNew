@@ -28,9 +28,25 @@ const BaseReducer = createSlice({
     useZudang: 0,
     projectItem: {},
     qrcode: '',
-    proselectedDate: ''
+    proselectedDate: '',
+    generalDown: false,
+    inventoryDown: false,
+    categoryDown: false,
+    gongweiDown: false
   },
   reducers: {
+    setgeneralDown(state, action) {
+      state.generalDown = action.payload
+    },
+    setinventoryDown(state, action) {
+      state.inventoryDown = action.payload
+    },
+    setcategoryDown(state, action) {
+      state.categoryDown = action.payload
+    },
+    setgongweiDown(state, action) {
+      state.gongweiDown = action.payload
+    },
     setqrcode(state, action) {
       state.qrcode = action.payload
     },
@@ -126,7 +142,11 @@ export const {
   setZudang,
   setProjectItem,
   setqrcode,
-  setProSelectDate
+  setProSelectDate,
+  setgeneralDown,
+  setinventoryDown,
+  setcategoryDown,
+  setgongweiDown
 } = BaseReducer.actions
 
 const persistConfig = {

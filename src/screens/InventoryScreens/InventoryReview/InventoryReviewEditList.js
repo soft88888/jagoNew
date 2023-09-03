@@ -107,7 +107,6 @@ const InventoryReviewEditList = (props) => {
           var list = [];
           for (let i = 0; i < results.rows.length; i++) {
             let item = {};
-            let result = await pipeiSKU(results.rows.item(i).commodity_sku, user.id);
             item.row = results.rows.item(i).row;
             item.column = results.rows.item(i).column;
             item.commodity_sku = results.rows.item(i).commodity_sku;
@@ -115,10 +114,11 @@ const InventoryReviewEditList = (props) => {
             item.count = results.rows.item(i).count;
             item.delete_flag = results.rows.item(i).delete_flag;
             item.record_id = results.rows.item(i).record_id;
-            item.color = result.color_code;
-            item.size = result.size_code;
+            item.size = results.rows.item(i).size;
+            item.color = results.rows.item(i).color;
             list.push(item);
           }
+
           setFlatListData(list);
         },
       );

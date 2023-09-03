@@ -7,11 +7,16 @@ import Header from '../../../components/Header';
 import CStyles from '../../../styles/CommonStyles';
 import DropBox from '../../../components/DropBox';
 import { getGenMtCount, getCatMtCount, getInvMtCount, getGongMtCount, insertGenMt, insertInvMt, insertCatMt, insertGongMt } from '../../../hooks/dbHooks';
-import { setCategoryTime, setGeneralTime, setInventoryTime, setPiangongTime, setScreenLoading, setZudang } from '../../../reducers/BaseReducer';
+import {
+  setCategoryTime, setGeneralTime, setInventoryTime, setPiangongTime, setScreenLoading, setZudang,
+  setgeneralDown, setinventoryDown, setcategoryDown, setgongweiDown
+} from '../../../reducers/BaseReducer';
 
 const MasterFile = (props) => {
   const dispatch = useDispatch();
-  const { user, project, generalTime, inventoryTime, categoryTime, piangongTime, useZudang } = useSelector((state) => state.base);
+  const { user, project, generalTime, inventoryTime, categoryTime, piangongTime, useZudang, generalDown,
+    inventoryDown, categoryDown, gongweiDown
+  } = useSelector((state) => state.base);
 
   const [genMtCount, setGenMtCount] = useState(0);
   const [invMtCount, setInvMtCount] = useState(0);
@@ -23,10 +28,10 @@ const MasterFile = (props) => {
   { label: "不使用", value: 1 }]);
   const [rowListOpen, setRowListOpen] = useState(false);
 
-  const [generalDiff, setGeneralDiff] = useState(false);
-  const [inventoryDiff, setInventoryDiff] = useState(false);
-  const [categoryDiff, setCategoryDiff] = useState(false);
-  const [gongweiDiff, setGongweiDiff] = useState(false);
+  const [generalDiff, setGeneralDiff] = useState(!generalDown);
+  const [inventoryDiff, setInventoryDiff] = useState(!inventoryDown);
+  const [categoryDiff, setCategoryDiff] = useState(!categoryDown);
+  const [gongweiDiff, setGongweiDiff] = useState(!gongweiDown);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,10 +42,10 @@ const MasterFile = (props) => {
 
       const data = await ApiObject.updateCheck({ qrcode: project.qrcode, general_time: generalTime, inventory_time: inventoryTime, category_time: categoryTime, piangong_time: piangongTime });
       if (data) {
-        setGeneralDiff(data.general);
-        setInventoryDiff(data.inventory);
-        setCategoryDiff(data.category);
-        setGongweiDiff(data.piangong);
+        if (generalDown) setGeneralDiff(data.general);
+        if (inventoryDown) setInventoryDiff(data.inventory);
+        if (categoryDown) setCategoryDiff(data.category);
+        if (gongweiDown) setGongweiDiff(data.piangong);
       }
     };
 
@@ -68,9 +73,9 @@ const MasterFile = (props) => {
 
       dispatch(setGeneralTime(general_time));
       setGenMtCount(data.length);
-      setGeneralDiff(false);
     }
-
+    dispatch(setgeneralDown(true));
+    setGeneralDiff(false);
     dispatch(setScreenLoading(false));
   }
 
@@ -86,9 +91,9 @@ const MasterFile = (props) => {
 
       dispatch(setCategoryTime(downloadTime));
       setCatMtCount(data.length);
-      setCategoryDiff(false);
     }
-
+    setCategoryDiff(false);
+    dispatch(setcategoryDown(true));
     dispatch(setScreenLoading(false));
   }
 
@@ -104,9 +109,9 @@ const MasterFile = (props) => {
 
       dispatch(setInventoryTime(downloadTime));
       setInvMtCount(data.length);
-      setInventoryDiff(false);
     }
-
+    setInventoryDiff(false);
+    dispatch(setinventoryDown(true));
     dispatch(setScreenLoading(false));
   }
 
@@ -122,9 +127,9 @@ const MasterFile = (props) => {
 
       dispatch(setPiangongTime(downloadTime));
       setGongMtCount(data.length);
-      setGongweiDiff(false);
     }
-
+    setGongweiDiff(false);
+    dispatch(setgongweiDown(true));
     dispatch(setScreenLoading(false));
   }
 
