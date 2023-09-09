@@ -61,7 +61,7 @@ const Report = (props) => {
     const downloadData = async (type) => {
         try {
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-            const download = downloadFile('http://39.97.209.255:8000/api/reportDownload', type, uniqueSuffix + "-" + type + '.xlsx');
+            downloadFile('http://39.97.209.255:8000/api/reportDownload', type, uniqueSuffix + "-" + type + '.xlsx');
 
             // download.then(({ response }) => {
             //     const totalLength = parseInt(response.headers['content-length'], 10);
