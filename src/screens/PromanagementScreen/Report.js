@@ -43,7 +43,7 @@ const Report = (props) => {
                     [{ text: '是(Y)', onPress: () => console.log("") }],
                     { cancelable: false },
                 );
-                console.log('The file saved to ', path);
+                console.log('The file saved to', path);
                 // console.log('The file saved to ', path);
             } catch (error) {
                 Alert.alert(
