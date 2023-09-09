@@ -8,6 +8,7 @@ import CStyles from '../../styles/CommonStyles';
 import ApiObject from '../../support/Api';
 import { PROGRAM_NAME } from '../../constants';
 import { setScreenLoading } from '../../reducers/BaseReducer';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const Register = (props) => {
   const dispatch = useDispatch();
@@ -109,6 +110,21 @@ const Register = (props) => {
       keyboardShouldPersistTaps="always"
       style={{ position: 'relative' }}
     >
+      <View style={{ alignSelf: 'flex-start', marginLeft: 20 }}>
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate('Login')}
+          style={{
+            height: 25,
+            width: 25,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#d6d3d3',
+            borderRadius: 20,
+          }}
+        >
+          <Icon name="left" size={20} color="#000" style={{}} />
+        </TouchableOpacity>
+      </View>
       <View style={{ alignItems: 'center', marginTop: 50, marginBottom: 20 }}>
         <Image source={require(LogoImg)} style={{ width: 72, height: 72 }} />
         <View style={{ flexDirection: 'row' }}>
@@ -158,7 +174,7 @@ const Register = (props) => {
             setItems={setAdressList}
             searchable={true}
             listMode='MODAL'
-            // listMode='SCROLLVIEW'
+          // listMode='SCROLLVIEW'
           />
         </View>
 

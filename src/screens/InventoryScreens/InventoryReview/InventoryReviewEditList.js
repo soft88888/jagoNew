@@ -118,7 +118,6 @@ const InventoryReviewEditList = (props) => {
             item.color = results.rows.item(i).color;
             list.push(item);
           }
-
           setFlatListData(list);
         },
       );

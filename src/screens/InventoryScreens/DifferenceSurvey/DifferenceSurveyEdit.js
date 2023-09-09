@@ -71,7 +71,7 @@ const DifferenceSurveyEdit = (props) => {
         [],
         async (tx, results) => {
           let tableDataArray = [];
-
+          console.log("09090")
           for (let i = 0; i < results.rows.length; i++) {
             let item = {};
             let result = await pipeiSKU(results.rows.item(i).commodity_sku, user.id);
@@ -83,8 +83,8 @@ const DifferenceSurveyEdit = (props) => {
             item.count = results.rows.item(i).count;
             item.delete_flag = results.rows.item(i).delete_flag;
             item.record_id = results.rows.item(i).record_id;
-            item.color = result.color_code;
-            item.size = result.size_code;
+            item.color = results?.color_code;
+            item.size = results?.size_code;
 
             tableDataArray.push(item);
           }
