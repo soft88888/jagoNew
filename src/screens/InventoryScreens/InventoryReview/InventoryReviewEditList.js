@@ -218,7 +218,7 @@ const InventoryReviewEditList = (props) => {
         {item.row}/{item.column}
       </Text>
       <Text style={[styles.title, { flex: 4, textAlignVertical: 'center' }]}>
-        {item.commodity_sku}{"\n"}{item.commodity_name ?? "不在档"}
+        {item.commodity_sku}{"\n"}{item.commodity_name != null && item.commodity_name != "" ? item.commodity_name : "不在档"}
       </Text>
       <Text style={[styles.title, { flex: 1, textAlignVertical: 'center' }]}>
         {item.color}
@@ -278,7 +278,7 @@ const InventoryReviewEditList = (props) => {
       </View>
 
       <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginVertical: 10 }}>
-        <Text style={{ fontSize: 14 }}>
+        <Text style={{ fontSize: 14, color: 'black' }}>
           SKU: {flatListData[selectedRow].commodity_sku}
         </Text>
       </View>

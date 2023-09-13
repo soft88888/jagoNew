@@ -306,6 +306,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f8ff',
     fontSize: 10,
     textAlign: 'center',
+    color: 'black'
   },
 
   title: {
@@ -315,6 +316,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 10,
     backgroundColor: '#fff',
+    color: 'black'
   },
 
   deleteBtn: {

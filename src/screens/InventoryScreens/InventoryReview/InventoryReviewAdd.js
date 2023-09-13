@@ -349,7 +349,7 @@ const InventoryReviewAdd = (props) => {
               marginRight: 10,
             }}
           />
-          <Text style={{ fontSize: 12 }}>店铺责任</Text>
+          <Text style={{ fontSize: 12, color: 'black' }}>店铺责任</Text>
         </TouchableOpacity>
       </View>
       <View style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: 30, flexDirection: 'row' }}>
@@ -379,8 +379,8 @@ const InventoryReviewAdd = (props) => {
 
         <View style={{ flex: 1 }}>
           <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
-            <Text style={{ fontSize: 12 }}>区域: {gongweiPos.pianqu} / </Text>
-            <Text style={{ fontSize: 12 }}>工位: {gongweiPos.gongwei?.toString().padStart(project.gongwei_max, "0")}</Text>
+            <Text style={{ fontSize: 12, color: 'black' }}>区域: {gongweiPos.pianqu} / </Text>
+            <Text style={{ fontSize: 12, color: 'black' }}>工位: {gongweiPos.gongwei?.toString().padStart(project.gongwei_max, "0")}</Text>
           </View>
 
           <View style={{ justifyContent: 'center', flexDirection: 'row', paddingHorizontal: 30, paddingVertical: 10 }}>
@@ -561,6 +561,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f8ff',
     fontSize: 10,
     textAlign: 'center',
+    color: 'black'
   },
 });
 

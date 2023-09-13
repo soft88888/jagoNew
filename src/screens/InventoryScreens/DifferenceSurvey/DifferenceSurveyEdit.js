@@ -31,9 +31,9 @@ const DifferenceSurveyEdit = (props) => {
 
   useEffect(() => {
     const pipeiFunc = async () => {
-    
+
       let selectedItem = flatListData[selectedRow];
-      
+
       if (selectedItem) {
         setPipeiItem(await pipeiSKU(selectedItem.commodity_sku, user.id));
       }
@@ -280,7 +280,7 @@ const DifferenceSurveyEdit = (props) => {
             </View>
 
             <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginVertical: 10 }}>
-              <Text style={{ fontSize: 14 }}>
+              <Text style={{ fontSize: 14, color: 'black' }}>
                 SKU: {flatListData[selectedRow].commodity_sku}
               </Text>
             </View>
@@ -315,7 +315,7 @@ const DifferenceSurveyEdit = (props) => {
             </View>
 
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 10, marginTop: 10 }}>
-              <Text style={{ fontSize: 12 }}>
+              <Text style={{ fontSize: 12,color: 'black' }}>
                 原数量: {flatListData[selectedRow].count} 个
               </Text>
               <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row', paddingVertical: 5 }}>
@@ -374,6 +374,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f8ff',
     fontSize: 10,
     textAlign: 'center',
+    color: 'black'
   },
 
   restoreBtn: {
@@ -389,6 +390,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f8ff',
     fontSize: 10,
     textAlign: 'center',
+    color: 'black'
   },
 
   title: {
@@ -399,6 +401,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     backgroundColor: '#f6f8fa',
     textAlignVertical: 'center',
+    color: 'black'
   },
 
   editBtn: {
@@ -421,6 +424,7 @@ const styles = StyleSheet.create({
   itemArea: {
     fontSize: 14,
     textAlign: 'center',
+    color: 'black'
   },
 });
 

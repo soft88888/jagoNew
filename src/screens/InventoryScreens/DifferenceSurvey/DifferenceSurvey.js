@@ -382,6 +382,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+    color: 'black'
   },
 
   title: {
@@ -392,6 +393,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     backgroundColor: '#f6f8fa',
     textAlignVertical: 'center',
+    color: 'black'
   },
 
   completeBtn: {

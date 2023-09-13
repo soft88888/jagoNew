@@ -68,39 +68,39 @@ const DifferenceSurveyAdd = (props) => {
     countChanged();
   }, [count]);
 
-  useEffect(() => {
-    if (countInputFocus && !pipeiStatus) {
-      pipei();
-    }
-  }, [countInputFocus]);
+  // useEffect(() => {
+  //   if (countInputFocus && !pipeiStatus) {
+  //     pipei();
+  //   }
+  // }, [countInputFocus]);
 
-  useEffect(() => {
-    if (rowInputFocus && !pipeiStatus) {
-      pipei();
-    }
-  }, [rowInputFocus]);
+  // useEffect(() => {
+  //   if (rowInputFocus && !pipeiStatus) {
+  //     pipei();
+  //   }
+  // }, [rowInputFocus]);
 
-  useEffect(() => {
-    if (gongweiInputFocus && !pipeiStatus) {
-      pipei();
-    }
-  }, [gongweiInputFocus]);
+  // useEffect(() => {
+  //   if (gongweiInputFocus && !pipeiStatus) {
+  //     pipei();
+  //   }
+  // }, [gongweiInputFocus]);
 
-  useEffect(() => {
-    if (columnInputFocus && !pipeiStatus) {
-      pipei();
-    }
-  }, [columnInputFocus]);
+  // useEffect(() => {
+  //   if (columnInputFocus && !pipeiStatus) {
+  //     pipei();
+  //   }
+  // }, [columnInputFocus]);
 
-  useEffect(() => {
-    setPipeiStatus(false);
-  }, [commoditySku]);
+  // useEffect(() => {
+  //   setPipeiStatus(false);
+  // }, [commoditySku]);
 
-  useEffect(() => {
-    if (commoditySku !== '') {
-      setPipeiStatus(true);
-    }
-  }, [pipeiItem]);
+  // useEffect(() => {
+  //   if (commoditySku !== '') {
+  //     setPipeiStatus(true);
+  //   }
+  // }, [pipeiItem]);
 
   useEffect(() => {
     DB.transaction((tx) => {
@@ -121,7 +121,7 @@ const DifferenceSurveyAdd = (props) => {
   }, [gongwei]);
 
   useEffect(() => {
-    if (pipeiStatus && commoditySku !== '' && Number(count) !== 0 && count !== '' && Number(row) !== 0 && row !== '' && gongwei !== '' && pianqu !== '' && column !== '') {
+    if (commoditySku !== '' && Number(count) !== 0 && count !== '' && Number(row) !== 0 && row !== '' && gongwei !== '' && column !== '') {
       setConfirm(true);
     } else {
       setConfirm(false);
@@ -197,38 +197,17 @@ const DifferenceSurveyAdd = (props) => {
         { cancelable: false },
       );
     } else {
-      if (useZudang == 0) {
-        let result = await pipeiSKU(commoditySku, user.id);
-        if (result !== null) {
-          setPipeiItem(result);
-          if (project.quantity_min == project.quantity_max) {
-            gongweiRef.current.focus();
-          }
-        } else {
-          Alert.alert(
-            PROGRAM_NAME,
-            '条形码不存在',
-            [
-              {
-                text: '是(Y)',
-                onPress: () => {
-                  setPipeiStatus(true);
-                  if (project.quantity_min == project.quantity_max) {
-                    gongweiRef.current.focus();
-                  }
-                },
-              },
-              { text: '不(N)', onPress: () => skuRef.current.focus() },
-            ],
-            { cancelable: false },
-          );
-        }
-      }
-      else {
-        setPipeiItem(null);
-        if (project.quantity_min == project.quantity_max) {
-          gongweiRef.current.focus();
-        }
+      let result = await pipeiSKU(commoditySku, user.id);
+      if (result !== null) {
+        setPipeiItem(result);
+        insertRow()
+      } else {
+        Alert.alert(
+          PROGRAM_NAME,
+          '条形码不存在',
+          [{ text: '是(Y)', onPress: () => { skuRef.current.focus(); setConfirm(false) } }],
+          { cancelable: false },
+        );
       }
     }
   }
@@ -244,6 +223,7 @@ const DifferenceSurveyAdd = (props) => {
   };
 
   const insertRow = () => {
+
     var date = new Date();
     var scantime =
       [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-') +
@@ -439,7 +419,7 @@ const DifferenceSurveyAdd = (props) => {
             <Button
               disabled={!confirm}
               ButtonTitle={'记录数据'}
-              BtnPress={() => insertRow()}
+              BtnPress={() => pipei()}
               type={'yellowBtn'}
               BTnWidth={300}
             />
@@ -503,6 +483,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f8ff',
     fontSize: 10,
     textAlign: 'center',
+    color: 'black'
   },
 });
 

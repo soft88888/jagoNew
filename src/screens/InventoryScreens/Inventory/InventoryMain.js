@@ -134,7 +134,7 @@ const InventoryMain = (props) => {
         let result = await pipeiSKU(commoditySku, user.id);
         if (result !== null) {
           setPipeiItem(result);
-          if (project.quantity_min == project.quantity_max) {
+          if (project.quantity_min == project.quantity_max && camera == true) {
             insertRowConfirm(result);
           }
         } else {
@@ -142,7 +142,7 @@ const InventoryMain = (props) => {
             PROGRAM_NAME,
             '条形码不存在',
             [
-              { text: '是(Y)', onPress: () => project.quantity_min == project.quantity_max && insertRowConfirm() },
+              { text: '是(Y)', onPress: () => project.quantity_min == project.quantity_max && camera == true && insertRowConfirm() },
               { text: '不(N)', onPress: () => { if (camera) skuRef.current.focus(); } },
             ],
             { cancelable: false },
@@ -151,7 +151,7 @@ const InventoryMain = (props) => {
       }
       else {
         setPipeiItem(null)
-        if (project.quantity_min == project.quantity_max) {
+        if (project.quantity_min == project.quantity_max && camera == true) {
           insertRowConfirm(null);
           if (camera) skuRef.current.focus();
         }
@@ -170,7 +170,8 @@ const InventoryMain = (props) => {
       );
     } else {
       insertRow(pipeiItemVal);
-      if (camera) skuRef.current.focus();
+      skuRef.current.focus();
+      if(!camera) setCommoditySku("")
       maxSkuCountCheck();
     }
   }
