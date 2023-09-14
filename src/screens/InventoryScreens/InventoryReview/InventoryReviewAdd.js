@@ -207,10 +207,12 @@ const InventoryReviewAdd = (props) => {
         let result = await pipeiSKU(commoditySku, user.id);
         if (result !== null) {
           setPipeiItem(result);
+          setPipeiStatus(true)
           if (project.quantity_min == project.quantity_max) {
             rowRef.current.focus();
           }
         } else {
+          setPipeiItem(null);
           Alert.alert(
             PROGRAM_NAME,
             '条形码不存在',
