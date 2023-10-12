@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { StyleSheet, View, Text, Alert, TextInput, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Alert, TextInput, Dimensions, ScrollView } from 'react-native';
 import uuid from 'react-native-uuid';
 import Button from '../../../components/Button';
 import Header from '../../../components/Header';
@@ -287,7 +287,7 @@ const DifferenceSurveyAdd = (props) => {
       <View style={{ position: 'relative', height: Dimensions.get('window').height }}>
         <Header {...props} BtnPress={BackBtnPress} title={'差异调查'} />
 
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
           <View style={{ justifyContent: 'center', flexDirection: 'row', paddingHorizontal: 30, paddingVertical: 10 }}>
             <Text style={{ ...CStyles.TextStyle, width: 25, textAlign: 'right' }}>SKU:</Text>
             <TextInput
@@ -301,6 +301,11 @@ const DifferenceSurveyAdd = (props) => {
               selectTextOnFocus={true}
               style={CStyles.InputStyle}
               multiline={false}
+              onKeyPress={({ nativeEvent }) => {
+                if (nativeEvent.key == 'Enter') {
+                  countRef.current.focus();
+                }
+              }}
             />
             <Button
               disabled={!skuInputFocus}
@@ -425,7 +430,7 @@ const DifferenceSurveyAdd = (props) => {
             />
           </View>
 
-          <View style={{ marginTop: 20 }}>
+          <View style={{ marginTop: 20, marginBottom: 20 }}>
             <View style={styles.container}>
               <Text style={{ ...styles.cell, flex: 1 }}>商品名称</Text>
               <Text style={{ ...styles.cell, flex: 3 }}>{pipeiItem?.commodity_name}</Text>
@@ -455,7 +460,7 @@ const DifferenceSurveyAdd = (props) => {
               <Text style={{ ...styles.cell, flex: 3 }}>{pipeiItem?.unit}</Text>
             </View>
           </View>
-        </View>
+        </ScrollView>
 
         <FooterBar3 screenNavigate={screenNavigate} activeBtn={1} />
 

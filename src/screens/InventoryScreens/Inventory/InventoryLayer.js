@@ -102,10 +102,10 @@ const InventoryLayer = (props) => {
                 </View>
 
                 <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center', paddingLeft: 90 }}>
-                    <Text style={{ flex: 1, fontSize: 14 }}>{rowCount}</Text>
-                    <Text style={{ flex: 1, fontSize: 14 }}>{columnCount}</Text>
-                    <Text style={{ flex: 1, fontSize: 14 }}>{sumCount}</Text>
-                    <Text style={{ flex: 1, fontSize: 14 }}>{pandianAmount ?? 0}</Text>
+                    <Text style={{ flex: 1, fontSize: 14, color: "black" }}>{rowCount}</Text>
+                    <Text style={{ flex: 1, fontSize: 14, color: "black" }}>{columnCount}</Text>
+                    <Text style={{ flex: 1, fontSize: 14, color: "black" }}>{sumCount}</Text>
+                    <Text style={{ flex: 1, fontSize: 14, color: "black" }}>{pandianAmount ?? 0}</Text>
                 </View>
 
                 <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center', marginVertical: 20, }}>

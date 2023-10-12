@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text } from 'react-native';
+import { ScrollView } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
 import ApiObject from '../../../support/Api';
 import Button from '../../../components/Button';
 import Header from '../../../components/Header';
@@ -142,7 +143,7 @@ const MasterFile = (props) => {
   };
 
   return (
-    <View style={{ position: 'relative' }}>
+    <View style={{ position: 'relative', flex: 1 }}>
       <View style={{}}>
         <Header
           {...props}
@@ -150,91 +151,92 @@ const MasterFile = (props) => {
           title={'主档'}
         />
       </View>
-
-      {project.general && (
-        <View style={{ alignItems: 'center', marginTop: 5 }}>
-          <Button
-            ButtonTitle={'下载新版通用主档'}
-            BtnPress={() => genMtDown()}
-            type={'blueBtn'}
-            notification={generalDiff}
-            BTnWidth={320}
-          />
-        </View>
-      )}
-
-      <View style={{ alignItems: 'center', marginTop: 5 }}>
-        <Button
-          ButtonTitle={'下载新版库存主档'}
-          BtnPress={() => invMtDown()}
-          notification={inventoryDiff}
-          type={'blueBtn'}
-          BTnWidth={320}
-        />
-      </View>
-
-      <View style={{ alignItems: 'center', marginTop: 5 }}>
-        <Button
-          ButtonTitle={'下载新版类别主档'}
-          BtnPress={() => catMtDown()}
-          notification={categoryDiff}
-          type={'blueBtn'}
-          BTnWidth={320}
-        />
-      </View>
-
-      <View style={{ alignItems: 'center', marginTop: 5 }}>
-        <Button
-          ButtonTitle={'下载新版区域主档'}
-          BtnPress={() => gongMtDown()}
-          notification={gongweiDiff}
-          type={'blueBtn'}
-          BTnWidth={320}
-        />
-      </View>
-
-      <View style={{ paddingHorizontal: 30, paddingVertical: 10 }}>
+      <ScrollView style={{ position: 'relative' }}>
         {project.general && (
-          <Text style={CStyles.TxTStyle}>
-            通用主档数：{genMtCount}
-          </Text>
+          <View style={{ alignItems: 'center', marginTop: 5 }}>
+            <Button
+              ButtonTitle={'下载新版通用主档'}
+              BtnPress={() => genMtDown()}
+              type={'blueBtn'}
+              notification={generalDiff}
+              BTnWidth={Dimensions.get('window').width * 0.9}
+            />
+          </View>
         )}
 
-        <Text style={CStyles.TxTStyle}>
-          库存主档数：{invMtCount}
-        </Text>
+        <View style={{ alignItems: 'center', marginTop: 5 }}>
+          <Button
+            ButtonTitle={'下载新版库存主档'}
+            BtnPress={() => invMtDown()}
+            notification={inventoryDiff}
+            type={'blueBtn'}
+            BTnWidth={Dimensions.get('window').width * 0.9}
+          />
+        </View>
 
-        <Text style={CStyles.TxTStyle}>
-          类别主档数：{catMtCount}
-        </Text>
+        <View style={{ alignItems: 'center', marginTop: 5 }}>
+          <Button
+            ButtonTitle={'下载新版类别主档'}
+            BtnPress={() => catMtDown()}
+            notification={categoryDiff}
+            type={'blueBtn'}
+            BTnWidth={Dimensions.get('window').width * 0.9}
+          />
+        </View>
 
-        <Text style={CStyles.TxTStyle}>
-          货架主档数：{gongMtCount}
-        </Text>
-      </View>
-      <View style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: 30, flexDirection: 'row' }}>
-        <Text style={{ ...CStyles.TextStyle, textAlign: 'right' }}>选择:</Text>
-        <DropBox
-          zIndex={10}
-          zIndexInverse={10}
-          open={rowListOpen}
-          setOpen={setRowListOpen}
-          value={row}
-          setValue={setRow}
-          items={rowList}
-          setItems={setRowList}
-          searchable={true}
-          listMode='MODAL'
-        />
-      </View>
-      <View style={{ marginTop: 10, alignItems: 'center' }}>
-        <Button
-          ButtonTitle={'下一步'}
-          BtnPress={() => toInventory()}
-          type={'yellowBtn'}
-          BTnWidth={320}
-        />
-      </View>
+        <View style={{ alignItems: 'center', marginTop: 5 }}>
+          <Button
+            ButtonTitle={'下载新版区域主档'}
+            BtnPress={() => gongMtDown()}
+            notification={gongweiDiff}
+            type={'blueBtn'}
+            BTnWidth={Dimensions.get('window').width * 0.9}
+          />
+        </View>
+
+        <View style={{ paddingHorizontal: 30, paddingVertical: 10 }}>
+          {project.general && (
+            <Text style={CStyles.TxTStyle}>
+              通用主档数：{genMtCount}
+            </Text>
+          )}
+
+          <Text style={CStyles.TxTStyle}>
+            库存主档数：{invMtCount}
+          </Text>
+
+          <Text style={CStyles.TxTStyle}>
+            类别主档数：{catMtCount}
+          </Text>
+
+          <Text style={CStyles.TxTStyle}>
+            货架主档数：{gongMtCount}
+          </Text>
+        </View>
+        <View style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: 30, flexDirection: 'row' }}>
+          <Text style={{ ...CStyles.TextStyle, textAlign: 'right' }}>选择:</Text>
+          <DropBox
+            zIndex={10}
+            zIndexInverse={10}
+            open={rowListOpen}
+            setOpen={setRowListOpen}
+            value={row}
+            setValue={setRow}
+            items={rowList}
+            setItems={setRowList}
+            searchable={true}
+            listMode='MODAL'
+          />
+        </View>
+        <View style={{ marginTop: 10, alignItems: 'center', marginBottom: 20 }}>
+          <Button
+            ButtonTitle={'下一步'}
+            BtnPress={() => toInventory()}
+            type={'yellowBtn'}
+            BTnWidth={Dimensions.get('window').width * 0.9}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 }

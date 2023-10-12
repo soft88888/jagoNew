@@ -8,7 +8,7 @@ const screenHeight = Dimensions.get('window').height;
 const App = () => {
   const [result, setResult] = useState(0)
   return (
-    <View style={{ flex: 1, width: screenWidth, height: screenHeight }}>
+    <View style={{ flex: 1, width: screenWidth, height: screenHeight, color: "black" }}>
       <Text>{result}</Text>
     </View>
   )

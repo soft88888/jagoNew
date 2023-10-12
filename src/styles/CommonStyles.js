@@ -155,6 +155,7 @@ export default (styles = StyleSheet.create({
     },
     InventoryTxt:{
         fontSize: 10, 
-        marginTop:5
+        marginTop:5,
+        color: "black"
     },
 }))

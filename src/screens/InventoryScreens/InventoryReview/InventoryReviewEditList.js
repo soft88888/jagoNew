@@ -339,7 +339,7 @@ const InventoryReviewEditList = (props) => {
               marginRight: 10,
             }}
           />
-          <Text style={{ fontSize: 12 }}>自己责任</Text>
+          <Text style={{ fontSize: 12, color: "black" }}>自己责任</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setOwnIssues(1)}
@@ -511,13 +511,13 @@ const InventoryReviewEditList = (props) => {
             ButtonTitle={'恢复层'}
             BtnPress={() => setRowRestoreOpen(true)}
             type={'yellowBtn'}
-            BTnWidth={150}
+            BTnWidth={Dimensions.get('window').width * 0.4}
           />
           <Button
             ButtonTitle={'删除层'}
             BtnPress={() => setRowDeleteOpen(true)}
             type={'blueBtn'}
-            BTnWidth={150}
+            BTnWidth={Dimensions.get('window').width * 0.4}
           />
         </View>
 
@@ -734,6 +734,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f8ff',
     fontSize: 10,
     textAlign: 'center',
+    color: "black"
   },
 
   title: {
@@ -743,6 +744,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 10,
     backgroundColor: '#fff',
+    color: "black"
   },
 
   deleteBtn: {
@@ -770,6 +772,7 @@ const styles = StyleSheet.create({
   itemArea: {
     fontSize: 14,
     textAlign: 'center',
+    color: "black"
   },
 
   cell: {
@@ -780,6 +783,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f8ff',
     fontSize: 10,
     textAlign: 'center',
+    color: "black"
   },
 });
 

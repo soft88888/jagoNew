@@ -324,7 +324,7 @@ const CardDetail = (props) => {
                 autoFocus={true}
                 placeholder={''}
                 selectTextOnFocus={true}
-                style={{ ...CStyles.InputStyle, paddingLeft: 12}}
+                style={{ ...CStyles.InputStyle, paddingLeft: 12 }}
                 multiline={false}
                 onChangeText={setPreferstarttime}
               />
@@ -339,7 +339,7 @@ const CardDetail = (props) => {
                 autoFocus={true}
                 placeholder={''}
                 selectTextOnFocus={true}
-                style={{ ...CStyles.InputStyle, paddingLeft: 12}}
+                style={{ ...CStyles.InputStyle, paddingLeft: 12 }}
                 multiline={false}
                 onChangeText={setPreferendtime}
               />
@@ -354,7 +354,7 @@ const CardDetail = (props) => {
                 autoFocus={true}
                 placeholder={''}
                 selectTextOnFocus={true}
-                style={{ ...CStyles.InputStyle, paddingLeft: 12}}
+                style={{ ...CStyles.InputStyle, paddingLeft: 12 }}
                 multiline={false}
                 onChangeText={setProstarttime}
               />
@@ -369,7 +369,7 @@ const CardDetail = (props) => {
                 autoFocus={true}
                 placeholder={''}
                 selectTextOnFocus={true}
-                style={{ ...CStyles.InputStyle, paddingLeft: 12}}
+                style={{ ...CStyles.InputStyle, paddingLeft: 12 }}
                 multiline={false}
                 onChangeText={setProendtime}
               />
@@ -381,7 +381,7 @@ const CardDetail = (props) => {
         renderItem={renderItem}
       /> */}
       </ScrollView>
-      <View style={{ justifyContent: 'center', flexDirection: 'row', paddingVertical: 10 }}>
+      <View style={{ justifyContent: 'center', flexDirection: 'row', paddingVertical: 10, marginBottom: 20 }}>
         <Button
           ButtonTitle={'开始'}
           BtnPress={() => onStart()}

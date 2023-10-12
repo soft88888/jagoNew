@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Modal, Text, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator, Dimensions, TextInput } from 'react-native';
+import { View, Modal, Text, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator, Dimensions, ScrollView } from 'react-native';
 import Header from '../../components/Header';
 import CStyles from '../../styles/CommonStyles';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -71,69 +71,71 @@ const Main = (props) => {
         </View>
       </Modal>
       <Text style={{ alignSelf: 'center', marginBottom: 10 }}>{projectItem.id}</Text>
-      <View style={styles.main}>
-        <Button
-          ButtonTitle={'项目信息'}
-          BtnPress={() => props.navigation.push('PromanageInfor')}
-          type={'yellowBtn'}
-          BTnWidth={300}
-          BTnHeight={"85%"}
-        />
-      </View>
-      <View style={styles.main}>
-        <Button
-          ButtonTitle={'QR号码'}
-          BtnPress={() => props.navigation.push('PromanageQrcode')}
-          type={'yellowBtn'}
-          BTnWidth={300}
-          BTnHeight={"85%"}
-        />
-      </View>
-      <View style={styles.main}>
-        <Button
-          ButtonTitle={'导入主档'}
-          BtnPress={() => props.navigation.push('PromanagePromaster')}
-          type={'yellowBtn'}
-          BTnWidth={300}
-          BTnHeight={"85%"}
-        />
-      </View>
-      <View style={styles.main}>
-        <Button
-          ButtonTitle={'工位设定'}
-          BtnPress={() => props.navigation.push('PromanageGongwei')}
-          type={'yellowBtn'}
-          BTnWidth={300}
-          BTnHeight={"85%"}
-        />
-      </View>
-      <View style={styles.main}>
-        <Button
-          ButtonTitle={'提交报告'}
-          BtnPress={() => props.navigation.push('PromanageReport')}
-          type={'yellowBtn'}
-          BTnWidth={300}
-          BTnHeight={"85%"}
-        />
-      </View>
-      <View style={styles.main}>
-        <Button
-          ButtonTitle={'停止'}
-          BtnPress={() => setisVisible(true)}
-          type={'yellowBtn'}
-          BTnWidth={300}
-          BTnHeight={"85%"}
-        />
-      </View>
-      <View style={styles.main}>
-        <Button
-          ButtonTitle={'人员状态'}
-          BtnPress={() => props.navigation.push('PromanagePersonal')}
-          type={'yellowBtn'}
-          BTnWidth={300}
-          BTnHeight={"85%"}
-        />
-      </View>
+      <ScrollView style={{ marginBottom: 20 }}>
+        <View style={{ ...styles.main, marginTop: 30 }}>
+          <Button
+            ButtonTitle={'项目信息'}
+            BtnPress={() => props.navigation.push('PromanageInfor')}
+            type={'yellowBtn'}
+            BTnWidth={300}
+            BTnHeight={50}
+          />
+        </View>
+        <View style={styles.main}>
+          <Button
+            ButtonTitle={'QR号码'}
+            BtnPress={() => props.navigation.push('PromanageQrcode')}
+            type={'yellowBtn'}
+            BTnWidth={300}
+            BTnHeight={50}
+          />
+        </View>
+        <View style={styles.main}>
+          <Button
+            ButtonTitle={'导入主档'}
+            BtnPress={() => props.navigation.push('PromanagePromaster')}
+            type={'yellowBtn'}
+            BTnWidth={300}
+            BTnHeight={50}
+          />
+        </View>
+        <View style={styles.main}>
+          <Button
+            ButtonTitle={'工位设定'}
+            BtnPress={() => props.navigation.push('PromanageGongwei')}
+            type={'yellowBtn'}
+            BTnWidth={300}
+            BTnHeight={50}
+          />
+        </View>
+        <View style={styles.main}>
+          <Button
+            ButtonTitle={'提交报告'}
+            BtnPress={() => props.navigation.push('PromanageReport')}
+            type={'yellowBtn'}
+            BTnWidth={300}
+            BTnHeight={50}
+          />
+        </View>
+        <View style={styles.main}>
+          <Button
+            ButtonTitle={'停止'}
+            BtnPress={() => setisVisible(true)}
+            type={'yellowBtn'}
+            BTnWidth={300}
+            BTnHeight={50}
+          />
+        </View>
+        <View style={styles.main}>
+          <Button
+            ButtonTitle={'人员状态'}
+            BtnPress={() => props.navigation.push('PromanagePersonal')}
+            type={'yellowBtn'}
+            BTnWidth={300}
+            BTnHeight={50}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -153,6 +155,7 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     height: "10%",
+    marginBottom: 15
   },
   modalContainer: {
     flex: 1,

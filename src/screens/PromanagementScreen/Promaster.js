@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Modal, Text, StyleSheet, TouchableOpacity, FlatList, Dimensions, Alert } from 'react-native';
+import { View, Modal, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions, Alert } from 'react-native';
 import Header from '../../components/Header';
 import ApiObject from '../../support/Api';
 import DocumentPicker from 'react-native-document-picker';
@@ -162,81 +162,83 @@ const Promaster = (props) => {
     return (
         <View style={styles.allcontent}>
             <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
-            <Text style={{ alignSelf: 'center', marginBottom: 2 }}>{projectItem.id}</Text>
-            <View style={{ width: '100%', alignItems: 'flex-start', marginBottom: 10, marginLeft: '10%' }}>
-                <Text style={{ fontSize: 16, color: 'black', fontWeight: "bold" }}>通用主档</Text>
-            </View>
-            <View style={styles.mark}>
-                {file1 && <Text>选取的文件:   {file1.name}</Text>}
-                {!file1 && <Text>没有选择文件</Text>}
-            </View>
-            <TouchableOpacity onPress={() => handlePickFile(1)}>
-                <View style={styles.uploadbutton}>
-                    <Icon1 name="plus" size={45} color={"#595959"} />
-                </View>
-            </TouchableOpacity>
-            <View style={styles.maincontent}>
-                <Button
-                    ButtonTitle={'Upload'}
-                    BtnPress={() => handleUpload(1)}
-                    type={'YellowBtn'}
-                    BTnWidth={'100%'}
-                    BTnHeight={50}
-                    disabled={disabled1}
-                    style={{ alignSelf: 'center' }}
-                />
-            </View>
-            <View style={{ marginTop: 30, width: '100%' }}>
+            <ScrollView style={{ flex: 1, marginBottom: 35 }}>
+                <Text style={{ alignSelf: 'center', marginBottom: 2 }}>{projectItem.id}</Text>
                 <View style={{ width: '100%', alignItems: 'flex-start', marginBottom: 10, marginLeft: '10%' }}>
-                    <Text style={{ fontSize: 16, color: 'black', fontWeight: "bold" }}>库存主档</Text>
+                    <Text style={{ fontSize: 16, color: 'black', fontWeight: "bold" }}>通用主档</Text>
                 </View>
                 <View style={styles.mark}>
-                    {file2 && <Text>选取的文件:   {file2.name}</Text>}
-                    {!file2 && <Text>没有选择文件</Text>}
+                    {file1 && <Text>选取的文件:   {file1.name}</Text>}
+                    {!file1 && <Text>没有选择文件</Text>}
                 </View>
-                <TouchableOpacity onPress={() => handlePickFile(2)}>
+                <TouchableOpacity onPress={() => handlePickFile(1)}>
                     <View style={styles.uploadbutton}>
                         <Icon1 name="plus" size={45} color={"#595959"} />
                     </View>
                 </TouchableOpacity>
-            </View>
-            <View style={styles.maincontent}>
-                <Button
-                    ButtonTitle={'Upload'}
-                    BtnPress={() => handleUpload(2)}
-                    type={'YellowBtn'}
-                    BTnWidth={'100%'}
-                    BTnHeight={50}
-                    disabled={disabled2}
-                    style={{ alignSelf: 'center' }}
-                />
-            </View>
-            <View style={styles.markcontent}>
-                {
-                    status == 1 ?
-                        <View style={styles.uploadingcontent}>
-                            <View style={{ flexDirection: 'row', alignSelf: 'flex-start', marginBottom: 5 }}>
-                                <Icon2 name="arrow-up" size={15} color={"#E19706"} />
-                                <Text style={{ color: '#E19706', fontSize: 10, marginLeft: 5 }}>Uploading</Text>
-                            </View>
-                            <ProgressBar progress={progress} width={screenWidth * 0.9 * 0.8} color={'#E19706'} />
-                        </View> :
-                        status == 2 ?
-                            <View style={styles.uploadsuccess}>
+                <View style={styles.maincontent}>
+                    <Button
+                        ButtonTitle={'Upload'}
+                        BtnPress={() => handleUpload(1)}
+                        type={'YellowBtn'}
+                        BTnWidth={'100%'}
+                        BTnHeight={50}
+                        disabled={disabled1}
+                        style={{ alignSelf: 'center' }}
+                    />
+                </View>
+                <View style={{ marginTop: 30, width: '100%' }}>
+                    <View style={{ width: '100%', alignItems: 'flex-start', marginBottom: 10, marginLeft: '10%' }}>
+                        <Text style={{ fontSize: 16, color: 'black', fontWeight: "bold" }}>库存主档</Text>
+                    </View>
+                    <View style={styles.mark}>
+                        {file2 && <Text>选取的文件:   {file2.name}</Text>}
+                        {!file2 && <Text>没有选择文件</Text>}
+                    </View>
+                    <TouchableOpacity onPress={() => handlePickFile(2)}>
+                        <View style={styles.uploadbutton}>
+                            <Icon1 name="plus" size={45} color={"#595959"} />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.maincontent}>
+                    <Button
+                        ButtonTitle={'Upload'}
+                        BtnPress={() => handleUpload(2)}
+                        type={'YellowBtn'}
+                        BTnWidth={'100%'}
+                        BTnHeight={50}
+                        disabled={disabled2}
+                        style={{ alignSelf: 'center' }}
+                    />
+                </View>
+                <View style={styles.markcontent}>
+                    {
+                        status == 1 ?
+                            <View style={styles.uploadingcontent}>
                                 <View style={{ flexDirection: 'row', alignSelf: 'flex-start', marginBottom: 5 }}>
-                                    <Icon1 name="checkcircleo" size={15} color={"#16B96B"} />
-                                    <Text style={{ color: '#16B96B', fontSize: 10, marginLeft: 5 }}>Uploading successful</Text>
+                                    <Icon2 name="arrow-up" size={15} color={"#E19706"} />
+                                    <Text style={{ color: '#E19706', fontSize: 10, marginLeft: 5 }}>Uploading</Text>
                                 </View>
+                                <ProgressBar progress={progress} width={screenWidth * 0.9 * 0.8} color={'#E19706'} />
                             </View> :
-                            status == 3 ?
-                                <View style={styles.uploadfail}>
+                            status == 2 ?
+                                <View style={styles.uploadsuccess}>
                                     <View style={{ flexDirection: 'row', alignSelf: 'flex-start', marginBottom: 5 }}>
-                                        <Icon1 name="closecircleo" size={15} color={"#B91616"} />
-                                        <Text style={{ color: '#B91616', fontSize: 10, marginLeft: 5 }}>Uploading failed</Text>
+                                        <Icon1 name="checkcircleo" size={15} color={"#16B96B"} />
+                                        <Text style={{ color: '#16B96B', fontSize: 10, marginLeft: 5 }}>Uploading successful</Text>
                                     </View>
-                                </View> : null
-                }
-            </View>
+                                </View> :
+                                status == 3 ?
+                                    <View style={styles.uploadfail}>
+                                        <View style={{ flexDirection: 'row', alignSelf: 'flex-start', marginBottom: 5 }}>
+                                            <Icon1 name="closecircleo" size={15} color={"#B91616"} />
+                                            <Text style={{ color: '#B91616', fontSize: 10, marginLeft: 5 }}>Uploading failed</Text>
+                                        </View>
+                                    </View> : null
+                    }
+                </View>
+            </ScrollView>
         </View >
     );
 }

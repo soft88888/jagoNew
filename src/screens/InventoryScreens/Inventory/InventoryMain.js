@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { StyleSheet, View, Text, Alert, TextInput, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Alert, TextInput, Dimensions, ScrollView } from 'react-native';
 import uuid from 'react-native-uuid';
 import Button from '../../../components/Button';
 import Header from '../../../components/Header';
@@ -24,6 +24,8 @@ const InventoryMain = (props) => {
   const [skuInputFocus, setSkuInputFocus] = useState(true);
   const [countInputFocus, setCountInputFocus] = useState(false);
   const [camera, setCamera] = useState(false)
+
+  const [status, setStatus] = useState(false)
 
   const [count, setCount] = useState('');
   const [commoditySku, setCommoditySku] = useState('');
@@ -67,6 +69,15 @@ const InventoryMain = (props) => {
       pipei();
     }
   }, [countInputFocus]);
+
+  useEffect(() => {
+    if (Number(count) !== 0 && commoditySku != "") {
+      setStatus(true);
+    }
+    else {
+      setStatus(false);
+    }
+  }, [count, commoditySku])
 
   const countChanged = () => {
     if (Number(count) !== 0 && count !== '' && (Number(count) > project.quantity_max || Number(count) < project.quantity_min)) {
@@ -171,7 +182,7 @@ const InventoryMain = (props) => {
     } else {
       insertRow(pipeiItemVal);
       skuRef.current.focus();
-      if(!camera) setCommoditySku("")
+      if (!camera) setCommoditySku("")
       maxSkuCountCheck();
     }
   }
@@ -247,6 +258,7 @@ const InventoryMain = (props) => {
 
   const skuScanOKFunc = (val) => {
     setCamera(true);
+
     setCommoditySku(val);
     setCodeInputMethod(SCAN_INPUT);
     countRef.current.focus();
@@ -275,7 +287,7 @@ const InventoryMain = (props) => {
       <View style={{ position: 'relative', height: Dimensions.get('window').height }}>
         <Header {...props} BtnPress={BackBtnPress} title={'盘点'} />
 
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
           <View style={{ justifyContent: 'center', flexDirection: 'row', paddingHorizontal: 30, paddingVertical: 10 }}>
             <Text style={CStyles.TextStyle}>SKU:</Text>
             <TextInput
@@ -289,6 +301,12 @@ const InventoryMain = (props) => {
               selectTextOnFocus={true}
               style={CStyles.InputStyle}
               multiline={false}
+              onKeyPress={({ nativeEvent }) => {
+                if (nativeEvent.key == 'Enter') {
+                  setCamera(true);
+                  countRef.current.focus();
+                }
+              }}
             />
             <Button
               disabled={!skuInputFocus}
@@ -349,7 +367,7 @@ const InventoryMain = (props) => {
         )} */}
           <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
             <Button
-              disabled={!countInputFocus}
+              disabled={!status}
               ButtonTitle={'记录数据'}
               BtnPress={() => insertRowConfirm()}
               type={'yellowBtn'}
@@ -395,13 +413,13 @@ const InventoryMain = (props) => {
                   paddingHorizontal: 25,
                 }}
               >
-                <Text style={{ fontSize: 14 }}>
+                <Text style={{ fontSize: 14, color: "black" }}>
                   区域: {gongweiPos.pianqu}
                 </Text>
-                <Text style={{ fontSize: 14 }}>
+                <Text style={{ fontSize: 14, color: "black" }}>
                   工位: {gongweiPos.gongwei?.toString().padStart(project.gongwei_max, "0")}
                 </Text>
-                <Text style={{ fontSize: 14 }}>
+                <Text style={{ fontSize: 14, color: "black" }}>
                   当前层: {rowPos}
                 </Text>
               </View>
@@ -414,21 +432,21 @@ const InventoryMain = (props) => {
                   paddingHorizontal: 25,
                 }}
               >
-                <Text style={{ flex: 1, fontSize: 12 }}>
+                <Text style={{ flex: 1, fontSize: 12, color: "black" }}>
                   当前层汇总：
                 </Text>
-                <Text style={{ flex: 1, fontSize: 12 }}>
+                <Text style={{ flex: 1, fontSize: 12, color: "black" }}>
                   {columnPos} 条
                 </Text>
-                <Text style={{ flex: 1, fontSize: 12 }}>
+                <Text style={{ flex: 1, fontSize: 12, color: "black" }}>
                   {sumCount} 件
                 </Text>
               </View>
             </View>
           </View>
-        </View>
-
+        </ScrollView>
         <FooterBar1 screenNavigate={screenNavigate} activeBtn={1} />
+
 
         {endModalOpen && (
           <InvEndModal setEndModalOpen={setEndModalOpen} navigation={props.navigation} />
@@ -454,6 +472,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f8ff',
     fontSize: 10,
     textAlign: 'center',
+    color: "black"
   },
 });
 

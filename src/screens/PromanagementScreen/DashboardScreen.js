@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Modal, Text, StyleSheet, TouchableOpacity, Alert, FlatList, ActivityIndicator, Dimensions, TextInput } from 'react-native';
+import { View, Modal, Text, StyleSheet, TouchableOpacity, Alert, FlatList, ActivityIndicator, Dimensions, TextInput,ScrollView } from 'react-native';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 import DropBox from '../../components/DropBox';
@@ -550,17 +550,16 @@ const DashboardScreen = (props) => {
         visible={isVisible}
         animationType="slide"
         transparent={true}
-        style={{ backgroundColor: 'red' }}
       >
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
+          <ScrollView style={styles.modalContent}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={{ color: '#282828', fontSize: 18 }}>项目追加</Text>
               <TouchableOpacity onPress={() => setisVisible(false)}>
                 <Icon name="close" size={30} style={{ marginRight: 10, color: '#000000' }} />
               </TouchableOpacity>
             </View>
-            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '5%', height: '8%' }}>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '7%' }}>
               <View style={{ width: '95%' }}>
                 <Text style={styles.modalText}>客户名称*庳存类型</Text>
                 <View style={{ width: '100%', height: '68%' }}>
@@ -580,7 +579,7 @@ const DashboardScreen = (props) => {
                 </View>
               </View>
             </View>
-            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '1%', height: '7%' }}>
               <View style={{ width: '45%' }}>
                 <Text style={styles.modalText}>客户编码</Text>
                 <View style={{ width: '100%', height: '60%' }}>
@@ -614,7 +613,7 @@ const DashboardScreen = (props) => {
                 </View>
               </View>
             </View>
-            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '1%', height: '7%' }}>
               <View style={{ width: '45%' }}>
                 <Text style={styles.modalText}>门店名称*</Text>
                 <View style={{ width: '100%', height: '60%' }}>
@@ -644,7 +643,7 @@ const DashboardScreen = (props) => {
                 </View>
               </View>
             </View>
-            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '2%', height: '8%' }}>
+            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', marginTop: '1%', height: '7%' }}>
               <View style={{ width: '45%' }}>
                 <Text style={styles.modalText}>门店联系人</Text>
                 <View style={{ width: '100%', height: '60%' }}>
@@ -896,7 +895,7 @@ const DashboardScreen = (props) => {
                 BTnWidth={300}
               />
             </View>
-          </View>
+          </ScrollView>
         </View>
 
       </Modal >
@@ -993,6 +992,9 @@ const DashboardScreen = (props) => {
             ListFooterComponent={renderFooter}
           />
       }
+      <View  style={{ height: 20  }}>
+        
+      </View>
     </View >
   );
 }
@@ -1044,14 +1046,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-
+    
   },
   modalContent: {
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 20,
     width: '95%',
-    height: 700,
+   
 
   },
   closeButton: {

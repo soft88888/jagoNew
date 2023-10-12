@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 const FooterBar4 = (props) => {
   return (
-    <View style={{ flexDirection: 'row', backgroundColor: '#012964', paddingTop: 10, paddingBottom: 10 }}>
+    <View style={{ flexDirection: 'row', backgroundColor: '#012964', paddingBottom: 5, height: 60 }}>
       <TouchableOpacity onPress={() => { props.screenInventory() }} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', height: 40 }}>
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ color: '#F8B502', fontSize: 17 }}>货架号设置</Text>

@@ -5,9 +5,9 @@ const { width, height } = Dimensions.get('window');
 
 const DrawerNavigation = () => {
     return (
-        <View style={{ flex: 1, backgroundColor: 'red', position: 'absolute', zIndex: 1000, height: height,width: width*0.8 }}>
+        <View style={{ flex: 1, backgroundColor: 'red', position: 'absolute', zIndex: 1000, height: height, width: width * 0.8 }}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Home</Text>
+                <Text style={{ color: "black" }}>Home</Text>
             </View>
             <TouchableOpacity
                 style={{ padding: 16, backgroundColor: 'lightgray' }}
@@ -15,7 +15,7 @@ const DrawerNavigation = () => {
                     // Implement navigation logic here
                 }}
             >
-                <Text>Drawer Item 1</Text>
+                <Text style={{ color: "black" }}>Drawer Item 1</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={{ padding: 16, backgroundColor: 'lightgray' }}
@@ -23,7 +23,7 @@ const DrawerNavigation = () => {
                     // Implement navigation logic here
                 }}
             >
-                <Text>Drawer Item 2</Text>
+                <Text style={{ color: "black" }}>Drawer Item 2</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={{ padding: 16, backgroundColor: 'lightgray' }}
@@ -31,7 +31,7 @@ const DrawerNavigation = () => {
                     // Implement navigation logic here
                 }}
             >
-                <Text>Drawer Item 3</Text>
+                <Text style={{ color: "black" }}>Drawer Item 3</Text>
             </TouchableOpacity>
         </View>
     );

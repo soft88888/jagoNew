@@ -114,37 +114,37 @@ const Main = (props) => {
         <Button1
           ButtonTitle={'登录项目'}
           BtnPress={() => toProjectScan()}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
         <Button1
           ButtonTitle={'下载主档'}
           BtnPress={() => toNextScene('MasterFile')}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
         <Button1
           ButtonTitle={'进入盘点'}
           BtnPress={() => toNextScene('AreaValue')}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
         <Button1
           ButtonTitle={'盘点复查'}
           BtnPress={() => toNextScene('InventoryReview')}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
         <Button1
           ButtonTitle={'差异调查'}
           BtnPress={() => toNextScene('DifferenceSurvey')}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
         <Button1
           ButtonTitle={'剩余数据'}
           BtnPress={() => toNextScene('RestDataUpload')}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
         <Button1
           ButtonTitle={'工作结束'}
           BtnPress={() => endWork()}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
       </View>
     </View>

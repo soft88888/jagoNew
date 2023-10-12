@@ -286,7 +286,7 @@ const InforEdit = (props) => {
   }
 
   return (
-    <ScrollView style={styles.allcontent}>
+    <View style={styles.allcontent}>
       <Header {...props} BtnPress={BackBtnPress} title={'项目管理'} />
       <Modal
         visible={isVisible}
@@ -674,7 +674,7 @@ const InforEdit = (props) => {
           />
         </View>
       </ScrollView>
-    </ScrollView>
+    </View>
   );
 }
 

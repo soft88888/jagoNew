@@ -264,7 +264,7 @@ const AreaValue = (props) => {
               ButtonTitle={'下一步'}
               BtnPress={() => toNextStep()}
               type={'blueBtn'}
-              BTnWidth={320}
+              BTnWidth={Dimensions.get('window').width * 0.9}
             />
           </View>
 
@@ -280,7 +280,7 @@ const AreaValue = (props) => {
               ButtonTitle={'综合数据'}
               BtnPress={() => getAllScanData()}
               type={'blueBtn'}
-              BTnWidth={320}
+              BTnWidth={Dimensions.get('window').width * 0.9}
             />
           </View>
 
@@ -388,7 +388,8 @@ const styles = StyleSheet.create({
     borderColor: '#9f9f9f',
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+    color: "black"
   },
 
   head: {
