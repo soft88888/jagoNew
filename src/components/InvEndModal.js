@@ -45,10 +45,10 @@ const InvEndModal = (props) => {
 
     const positionOut = async () => {
         await ApiObject.gongweiEndUpdate({ qrcode: project.qrcode });
-        dispatch(await setGongweiPos({}));
-        dispatch(await setRowPos(1));
-        dispatch(await setColumnPos(1));
-        dispatch(await setSkuCount(0));
+        dispatch(setGongweiPos({}));
+        dispatch(setRowPos(1));
+        dispatch(setColumnPos(1));
+        dispatch(setSkuCount(0));
         props.navigation.push('AreaValue');
     };
 

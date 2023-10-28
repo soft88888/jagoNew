@@ -31,6 +31,8 @@
     "react-native-fs": "2.19.0",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-image-picker": "2.3.3",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-keyevent": "^0.3.1",
     "react-native-material-design": "^0.3.7",
     "react-native-modal": "^13.0.1",
     "react-native-modal-datetime-picker": "^17.0.0",

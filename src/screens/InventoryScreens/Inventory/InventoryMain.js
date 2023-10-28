@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { StyleSheet, View, Text, Alert, TextInput, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Alert, TextInput, Dimensions, ScrollView, Keyboard } from 'react-native';
 import uuid from 'react-native-uuid';
 import Button from '../../../components/Button';
 import Header from '../../../components/Header';
@@ -13,19 +13,27 @@ import { setScreenLoading, setColumnPos, setSkuCount } from '../../../reducers/B
 import { DB, tbName, pipeiSKU } from '../../../hooks/dbHooks';
 import SoundObject from '../../../utils/sound';
 import InvEndModal from '../../../components/InvEndModal';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import KeyEvent from 'react-native-keyevent';
 
 const InventoryMain = (props) => {
   const dispatch = useDispatch();
   const { user, project, gongweiPos, rowPos, columnPos, skuCount, useZudang } = useSelector(state => state.base);
   const { scandataTb } = tbName(user.id);
 
+
   const [scanScreen, setScanScreen] = useState(false);
   const [calScreen, setCalScreen] = useState(false);
   const [skuInputFocus, setSkuInputFocus] = useState(true);
   const [countInputFocus, setCountInputFocus] = useState(false);
-  const [camera, setCamera] = useState(false)
+  const [camera, setCamera] = useState(true)
 
-  const [status, setStatus] = useState(false)
+  const [row, setRow] = useState(rowPos)
+  const [column, setColumn] = useState(columnPos)
+  const [skuC, setskuC] = useState(skuCount)
+
+
+  const [status, setStatus] = useState(true)
 
   const [count, setCount] = useState('');
   const [commoditySku, setCommoditySku] = useState('');
@@ -41,7 +49,17 @@ const InventoryMain = (props) => {
   const skuRef = useRef(null);
   const countRef = useRef(null);
 
+  const [first, setFirst] = useState(true)
+
+
   useEffect(() => {
+    skuRef.current.focus();
+    setCamera(true)
+  }, [])
+  
+
+  useEffect(() => {
+   
     dispatch(setScreenLoading(true));
 
     if (project.quantity_min == project.quantity_max) {
@@ -53,9 +71,17 @@ const InventoryMain = (props) => {
     dispatch(setScreenLoading(false));
   }, []);
 
+  // useEffect(() => {
+  //   countChanged();
+  // }, [count]);
+
   useEffect(() => {
-    countChanged();
-  }, [count]);
+    if (status) {
+    
+      skuRef.current.focus();
+    }
+  }, [status])
+
 
   useEffect(() => {
     if (commoditySku.indexOf('\n') !== -1) {
@@ -64,20 +90,20 @@ const InventoryMain = (props) => {
     }
   }, [commoditySku]);
 
-  useEffect(() => {
-    if (countInputFocus) {
-      pipei();
-    }
-  }, [countInputFocus]);
+  // useEffect(() => {
+  //   if (countInputFocus) {
+  //     pipei();
+  //   }
+  // }, [countInputFocus]);
 
-  useEffect(() => {
-    if (Number(count) !== 0 && commoditySku != "") {
-      setStatus(true);
-    }
-    else {
-      setStatus(false);
-    }
-  }, [count, commoditySku])
+  // useEffect(() => {
+  //   if (Number(count) !== 0 && commoditySku != "") {
+  //     setStatus(true);
+  //   }
+  //   else {
+  //     setStatus(false);
+  //   }
+  // }, [count, commoditySku])
 
   const countChanged = () => {
     if (Number(count) !== 0 && count !== '' && (Number(count) > project.quantity_max || Number(count) < project.quantity_min)) {
@@ -111,6 +137,7 @@ const InventoryMain = (props) => {
         }
       )
     });
+    setFirst(true)
   };
 
   const BackBtnPress = async () => {
@@ -121,8 +148,12 @@ const InventoryMain = (props) => {
     if (id == 1) {
       props.navigation.push('InventoryMain');
     } else if (id == 2) {
+      dispatch(setColumnPos(column));
+      dispatch(setSkuCount(skuC));
       props.navigation.push('InventoryLayer');
     } else if (id == 3) {
+      dispatch(setColumnPos(column));
+      dispatch(setSkuCount(skuC));
       props.navigation.push('InventoryEditData');
     }
   }
@@ -166,13 +197,16 @@ const InventoryMain = (props) => {
           insertRowConfirm(null);
           if (camera) skuRef.current.focus();
         }
+        else if (camera == false) {
+          insertRowConfirm(null);
+        }
       }
     }
     setCamera(false);
   }
 
   const insertRowConfirm = (pipeiItemVal = pipeiItem) => {
-    if (Number(count) === 0 || count === '') {
+    if ((Number(count) === 0 || count === '')) {
       Alert.alert(
         PROGRAM_NAME,
         '数量信息为空。 请输入正确的数量。',
@@ -181,9 +215,8 @@ const InventoryMain = (props) => {
       );
     } else {
       insertRow(pipeiItemVal);
-      skuRef.current.focus();
       if (!camera) setCommoditySku("")
-      maxSkuCountCheck();
+      // maxSkuCountCheck();
     }
   }
 
@@ -218,7 +251,7 @@ const InventoryMain = (props) => {
           pihao,
           codeInputMethod,
           count,
-          columnPos,
+          column,
           rowPos,
           0,
           uuid.v4(),
@@ -233,16 +266,20 @@ const InventoryMain = (props) => {
         (txn, results) => {
           setPipeiItem(null);
           if (camera) setCommoditySku('');
-          setPihao('');
           setCount(project.quantity_min == project.quantity_max ? project.quantity_min : '');
           setQuantityClose(true);
-          setCodeInputMethod(SCAN_INPUT);
-          dispatch(setColumnPos(Number(columnPos) + 1));
-          dispatch(setSkuCount(Number(skuCount) + 1));
+          let colu = column + 1;
+          setColumn(colu)
         },
       );
+      txn.executeSql(`SELECT SUM("count") as sumCount FROM ${scandataTb} WHERE gongwei_id = ? AND row = ?`,
+        [gongweiPos.id, rowPos],
+        (txn, results) => {
+          setSumCount(results.rows.item(0).sumCount ?? 0);
+          setStatus(true);
+        }
+      );
     });
-    callGetGongweiData();
   };
 
   const maxSkuCountCheck = () => {
@@ -270,15 +307,16 @@ const InventoryMain = (props) => {
     setScanScreen(false);
   }
 
-  const skuHandFunc = (val) => {
-    setCommoditySku(val);
-    setCodeInputMethod(HAND_INPUT);
+  const skuHandFunc = async (val) => {
+    await setCommoditySku(val);
   }
 
   const countCalFunc = (val) => {
     setCount(val);
     setCalScreen(false);
   }
+
+
 
   return (
     <>
@@ -293,7 +331,7 @@ const InventoryMain = (props) => {
             <TextInput
               ref={skuRef}
               value={commoditySku}
-              autoFocus={true}
+              autoFocus={false}
               onBlur={() => setSkuInputFocus(false)}
               onFocus={() => setSkuInputFocus(true)}
               onChangeText={skuHandFunc}
@@ -301,15 +339,40 @@ const InventoryMain = (props) => {
               selectTextOnFocus={true}
               style={CStyles.InputStyle}
               multiline={false}
-              onKeyPress={({ nativeEvent }) => {
-                if (nativeEvent.key == 'Enter') {
+              blurOnSubmit={false}
+              onKeyPress={async ({ nativeEvent }) => {
+                // console.log("3333333333333333333")
+                if (nativeEvent.key == 'Enter' && status) {
                   setCamera(true);
-                  countRef.current.focus();
+                  setStatus(false)
+                  if (useZudang == 0) {
+                    let result = await pipeiSKU(commoditySku, user.id);
+                    if (result !== null) {
+                      setPipeiItem(result);
+                      if (project.quantity_min == project.quantity_max && camera == true) {
+                        insertRow(result);
+                      }
+                    } else {
+                      Alert.alert(
+                        PROGRAM_NAME,
+                        '条形码不存在',
+                        [
+                          { text: '是(Y)', onPress: () => project.quantity_min == project.quantity_max && camera == true && insertRowConfirm() },
+                          { text: '不(N)', onPress: () => { if (camera) skuRef.current.focus(); } },
+                        ],
+                        { cancelable: false },
+                      );
+                      insertRow(null)
+                    }
+                  }
+                  else {
+                    insertRow(null)
+                  }
                 }
               }}
             />
             <Button
-              disabled={!skuInputFocus}
+              disabled={false}
               ButtonTitle={'匹配'}
               BtnPress={pipei}
               type={'blueBtn'}
@@ -318,7 +381,7 @@ const InventoryMain = (props) => {
           </View>
           <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
             <Button
-              disabled={!skuInputFocus}
+              disabled={false}
               ButtonTitle={'扫描'}
               BtnPress={() => setScanScreen(true)}
               type={'yellowBtn'}
@@ -340,36 +403,18 @@ const InventoryMain = (props) => {
               style={CStyles.InputStyle}
             />
             <Button
-              disabled={!countInputFocus}
+              disabled={false}
               ButtonTitle={'计算机'}
               BtnPress={() => setCalScreen(true)}
               type={'yellowBtn'}
               BTnWidth={100}
             />
           </View>
-          {/* {project.pihao && (
-          <View style={{ marginLeft: 5 }}>
-            <InputText
-              refName={(ref) => {
-                // pihaoRef = ref;
-              }}
-              inputValue={pihao}
-              // autoFocus={countPihao}
-              inputChange={(pihao) => {
-                setPihao(pihao);
-              }}
-              InputTitle={'批号'}
-              InputTXTWidth={300}
-              type={'Disp'}
-              placeholder={''}
-            />
-          </View>
-        )} */}
           <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
             <Button
-              disabled={!status}
+              disabled={false}
               ButtonTitle={'记录数据'}
-              BtnPress={() => insertRowConfirm()}
+              BtnPress={() => pipei()}
               type={'yellowBtn'}
               BTnWidth={300}
             />
