@@ -90,8 +90,8 @@ export default (styles = StyleSheet.create({
     },
     InputStyle:{
         backgroundColor:'white',
-        height: 36,
-        paddingLeft: 10,
+        height: 33,
+        paddingLeft: 20,
         fontSize: 10,
         flex: 1,
         borderWidth:1,
@@ -100,6 +100,7 @@ export default (styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 5,
+        color:'black'
     },
     TextStyle:{
         color:TEXT_DEFAULT_COLOR,
@@ -154,6 +155,7 @@ export default (styles = StyleSheet.create({
     },
     InventoryTxt:{
         fontSize: 10, 
-        marginTop:5
+        marginTop:5,
+        color: "black"
     },
 }))

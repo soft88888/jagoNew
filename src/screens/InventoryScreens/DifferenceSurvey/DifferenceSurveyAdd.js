@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { StyleSheet, View, Text, Alert, TextInput, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Alert, TextInput, Dimensions, ScrollView } from 'react-native';
 import uuid from 'react-native-uuid';
 import Button from '../../../components/Button';
 import Header from '../../../components/Header';
@@ -68,39 +68,39 @@ const DifferenceSurveyAdd = (props) => {
     countChanged();
   }, [count]);
 
-  useEffect(() => {
-    if (countInputFocus && !pipeiStatus) {
-      pipei();
-    }
-  }, [countInputFocus]);
+  // useEffect(() => {
+  //   if (countInputFocus && !pipeiStatus) {
+  //     pipei();
+  //   }
+  // }, [countInputFocus]);
 
-  useEffect(() => {
-    if (rowInputFocus && !pipeiStatus) {
-      pipei();
-    }
-  }, [rowInputFocus]);
+  // useEffect(() => {
+  //   if (rowInputFocus && !pipeiStatus) {
+  //     pipei();
+  //   }
+  // }, [rowInputFocus]);
 
-  useEffect(() => {
-    if (gongweiInputFocus && !pipeiStatus) {
-      pipei();
-    }
-  }, [gongweiInputFocus]);
+  // useEffect(() => {
+  //   if (gongweiInputFocus && !pipeiStatus) {
+  //     pipei();
+  //   }
+  // }, [gongweiInputFocus]);
 
-  useEffect(() => {
-    if (columnInputFocus && !pipeiStatus) {
-      pipei();
-    }
-  }, [columnInputFocus]);
+  // useEffect(() => {
+  //   if (columnInputFocus && !pipeiStatus) {
+  //     pipei();
+  //   }
+  // }, [columnInputFocus]);
 
-  useEffect(() => {
-    setPipeiStatus(false);
-  }, [commoditySku]);
+  // useEffect(() => {
+  //   setPipeiStatus(false);
+  // }, [commoditySku]);
 
-  useEffect(() => {
-    if (commoditySku !== '') {
-      setPipeiStatus(true);
-    }
-  }, [pipeiItem]);
+  // useEffect(() => {
+  //   if (commoditySku !== '') {
+  //     setPipeiStatus(true);
+  //   }
+  // }, [pipeiItem]);
 
   useEffect(() => {
     DB.transaction((tx) => {
@@ -121,7 +121,7 @@ const DifferenceSurveyAdd = (props) => {
   }, [gongwei]);
 
   useEffect(() => {
-    if (pipeiStatus && commoditySku !== '' && Number(count) !== 0 && count !== '' && Number(row) !== 0 && row !== '' && gongwei !== '' && pianqu !== '' && column !== '') {
+    if (commoditySku !== '' && Number(count) !== 0 && count !== '' && Number(row) !== 0 && row !== '' && gongwei !== '' && column !== '') {
       setConfirm(true);
     } else {
       setConfirm(false);
@@ -197,38 +197,17 @@ const DifferenceSurveyAdd = (props) => {
         { cancelable: false },
       );
     } else {
-      if (useZudang == 0) {
-        let result = await pipeiSKU(commoditySku, user.id);
-        if (result !== null) {
-          setPipeiItem(result);
-          if (project.quantity_min == project.quantity_max) {
-            gongweiRef.current.focus();
-          }
-        } else {
-          Alert.alert(
-            PROGRAM_NAME,
-            '条形码不存在',
-            [
-              {
-                text: '是(Y)',
-                onPress: () => {
-                  setPipeiStatus(true);
-                  if (project.quantity_min == project.quantity_max) {
-                    gongweiRef.current.focus();
-                  }
-                },
-              },
-              { text: '不(N)', onPress: () => skuRef.current.focus() },
-            ],
-            { cancelable: false },
-          );
-        }
-      }
-      else {
-        setPipeiItem(null);
-        if (project.quantity_min == project.quantity_max) {
-          gongweiRef.current.focus();
-        }
+      let result = await pipeiSKU(commoditySku, user.id);
+      if (result !== null) {
+        setPipeiItem(result);
+        insertRow()
+      } else {
+        Alert.alert(
+          PROGRAM_NAME,
+          '条形码不存在',
+          [{ text: '是(Y)', onPress: () => { skuRef.current.focus(); setConfirm(false) } }],
+          { cancelable: false },
+        );
       }
     }
   }
@@ -244,6 +223,7 @@ const DifferenceSurveyAdd = (props) => {
   };
 
   const insertRow = () => {
+
     var date = new Date();
     var scantime =
       [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-') +
@@ -307,7 +287,7 @@ const DifferenceSurveyAdd = (props) => {
       <View style={{ position: 'relative', height: Dimensions.get('window').height }}>
         <Header {...props} BtnPress={BackBtnPress} title={'差异调查'} />
 
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
           <View style={{ justifyContent: 'center', flexDirection: 'row', paddingHorizontal: 30, paddingVertical: 10 }}>
             <Text style={{ ...CStyles.TextStyle, width: 25, textAlign: 'right' }}>SKU:</Text>
             <TextInput
@@ -320,7 +300,12 @@ const DifferenceSurveyAdd = (props) => {
               placeholder={''}
               selectTextOnFocus={true}
               style={CStyles.InputStyle}
-              multiline={true}
+              multiline={false}
+              onKeyPress={({ nativeEvent }) => {
+                if (nativeEvent.key == 'Enter') {
+                  countRef.current.focus();
+                }
+              }}
             />
             <Button
               disabled={!skuInputFocus}
@@ -439,13 +424,13 @@ const DifferenceSurveyAdd = (props) => {
             <Button
               disabled={!confirm}
               ButtonTitle={'记录数据'}
-              BtnPress={() => insertRow()}
+              BtnPress={() => pipei()}
               type={'yellowBtn'}
               BTnWidth={300}
             />
           </View>
 
-          <View style={{ marginTop: 20 }}>
+          <View style={{ marginTop: 20, marginBottom: 20 }}>
             <View style={styles.container}>
               <Text style={{ ...styles.cell, flex: 1 }}>商品名称</Text>
               <Text style={{ ...styles.cell, flex: 3 }}>{pipeiItem?.commodity_name}</Text>
@@ -475,7 +460,7 @@ const DifferenceSurveyAdd = (props) => {
               <Text style={{ ...styles.cell, flex: 3 }}>{pipeiItem?.unit}</Text>
             </View>
           </View>
-        </View>
+        </ScrollView>
 
         <FooterBar3 screenNavigate={screenNavigate} activeBtn={1} />
 
@@ -503,6 +488,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f8ff',
     fontSize: 10,
     textAlign: 'center',
+    color: 'black'
   },
 });
 

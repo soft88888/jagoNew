@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const FooterBar3 = (props) => {
     return (
-        <View style={{ flexDirection: 'row', backgroundColor: '#012964', paddingTop: 10, paddingBottom: 10 }}>
+        <View style={{ flexDirection: 'row', backgroundColor: '#012964', paddingBottom: 5, height: 100 }}>
             <TouchableOpacity onPress={() => { props.screenNavigate(1) }} style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Icon name="plus-box-multiple-outline" size={30} color={props.activeBtn == 1 ? "#F8B502" : "#fff"} />
                 <Text style={{ color: props.activeBtn == 1 ? "#F8B502" : "#fff" }}>新增</Text>

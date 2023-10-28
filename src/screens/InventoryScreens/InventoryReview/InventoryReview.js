@@ -219,7 +219,7 @@ const InventoryReview = (props) => {
               ButtonTitle={'下一步'}
               BtnPress={() => toNextStep()}
               type={'blueBtn'}
-              BTnWidth={320}
+              BTnWidth={Dimensions.get('window').width * 0.9}
             />
           </View>
         </View>

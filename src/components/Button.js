@@ -10,15 +10,31 @@ const Button = (props) => {
         onPress={() => props.BtnPress()}
         disabled={props.disabled}
       >
-        <View
-          opacity={props.disabled ? 0.5 : 1}
-          style={{
-            ...props.type == 'blueBtn' ? CStyles.BlueBtn : CStyles.YellowBtn, flexDirection: 'row'
-          }}
-        >
-          <Text style={CStyles.BtnText}>{props.ButtonTitle}</Text>
-          {props.notification && <Icon name="notifications" size={20} color="red" />}
-        </View>
+        {
+          props.BTnHeight ?
+            <View
+              opacity={props.disabled ? 0.5 : 1}
+              style={{
+                ...props.type == 'blueBtn' ? CStyles.BlueBtn : CStyles.YellowBtn, height: props.BTnHeight,
+                flexDirection:'row'
+              }}
+            >
+              <Text style={{ ...CStyles.BtnText, alignSelf: 'center' }}>{props.ButtonTitle}</Text>
+              {props.notification && <Icon name="notifications" size={20} color="red" />}
+            </View>
+            :
+            <View
+              opacity={props.disabled ? 0.5 : 1}
+              style={{
+                ...props.type == 'blueBtn' ? CStyles.BlueBtn : CStyles.YellowBtn,
+                flexDirection:'row'
+              }}
+            >
+              <Text style={{ ...CStyles.BtnText, alignSelf: 'center' }}>{props.ButtonTitle}</Text>
+              {props.notification && <Icon name="notifications" size={20} color="red" />}
+            </View>
+        }
+
       </TouchableOpacity>
     </View>
   );

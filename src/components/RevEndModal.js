@@ -27,7 +27,7 @@ const RevEndModal = (props) => {
 
     const uploadData = async (data) => {
         var result = await ApiObject.uploadScanData({ data: data, work_type: REV_TYPE, qrcode: project.qrcode });
-        
+
         if (result !== null) {
             DB.transaction((tx) => {
                 tx.executeSql(
@@ -58,7 +58,7 @@ const RevEndModal = (props) => {
                 <Text style={{ fontSize: 18 }}>{PROGRAM_NAME}</Text>
 
                 <View style={{ alignItems: 'center' }}>
-                    <Text style={{ textAlign: 'center', fontSize: 16, marginVertical: 30 }}>
+                    <Text style={{ textAlign: 'center', fontSize: 16, marginVertical: 30, color: "black" }}>
                         您要结束此工位的复查工作吗？
                     </Text>
                 </View>

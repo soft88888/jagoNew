@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { persistReducer } from "redux-persist"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { act } from "react-test-renderer"
 
 const BaseReducer = createSlice({
   name: "Base",
@@ -24,9 +25,37 @@ const BaseReducer = createSlice({
     diffPhotos: [],
     mistakes: [],
     diffBia: '',
-    useZudang: 0
+    useZudang: 0,
+    projectItem: {},
+    qrcode: '',
+    proselectedDate: '',
+    generalDown: false,
+    inventoryDown: false,
+    categoryDown: false,
+    gongweiDown: false
   },
   reducers: {
+    setgeneralDown(state, action) {
+      state.generalDown = action.payload
+    },
+    setinventoryDown(state, action) {
+      state.inventoryDown = action.payload
+    },
+    setcategoryDown(state, action) {
+      state.categoryDown = action.payload
+    },
+    setgongweiDown(state, action) {
+      state.gongweiDown = action.payload
+    },
+    setqrcode(state, action) {
+      state.qrcode = action.payload
+    },
+    setProSelectDate(state, action) {
+      state.proselectedDate = action.payload
+    },
+    setProjectItem(state, action) {
+      state.projectItem = action.payload
+    },
     setAccessToken(state, action) {
       state.accessToken = action.payload
     },
@@ -110,7 +139,14 @@ export const {
   setDiffPhotos,
   setMistakes,
   setDiffBia,
-  setZudang
+  setZudang,
+  setProjectItem,
+  setqrcode,
+  setProSelectDate,
+  setgeneralDown,
+  setinventoryDown,
+  setcategoryDown,
+  setgongweiDown
 } = BaseReducer.actions
 
 const persistConfig = {

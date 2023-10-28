@@ -37,6 +37,18 @@ import DifferenceSurveyDelete from './InventoryScreens/DifferenceSurvey/Differen
 
 import RestDataUploadScreen from './InventoryScreens/RestDataUploadScreen/RestDataUpload';
 
+import ClientDashbardScreen from './ClientScreens/DashboardScreen';
+
+import PromanageDashbardScreen from './PromanagementScreen/DashboardScreen';
+import PromanageCardScreen from './PromanagementScreen/CardDetail';
+import PromanageMainScreen from './PromanagementScreen/Main';
+import PromanageQrScreen from './PromanagementScreen/QrScreen';
+import PromanageInforScreen from './PromanagementScreen/Infor';
+import PromanageInforEditScreen from './PromanagementScreen/InforEdit';
+import PromanageGongweiScreen from './PromanagementScreen/Gongwei';
+import PromanageReportScreen from './PromanagementScreen/Report';
+import PromanagePersonalScreen from './PromanagementScreen/Personal';
+import PromanagePromasterScreen from './PromanagementScreen/Promaster';
 
 const AppStack = createStackNavigator(
   {
@@ -172,9 +184,75 @@ const AppStack = createStackNavigator(
         headerShown: false,
       },
     },
+    ClientDashboard: {
+      screen: ClientDashbardScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    PromanageDashboard: {
+      screen: PromanageDashbardScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    PromanageCard: {
+      screen: PromanageCardScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    PromanageMain: {
+      screen: PromanageMainScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    PromanageQrcode: {
+      screen: PromanageQrScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    PromanageInfor: {
+      screen: PromanageInforScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    PromanageInforEdit: {
+      screen: PromanageInforEditScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    PromanageGongwei: {
+      screen: PromanageGongweiScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    PromanageReport: {
+      screen: PromanageReportScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    PromanagePersonal: {
+      screen: PromanagePersonalScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    PromanagePromaster: {
+      screen: PromanagePromasterScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
   },
   {
-    initialRouteName: 'Management',
+    initialRouteName: 'PromanageDashboard',
     defaultNavigationOptions: {
       ...TransitionPresets.SlideFromRightIOS,
     },

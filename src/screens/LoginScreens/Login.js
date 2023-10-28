@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { View, Text, Image, TouchableOpacity, Alert, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Alert, TextInput, Dimensions } from 'react-native';
 import LogButton from '../../components/LogButton';
 import ApiObject from '../../support/Api';
 import CStyles from '../../styles/CommonStyles';
@@ -12,6 +12,7 @@ const Login = (props) => {
   const [inputValueTF, setInputValueTF] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const screenHeight = Dimensions.get('window').height;
 
   const LogoImg = '../../assets/images/Logo.png';
   const Checkbox_Off = '../../assets/images/Checkbox_Off.png';
@@ -35,7 +36,7 @@ const Login = (props) => {
       Alert.alert(
         PROGRAM_NAME,
         '登录成功。',
-        [{ text: '是(OK)', onPress: () => props.navigation.navigate('Management') }],
+        [{ text: '是(OK)', onPress: () => props.navigation.navigate('PromanageDashboard') }],
         { cancelable: false },
       );
     }
@@ -44,18 +45,17 @@ const Login = (props) => {
   }
 
   return (
-    <View style={{ position: 'relative', minHeight: '100%', paddingTop: 40 }}>
-      <View style={{ alignItems: 'center' }}>
-        <Image source={require(LogoImg)} />
+    <View style={{ position: 'relative', minHeight: '100%', height: screenHeight, paddingTop: 40 }}>
+      <View style={{ alignItems: 'center', height: screenHeight * 0.15 }}>
+        <Image style={{ height: screenHeight * 0.07 }} source={require(LogoImg)} />
 
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={{ fontSize: 36, color: '#012964', fontWeight: 'bold' }}>GongXing</Text>
-
-          <Text style={{ fontSize: 36, color: '#F8B502', fontWeight: 'bold' }}>盘点</Text>
+        <View style={{ flexDirection: 'row', height: screenHeight * 0.08 }}>
+          <Text style={{ fontSize: 32, color: '#012964', fontWeight: 'bold' }}>GongXing</Text>
+          <Text style={{ fontSize: 32, color: '#F8B502', fontWeight: 'bold' }}>盘点</Text>
         </View>
       </View>
 
-      <View style={{ alignItems: 'center', marginTop: 30 }}>
+      <View style={{ alignItems: 'center', marginTop: screenHeight * 0.05, height: screenHeight * 0.5 }}>
         <View style={{ justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 30, paddingVertical: 5 }}>
           <TextInput
             value={email}
@@ -75,7 +75,7 @@ const Login = (props) => {
           />
         </View>
 
-        <View style={{ flexDirection: 'row', marginTop: 20, marginLeft: 30, marginRight: 30 }}>
+        <View style={{ flexDirection: 'row', marginTop: screenHeight * 0.02, marginLeft: 30, marginRight: 30 }}>
           <TouchableOpacity style={{ flex: 1, alignItems: 'flex-start' }} onPress={() => props.navigation.navigate('Register')}>
             <Text style={{ fontSize: 16, color: '#F8B502' }}>创建帐号</Text>
           </TouchableOpacity>
@@ -85,27 +85,26 @@ const Login = (props) => {
           </TouchableOpacity>
         </View>
 
-        <View style={{ marginTop: 150 }}>
+        <View style={{ marginTop: screenHeight * 0.1 }}>
           <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image source={require(Checkbox_Off)} />
             <Text style={{ fontSize: 14, color: '#8D90A6' }}>同意《服务条款》和《隐私政策》</Text>
           </TouchableOpacity>
         </View>
-      </View>
-
-      <View style={{ alignItems: 'center', marginBottom: 50 }}>
-        {inputValueTF ?
-          <LogButton ButtonTitle={"登入"} LogBtn={() => loginFunc()} type={"able"} />
-          :
-          <LogButton ButtonTitle={"登入"} LogBtn={() => {
-            Alert.alert(
-              PROGRAM_NAME,
-              '请输入电子邮件和密码',
-              [{ text: 'OK', onPress: () => { } }],
-              { cancelable: false },
-            );
-          }} type={"disable"} />
-        }
+        <View style={{ alignItems: 'center', marginBottom: screenHeight * 0.5, }}>
+          {inputValueTF ?
+            <LogButton ButtonTitle={"登入"} LogBtn={() => loginFunc()} type={"able"} />
+            :
+            <LogButton ButtonTitle={"登入"} LogBtn={() => {
+              Alert.alert(
+                PROGRAM_NAME,
+                '请输入电子邮件和密码',
+                [{ text: 'OK', onPress: () => { } }],
+                { cancelable: false },
+              );
+            }} type={"disable"} />
+          }
+        </View>
       </View>
     </View>
   );

@@ -85,7 +85,7 @@ class Api {
           Alert.alert(
             PROGRAM_NAME,
             '登录有效期已过。请重新登录。',
-            [{ text: '是(Y)', onPress: () => this.props?.navigation.push('Login') }],
+            [{ text: '是(Y)', onPress: () => console.log("fewfwef") }],
             { cancelable: false },
           );
         } else if (response.status === 500) {
@@ -114,6 +114,161 @@ class Api {
         );
       });
 
+    return result;
+  }
+
+
+  async uploadpostApi(response) {
+    var result = null;
+    if (response.status === 200) {
+
+      let responseJson = response.data;
+      if (responseJson.status) {
+        result = responseJson.data;
+      } else {
+        switch (responseJson.error) {
+          case 'verifyNo':
+            props.navigation.navigate('PhoneVerifyScreen');
+            break;
+
+          case 'endInvGongwei':
+          case 'endRevGongwei':
+          case 'otherUserGongwei':
+            await new Promise(resolve => {
+              Alert.alert(
+                PROGRAM_NAME,
+                responseJson.message ?? 'Error!!',
+                [
+                  { text: '是(Y)', onPress: () => { result = 'reApiForce'; resolve(); } },
+                  { text: '不(N)', onPress: () => resolve() },
+                ],
+                { cancelable: false },
+              );
+            });
+            result = "error";
+            break;
+
+          case 'loginFailed':
+          case 'projectEnd':
+          case 'projectNo':
+          case 'projectUnAuth':
+          case 'projectIsNotOpen':
+          case 'projectBlock':
+          case 'duplicatePhone':
+          case 'verifyCodeFailed':
+          case 'noPhone':
+          case 'userUpdateFailed':
+          default:
+            if (typeof (responseJson.message) == 'string') {
+              Alert.alert(
+                PROGRAM_NAME,
+                responseJson.message ?? 'Error!!',
+                [{ text: '是(Y)', onPress: () => { } }],
+                { cancelable: false },
+              );
+            }
+            else {
+              Alert.alert(
+                PROGRAM_NAME,
+                JSON.stringify(responseJson.message),
+                [{ text: '是(Y)', onPress: () => { } }],
+                { cancelable: false },
+              );
+            }
+            result = "error";
+            break;
+        }
+      }
+    } else if (response.status === 401) {
+      result = "error";
+      Alert.alert(
+        PROGRAM_NAME,
+        '登录有效期已过。请重新登录。',
+        [{ text: '是(Y)', onPress: () => console.log("fewfwef") }],
+        { cancelable: false },
+      );
+    } else if (response.status === 500) {
+      result = "error";
+      Alert.alert(
+        PROGRAM_NAME,
+        'Server Error!',
+        [{ text: '是(Y)', onPress: () => { } }],
+        { cancelable: false },
+      );
+    } else {
+      result = "error";
+      Alert.alert(
+        PROGRAM_NAME,
+        response.status,
+        [{ text: '是(Y)', onPress: () => { } }],
+        { cancelable: false },
+      );
+    }
+    return result;
+  }
+
+  async getProjectList(data) {
+    let result = await this.postApi('getProjectList', data);
+    return result;
+  }
+
+  async getSettingList() {
+    let result = await this.postApi('getSettingList', {});
+    return result;
+  }
+
+  async getLeaderList(data) {
+    let result = await this.postApi('getLeaderList', data);
+    return result;
+  }
+
+  async getSchedulerList(data) {
+    let result = await this.postApi('getSchedulerList', data);
+    return result;
+  }
+
+  async addProject(data) {
+    let result = await this.postApi('addProject', data);
+    return result;
+  }
+
+  async updateProject(data) {
+    let result = await this.postApi('updateProject', data);
+    return result;
+  }
+
+  async startProject(data) {
+    let result = await this.postApi('startProject', data);
+    return result;
+  }
+
+  async addGongwei(data) {
+    let result = await this.postApi('addGongwei', data);
+    return result;
+  }
+
+  async updateGongwei(data) {
+    let result = await this.postApi('updateGongwei', data);
+    return result;
+  }
+
+  async deleteGongwei(data) {
+    let result = await this.postApi('deleteGongwei', data);
+    return result;
+  }
+
+  async projectmemberList(data) {
+    let result = await this.postApi('projectmemberList', data);
+    return result;
+  }
+
+  async endProject(data) {
+    let result = await this.postApi('endProject', data);
+    return result;
+  }
+
+  async getGongweiList(data) {
+    let result = await this.postApi('getGongweiList', data);
     return result;
   }
 
@@ -256,6 +411,16 @@ class Api {
     let result = await this.postApi('uploadDiffResult', data);
     return result;
   }
+
+  // async inventorymasterimport(data) {
+  //   let result = await this.uploadpostApi('inventorymasterimport', data);
+  //   return result;
+  // }
+
+  // async generalmasterimport(data) {
+  //   let result = await this.uploadpostApi('generalmasterimport', data);
+  //   return result;
+  // }
 }
 
 const ApiObject = new Api();

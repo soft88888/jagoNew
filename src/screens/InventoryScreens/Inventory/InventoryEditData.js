@@ -297,8 +297,8 @@ const InventoryEditData = (props) => {
 
             <View style={{ flex: 1, paddingHorizontal: 10 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 10 }}>
-                    <Text style={{ marginRight: 20 }}>片区: {gongweiPos.pianqu}</Text>
-                    <Text>工位: {gongweiPos.gongwei?.toString().padStart(project.gongwei_max, "0")}</Text>
+                    <Text style={{ marginRight: 20, color: "black" }}>片区: {gongweiPos.pianqu}</Text>
+                    <Text style={{ color: "black" }}>工位: {gongweiPos.gongwei?.toString().padStart(project.gongwei_max, "0")}</Text>
                 </View>
 
                 <View style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: 30, flexDirection: 'row' }}>
@@ -348,13 +348,13 @@ const InventoryEditData = (props) => {
                         ButtonTitle={'恢复层'}
                         BtnPress={() => recoverRow()}
                         type={'yellowBtn'}
-                        BTnWidth={150}
+                        BTnWidth={Dimensions.get('window').width * 0.4}
                     />
                     <Button
                         ButtonTitle={'删除层'}
                         BtnPress={() => deleteRow()}
                         type={'blueBtn'}
-                        BTnWidth={150}
+                        BTnWidth={Dimensions.get('window').width * 0.4}
                     />
                 </View>
             </View>
@@ -377,7 +377,7 @@ const InventoryEditData = (props) => {
                         </View>
 
                         <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginVertical: 10 }}>
-                            <Text style={{ fontSize: 14 }}>
+                            <Text style={{ fontSize: 14, color: "black" }}>
                                 SKU: {flatListData[selectedRow].commodity_sku}
                             </Text>
                         </View>
@@ -412,7 +412,7 @@ const InventoryEditData = (props) => {
                         </View>
 
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 10, marginTop: 10 }}>
-                            <Text style={{ fontSize: 12 }}>
+                            <Text style={{ fontSize: 12, color: "black" }}>
                                 原数量: {flatListData[selectedRow].count} 个
                             </Text>
                             <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row', paddingVertical: 5 }}>
@@ -468,6 +468,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f1f8ff',
         fontSize: 10,
         textAlign: 'center',
+        color: "black"
     },
 
     cell: {
@@ -487,6 +488,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 10,
         backgroundColor: '#fff',
+        color: "black"
     },
 
     row: {
@@ -525,6 +527,7 @@ const styles = StyleSheet.create({
     itemArea: {
         fontSize: 14,
         textAlign: 'center',
+        color: "black"
     },
 });
 

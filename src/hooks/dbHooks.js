@@ -58,12 +58,12 @@ export const createTable = async (userId) => {
 
         txn.executeSql(
             `CREATE TABLE IF NOT EXISTS ${categoryMasterTb}(
-                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                a_category_code varchar(255), 
-                a_category_name varchar(255), 
-                b_category_code varchar(255), 
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                a_category_code varchar(255),
+                a_category_name varchar(255),
+                b_category_code varchar(255),
                 b_category_name varchar(255),
-                c_category_code varchar(255), 
+                c_category_code varchar(255),
                 c_category_name varchar(255)
             )`,
             []
@@ -74,14 +74,14 @@ export const createTable = async (userId) => {
                 record_id varchar(255),
                 scan_time varchar(255),
                 commodity_sku varchar(255),
-                pihao varchar(255), 
+                pihao varchar(255),
                 gongwei_id INTEGER,
                 row INTEGER,
                 column INTEGER,
-                codeinput_method varchar(255), 
+                codeinput_method varchar(255),
                 delete_flag INTEGER,
-                count INTEGER, 
-                mistakes_id varchar(255), 
+                count INTEGER,
+                mistakes_id varchar(255),
                 mistakes_type varchar(255),
                 commodity_price varchar(255),
                 upload TEXT,
@@ -93,71 +93,71 @@ export const createTable = async (userId) => {
 
         txn.executeSql(
             `CREATE TABLE IF NOT EXISTS ${generalMasterTb}(
-                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                commodity_code VARCHAR(255), 
-                commodity_sku VARCHAR(255), 
-                commodity_price VARCHAR(255), 
-                commodity_name VARCHAR(255), 
-                major_code VARCHAR(255), 
-                color_code VARCHAR(255),
-                size_code VARCHAR(255), 
-                unit VARCHAR(255),
-                CONSTRAINT unique_commodity UNIQUE (commodity_code, commodity_sku)
-            ); 
-            CREATE INDEX IF NOT EXISTS idx_generalMaster_tb ON ${generalMasterTb}(
-                commodity_code, commodity_sku
-            )`,
-            []
-        );
-
-        txn.executeSql(
-            `CREATE TABLE IF NOT EXISTS ${inventoryReviewTb}(
-                record_id varchar(255),
-                scan_time varchar(255),
-                commodity_sku varchar(255),
-                pihao varchar(255),
-                gongwei_id INTEGER,
-                row INTEGER,
-                column INTEGER,
-                codeinput_method varchar(255), 
-                delete_flag INTEGER,
-                count INTEGER, 
-                mistakes_id varchar(255), 
-                mistakes_type varchar(255),
-                commodity_price TEXT,
-                upload TEXT,
-                commodity_name varchar(255),
-                color varchar(255),
-                size varchar(255)
-            )`,
-            []
-        );
-
-        txn.executeSql(
-            `CREATE TABLE IF NOT EXISTS ${inventoryMasterTb}(
-                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                commodity_code VARCHAR(255), 
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                commodity_code VARCHAR(255),
                 commodity_sku VARCHAR(255),
-                commodity_price VARCHAR(255), 
-                commodity_name VARCHAR(255), 
-                major_code VARCHAR(255), 
+                commodity_price VARCHAR(255),
+                commodity_name VARCHAR(255),
+                major_code VARCHAR(255),
                 color_code VARCHAR(255),
-                size_code VARCHAR(255), 
-                count INTEGER, 
+                size_code VARCHAR(255),
                 unit VARCHAR(255),
-                CONSTRAINT unique_commodity UNIQUE (commodity_code, commodity_sku)
-            );
-            CREATE INDEX IF NOT EXISTS idx_inventoryMaster_tb ON ${inventoryMasterTb}(
-                commodity_code, commodity_sku
+                CONSTRAINT unique_commodity UNIQUE(commodity_code, commodity_sku)
+            ); 
+            CREATE INDEX IF NOT EXISTS idx_generalMaster_tb ON ${generalMasterTb} (
+            commodity_code, commodity_sku
+        )`,
+            []
+        );
+
+        txn.executeSql(
+            `CREATE TABLE IF NOT EXISTS ${inventoryReviewTb} (
+            record_id varchar(255),
+                scan_time varchar(255),
+                    commodity_sku varchar(255),
+                        pihao varchar(255),
+                            gongwei_id INTEGER,
+                                row INTEGER,
+                                    column INTEGER,
+                                        codeinput_method varchar(255),
+                                            delete_flag INTEGER,
+                                                count INTEGER,
+                                                    mistakes_id varchar(255),
+                                                        mistakes_type varchar(255),
+                                                            commodity_price TEXT,
+                                                                upload TEXT,
+                                                                    commodity_name varchar(255),
+                                                                        color varchar(255),
+                                                                            size varchar(255)
             )`,
             []
         );
 
         txn.executeSql(
-            `CREATE TABLE IF NOT EXISTS ${gongweiMasterTb}(
-                id INTEGER PRIMARY KEY NOT NULL,
-                pianqu varchar(255),
-                gongwei varchar(255)
+            `CREATE TABLE IF NOT EXISTS ${inventoryMasterTb} (
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            commodity_code VARCHAR(255),
+                commodity_sku VARCHAR(255),
+                    commodity_price VARCHAR(255),
+                        commodity_name VARCHAR(255),
+                            major_code VARCHAR(255),
+                                color_code VARCHAR(255),
+                                    size_code VARCHAR(255),
+                                        count INTEGER,
+                                            unit VARCHAR(255),
+                                                CONSTRAINT unique_commodity UNIQUE(commodity_code, commodity_sku)
+            );
+            CREATE INDEX IF NOT EXISTS idx_inventoryMaster_tb ON ${inventoryMasterTb} (
+    commodity_code, commodity_sku
+)`,
+            []
+        );
+
+        txn.executeSql(
+            `CREATE TABLE IF NOT EXISTS ${gongweiMasterTb} (
+    id INTEGER PRIMARY KEY NOT NULL,
+        pianqu varchar(255),
+            gongwei varchar(255)
             )`,
             []
         );
@@ -168,13 +168,13 @@ export const deleteTable = (userId) => {
     const { scandataTb, inventoryReviewTb, differenceSurveyTb, inventoryMasterTb, generalMasterTb, categoryMasterTb, gongweiMasterTb } = tbName(userId);
 
     DB.transaction((tx) => {
-        tx.executeSql(`DELETE FROM ${scandataTb}`, [], (tx, results) => { });
-        tx.executeSql(`DELETE FROM ${inventoryReviewTb}`, [], (tx, results) => { });
-        tx.executeSql(`DELETE FROM ${differenceSurveyTb}`, [], (tx, results) => { });
-        tx.executeSql(`DELETE FROM ${inventoryMasterTb}`, [], (txn, results) => { });
-        tx.executeSql(`DELETE FROM ${generalMasterTb}`, [], (txn, results) => { });
-        tx.executeSql(`DELETE FROM ${gongweiMasterTb}`, [], (txn, results) => { });
-        tx.executeSql(`DELETE FROM ${categoryMasterTb}`, [], (txn, results) => { });
+        tx.executeSql(`DELETE FROM ${scandataTb} `, [], (tx, results) => { });
+        tx.executeSql(`DELETE FROM ${inventoryReviewTb} `, [], (tx, results) => { });
+        tx.executeSql(`DELETE FROM ${differenceSurveyTb} `, [], (tx, results) => { });
+        tx.executeSql(`DELETE FROM ${inventoryMasterTb} `, [], (txn, results) => { });
+        tx.executeSql(`DELETE FROM ${generalMasterTb} `, [], (txn, results) => { });
+        tx.executeSql(`DELETE FROM ${gongweiMasterTb} `, [], (txn, results) => { });
+        tx.executeSql(`DELETE FROM ${categoryMasterTb} `, [], (txn, results) => { });
     });
 };
 
@@ -189,7 +189,7 @@ export const getInvNewData = (userId) => {
                 `
                     SELECT record_id, commodity_sku, count, gongwei_id, column, row, delete_flag, scan_time, codeinput_method, pihao 
                     FROM ${scandataTb} WHERE upload = "new"
-                `,
+    `,
                 [],
                 (tx, results) => {
                     let list = [];
@@ -215,7 +215,7 @@ export const getRevNewData = (userId) => {
                 `
                     SELECT record_id, commodity_sku, count, gongwei_id, column, row, delete_flag, scan_time, codeinput_method, pihao, mistakes_id, mistakes_type 
                     FROM ${inventoryReviewTb} WHERE upload = "new"
-                `,
+    `,
                 [],
                 (tx, results) => {
                     let list = [];
@@ -241,7 +241,7 @@ export const getDiffNewData = (userId) => {
                 `
                     SELECT record_id, commodity_sku, count, gongwei_id, column, row, delete_flag, scan_time, codeinput_method, pihao 
                     FROM ${differenceSurveyTb} WHERE upload = "new"
-                `,
+    `,
                 [],
                 (tx, results) => {
                     let list = [];
@@ -266,8 +266,8 @@ export const getInvNewGongweiData = (userId, gongweiId) => {
             tx.executeSql(
                 `
                     SELECT record_id, commodity_sku, count, gongwei_id, column, row, delete_flag, scan_time, codeinput_method, pihao 
-                    FROM ${scandataTb} WHERE upload = "new" AND gongwei_id=?
-                `,
+                    FROM ${scandataTb} WHERE upload = "new" AND gongwei_id =?
+    `,
                 [gongweiId],
                 (tx, results) => {
                     let list = [];
@@ -292,7 +292,7 @@ export const getGenMtCount = async (userId) => {
     return new Promise((resolve, reject) => {
         DB.transaction((tx) => {
             tx.executeSql(
-                `SELECT COUNT(*) as count FROM ${generalMasterTb}`,
+                `SELECT COUNT(*) as count FROM ${generalMasterTb} `,
                 [],
                 (tx, results) => {
                     const count = results.rows.item(0).count;
@@ -312,7 +312,7 @@ export const getCatMtCount = async (userId) => {
     return new Promise((resolve, reject) => {
         DB.transaction((tx) => {
             tx.executeSql(
-                `SELECT COUNT(*) as count FROM ${categoryMasterTb}`,
+                `SELECT COUNT(*) as count FROM ${categoryMasterTb} `,
                 [],
                 (tx, results) => {
                     const count = results.rows.item(0).count;
@@ -332,7 +332,7 @@ export const getInvMtCount = async (userId) => {
     return new Promise((resolve, reject) => {
         DB.transaction((tx) => {
             tx.executeSql(
-                `SELECT COUNT(*) as count FROM ${inventoryMasterTb}`,
+                `SELECT COUNT(*) as count FROM ${inventoryMasterTb} `,
                 [],
                 (tx, results) => {
                     const count = results.rows.item(0).count;
@@ -352,7 +352,7 @@ export const getGongMtCount = async (userId) => {
     return new Promise((resolve, reject) => {
         DB.transaction((tx) => {
             tx.executeSql(
-                `SELECT COUNT(*) as count FROM ${gongweiMasterTb}`,
+                `SELECT COUNT(*) as count FROM ${gongweiMasterTb} `,
                 [],
                 (tx, results) => {
                     const count = results.rows.item(0).count;
@@ -373,10 +373,10 @@ export const insertGenMt = (userId, data) => {
 
     return new Promise((resolve, reject) => {
         DB.transaction((tx) => {
-            tx.executeSql(`DELETE FROM ${generalMasterTb}`, [], (tx, results) => { });
+            tx.executeSql(`DELETE FROM ${generalMasterTb} `, [], (tx, results) => { });
             for (let i = 0; i < data.length; i++) {
                 tx.executeSql(
-                    `INSERT INTO ${generalMasterTb} ("commodity_code", "commodity_sku", "commodity_name", "commodity_price", "major_code", "size_code","color_code", "unit") VALUES (?,?,?,?,?,?,?,?)`,
+                    `INSERT INTO ${generalMasterTb} ("commodity_code", "commodity_sku", "commodity_name", "commodity_price", "major_code", "size_code", "color_code", "unit") VALUES(?,?,?,?,?,?,?,?)`,
                     [
                         data[i].commodity_code,
                         data[i].commodity_sku,
@@ -404,10 +404,10 @@ export const insertInvMt = async (userId, data) => {
 
     return new Promise((resolve, reject) => {
         DB.transaction((tx) => {
-            tx.executeSql(`DELETE FROM ${inventoryMasterTb}`, [], (tx, results) => { });
+            tx.executeSql(`DELETE FROM ${inventoryMasterTb} `, [], (tx, results) => { });
             for (let i = 0; i < data.length; i++) {
                 tx.executeSql(
-                    `INSERT INTO ${inventoryMasterTb} ("commodity_code", "commodity_sku", "commodity_name", "commodity_price", "major_code", "size_code", "color_code","count", "unit") VALUES (?,?,?,?,?,?,?,?,?)`,
+                    `INSERT INTO ${inventoryMasterTb} ("commodity_code", "commodity_sku", "commodity_name", "commodity_price", "major_code", "size_code", "color_code", "count", "unit") VALUES(?,?,?,?,?,?,?,?,?)`,
                     [
                         data[i].commodity_code,
                         data[i].commodity_sku,
@@ -436,10 +436,10 @@ export const insertCatMt = (userId, data) => {
 
     return new Promise((resolve, reject) => {
         DB.transaction((tx) => {
-            tx.executeSql(`DELETE FROM ${categoryMasterTb}`, [], (tx, results) => { });
+            tx.executeSql(`DELETE FROM ${categoryMasterTb} `, [], (tx, results) => { });
             for (let i = 0; i < data.length; i++) {
                 tx.executeSql(
-                    `INSERT INTO ${categoryMasterTb} ("id", "a_category_code", "a_category_name", "b_category_code", "b_category_name", "c_category_code", "c_category_name") VALUES (?,?,?,?,?,?,?)`,
+                    `INSERT INTO ${categoryMasterTb} ("id", "a_category_code", "a_category_name", "b_category_code", "b_category_name", "c_category_code", "c_category_name") VALUES(?,?,?,?,?,?,?)`,
                     [
                         data[i].id,
                         data[i].a_category_code,
@@ -466,10 +466,10 @@ export const insertGongMt = (userId, data) => {
 
     return new Promise((resolve, reject) => {
         DB.transaction((tx) => {
-            tx.executeSql(`DELETE FROM ${gongweiMasterTb}`, [], (tx, results) => { });
+            tx.executeSql(`DELETE FROM ${gongweiMasterTb} `, [], (tx, results) => { });
             for (let i = 0; i < data.length; i++) {
                 tx.executeSql(
-                    `INSERT INTO ${gongweiMasterTb} ("id", "pianqu", "gongwei") VALUES (?,?,?)`,
+                    `INSERT INTO ${gongweiMasterTb} ("id", "pianqu", "gongwei") VALUES(?,?,?)`,
                     [
                         data[i].id,
                         data[i].pianqu,
@@ -495,7 +495,7 @@ export const getPianquList = async (userId) => {
     return new Promise((resolve, reject) => {
         DB.transaction((tx) => {
             tx.executeSql(
-                `SELECT DISTINCT pianqu FROM ${gongweiMasterTb}`,
+                `SELECT DISTINCT pianqu FROM ${gongweiMasterTb} `,
                 [],
                 (tx, results) => {
                     let list = [];
@@ -526,7 +526,7 @@ export const pipeiSKU = async (commoditySku, userId) => {
                     FROM ${inventoryMasterTb} im
                     LEFT JOIN ${categoryMasterTb} cm ON im.major_code = cm.a_category_code
                     WHERE im.commodity_sku = ? OR im.commodity_code = ?
-                `,
+    `,
                 [commoditySku, commoditySku],
                 (txn, results) => {
                     if (results.rows.length > 0) {
@@ -538,7 +538,7 @@ export const pipeiSKU = async (commoditySku, userId) => {
                                 FROM ${generalMasterTb} gm
                                 LEFT JOIN ${categoryMasterTb} cm ON gm.major_code = cm.a_category_code
                                 WHERE gm.commodity_sku = ? OR gm.commodity_code = ?
-                            `,
+    `,
                             [commoditySku, commoditySku],
                             (txn, results) => {
                                 if (results.rows.length > 0) {
@@ -566,21 +566,21 @@ export const insertDifferenceSurvey = (userId, data) => {
 
     DB.transaction((txn) => {
         txn.executeSql(
-            `DELETE FROM ${differenceSurveyTb}`,
+            `DELETE FROM ${differenceSurveyTb} `,
             [],
             (txn, results) => { },
         );
         for (let i = 0; i < data.length; i++) {
             var commodity_price = '';
             txn.executeSql(
-                `SELECT commodity_price FROM ${inventoryMasterTb} WHERE commodity_sku = ?`,
+                `SELECT commodity_price FROM ${inventoryMasterTb} WHERE commodity_sku = ? `,
                 [data[i].commodity_sku],
                 (txn, results) => {
                     if (results.rows.length > 0) {
                         commodity_price = results.rows.item(0).commodity_price;
                     } else {
                         txn.executeSql(
-                            `SELECT commodity_price FROM ${generalMasterTb} WHERE commodity_sku = ?`,
+                            `SELECT commodity_price FROM ${generalMasterTb} WHERE commodity_sku = ? `,
                             [data[i].commodity_sku],
                             (txn, results) => {
                                 if (results.rows.length > 0) {
@@ -593,19 +593,19 @@ export const insertDifferenceSurvey = (userId, data) => {
             );
             txn.executeSql(
                 `INSERT INTO ${differenceSurveyTb} (
-                        "record_id",
-                        "commodity_sku",
-                        "commodity_price",
-                        "codeinput_method",
-                        "pihao",
-                        "count",
-                        "column",
-                        "row",
-                        "scan_time",
-                        "delete_flag",
-                        "gongwei_id",
-                        "upload"
-                    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,"uploaded")`,
+    "record_id",
+    "commodity_sku",
+    "commodity_price",
+    "codeinput_method",
+    "pihao",
+    "count",
+    "column",
+    "row",
+    "scan_time",
+    "delete_flag",
+    "gongwei_id",
+    "upload"
+) VALUES(?,?,?,?,?,?,?,?,?,?,?, "uploaded")`,
                 [
                     data[i].record_id,
                     data[i].commodity_sku,

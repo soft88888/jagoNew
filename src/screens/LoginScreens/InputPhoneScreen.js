@@ -6,6 +6,7 @@ import LogButton from '../../components/LogButton';
 import ApiObject from '../../support/Api';
 import { PROGRAM_NAME } from '../../constants';
 import CStyles from '../../styles/CommonStyles';
+import Icon from 'react-native-vector-icons/AntDesign';
 import { setScreenLoading, setAccessToken, setUser } from '../../reducers/BaseReducer';
 
 const InputPhoneScreen = (props) => {
@@ -68,6 +69,21 @@ const InputPhoneScreen = (props) => {
 
   return (
     <View style={{ position: 'relative', alignItems: 'center', marginTop: 50 }}>
+      <View style={{ alignSelf: 'flex-start', marginLeft: 20 }}>
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate('Login')}
+          style={{
+            height: 25,
+            width: 25,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#d6d3d3',
+            borderRadius: 20,
+          }}
+        >
+          <Icon name="left" size={20} color="#000" style={{}} />
+        </TouchableOpacity>
+      </View>
       <Image source={require(LogoImg)} />
 
       <View style={{ flexDirection: 'row' }}>

@@ -61,15 +61,15 @@ const Main = (props) => {
             text: '确定',
             onPress: async () => {
               dispatch(setScreenLoading(true));
-  
+
               const invNewRows = await getInvNewData(user.id);
               const revNewRows = await getRevNewData(user.id);
               const diffNewRows = await getDiffNewData(user.id);
-  
+
               await ApiObject.uploadScanData({ data: invNewRows, work_type: 1, qrcode: project.qrcode });
               await ApiObject.uploadScanData({ data: revNewRows, work_type: 2, qrcode: project.qrcode });
               await ApiObject.uploadScanData({ data: diffNewRows, work_type: 3, qrcode: project.qrcode });
-  
+
               dispatch(setProject({}));
               dispatch(setGongweiPos({}));
               dispatch(setRowPos(1));
@@ -79,9 +79,9 @@ const Main = (props) => {
               dispatch(setCategoryTime(null));
               dispatch(setPiangongTime(null));
               dispatch(setSkuCount(0));
-  
+
               deleteTable(user.id);
-  
+
               dispatch(setScreenLoading(false));
             }
           },
@@ -114,41 +114,39 @@ const Main = (props) => {
         <Button1
           ButtonTitle={'登录项目'}
           BtnPress={() => toProjectScan()}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
         <Button1
           ButtonTitle={'下载主档'}
           BtnPress={() => toNextScene('MasterFile')}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
         <Button1
           ButtonTitle={'进入盘点'}
           BtnPress={() => toNextScene('AreaValue')}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
         <Button1
           ButtonTitle={'盘点复查'}
           BtnPress={() => toNextScene('InventoryReview')}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
         <Button1
           ButtonTitle={'差异调查'}
           BtnPress={() => toNextScene('DifferenceSurvey')}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
         <Button1
           ButtonTitle={'剩余数据'}
           BtnPress={() => toNextScene('RestDataUpload')}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
         <Button1
           ButtonTitle={'工作结束'}
           BtnPress={() => endWork()}
-          BTnWidth={320}
+          BTnWidth={Dimensions.get('window').width * 0.9}
         />
       </View>
-
-      <FooterBar screenNavigate={screenNavigate} activeBtn={2} />
     </View>
   );
 }

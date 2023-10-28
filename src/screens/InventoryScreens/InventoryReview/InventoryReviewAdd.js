@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { StyleSheet, View, Text, Alert, TextInput, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, Alert, TextInput, Dimensions, TouchableOpacity, Image, ScrollView } from 'react-native';
 import uuid from 'react-native-uuid';
 import Button from '../../../components/Button';
 import Header from '../../../components/Header';
@@ -207,10 +207,12 @@ const InventoryReviewAdd = (props) => {
         let result = await pipeiSKU(commoditySku, user.id);
         if (result !== null) {
           setPipeiItem(result);
+          setPipeiStatus(true)
           if (project.quantity_min == project.quantity_max) {
             rowRef.current.focus();
           }
         } else {
+          setPipeiItem(null);
           Alert.alert(
             PROGRAM_NAME,
             '条形码不存在',
@@ -232,6 +234,7 @@ const InventoryReviewAdd = (props) => {
       }
       else {
         setPipeiItem(null);
+        setPipeiStatus(true)
         if (project.quantity_min == project.quantity_max) {
           rowRef.current.focus();
         }
@@ -331,7 +334,7 @@ const InventoryReviewAdd = (props) => {
               marginRight: 10,
             }}
           />
-          <Text style={{ fontSize: 12 }}>自己责任</Text>
+          <Text style={{ fontSize: 12, color: "black" }}>自己责任</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setOwnIssues(1)}
@@ -349,7 +352,7 @@ const InventoryReviewAdd = (props) => {
               marginRight: 10,
             }}
           />
-          <Text style={{ fontSize: 12 }}>店铺责任</Text>
+          <Text style={{ fontSize: 12, color: 'black' }}>店铺责任</Text>
         </TouchableOpacity>
       </View>
       <View style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: 30, flexDirection: 'row' }}>
@@ -377,10 +380,10 @@ const InventoryReviewAdd = (props) => {
       <View style={{ position: 'relative', height: Dimensions.get('window').height }}>
         <Header {...props} BtnPress={BackBtnPress} title={'盘点复查'} />
 
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
           <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
-            <Text style={{ fontSize: 12 }}>区域: {gongweiPos.pianqu} / </Text>
-            <Text style={{ fontSize: 12 }}>工位: {gongweiPos.gongwei?.toString().padStart(project.gongwei_max, "0")}</Text>
+            <Text style={{ fontSize: 12, color: 'black' }}>区域: {gongweiPos.pianqu} / </Text>
+            <Text style={{ fontSize: 12, color: 'black' }}>工位: {gongweiPos.gongwei?.toString().padStart(project.gongwei_max, "0")}</Text>
           </View>
 
           <View style={{ justifyContent: 'center', flexDirection: 'row', paddingHorizontal: 30, paddingVertical: 10 }}>
@@ -395,7 +398,12 @@ const InventoryReviewAdd = (props) => {
               placeholder={''}
               selectTextOnFocus={true}
               style={CStyles.InputStyle}
-              multiline={true}
+              multiline={false}
+              onKeyPress={({ nativeEvent }) => {
+                if (nativeEvent.key == 'Enter') {
+                  countRef.current.focus();
+                }
+              }}
             />
             <Button
               disabled={!skuInputFocus}
@@ -479,7 +487,7 @@ const InventoryReviewAdd = (props) => {
               BTnWidth={300}
             />
           </View>
-          <View style={{ marginTop: 20 }}>
+          <View style={{ marginTop: 20, marginBottom: 20 }}>
             <View style={styles.container}>
               <Text style={{ ...styles.cell, flex: 1 }}>商品名称</Text>
               <Text style={{ ...styles.cell, flex: 3 }}>{pipeiItem?.commodity_name}</Text>
@@ -509,7 +517,7 @@ const InventoryReviewAdd = (props) => {
               <Text style={{ ...styles.cell, flex: 3 }}>{pipeiItem?.unit}</Text>
             </View>
           </View>
-        </View>
+        </ScrollView>
 
         <FooterBar2 screenNavigate={screenNavigate} activeBtn={2} />
 
@@ -540,7 +548,7 @@ const InventoryReviewAdd = (props) => {
         {endModalOpen && (
           <RevEndModal setEndModalOpen={setEndModalOpen} navigation={props.navigation} />
         )}
-      </View>
+      </View >
     </>
   );
 }
@@ -561,6 +569,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f8ff',
     fontSize: 10,
     textAlign: 'center',
+    color: 'black'
   },
 });
 

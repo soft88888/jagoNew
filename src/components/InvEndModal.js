@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
 import CStyles from '../styles/CommonStyles';
 import Button from './Button';
 import { setScreenLoading, setRowPos, setColumnPos, setGongweiPos, setSkuCount } from '../reducers/BaseReducer';
@@ -12,7 +12,7 @@ const InvEndModal = (props) => {
     const dispatch = useDispatch();
     const { user, project, gongweiPos } = useSelector(state => state.base);
     const { scandataTb } = tbName(user.id);
-    
+
     const getUploadData = async () => {
         dispatch(setScreenLoading(true));
 
@@ -45,21 +45,21 @@ const InvEndModal = (props) => {
 
     const positionOut = async () => {
         await ApiObject.gongweiEndUpdate({ qrcode: project.qrcode });
-        dispatch(await setGongweiPos({}));
-        dispatch(await setRowPos(1));
-        dispatch(await setColumnPos(1));
-        dispatch(await setSkuCount(0));
+        dispatch(setGongweiPos({}));
+        dispatch(setRowPos(1));
+        dispatch(setColumnPos(1));
+        dispatch(setSkuCount(0));
         props.navigation.push('AreaValue');
     };
 
     return (
         <View style={CStyles.ModalContainer}>
             <View style={CStyles.ModalBack} />
-            <View style={CStyles.ModalBoxBack}>
-                <Text style={{ fontSize: 18 }}>{PROGRAM_NAME}</Text>
+            <View style={{ ...CStyles.ModalBoxBack, width: Dimensions.get('window').width * 0.9 }}>
+                <Text style={{ fontSize: 18, color: "black" }}>{PROGRAM_NAME}</Text>
 
                 <View style={{ alignItems: 'center' }}>
-                    <Text style={{ textAlign: 'center', fontSize: 16, marginVertical: 30 }}>
+                    <Text style={{ textAlign: 'center', fontSize: 16, marginVertical: 30, color: "black" }}>
                         您要结束当前工位的盘点吗？
                     </Text>
                 </View>
@@ -68,13 +68,13 @@ const InvEndModal = (props) => {
                         ButtonTitle={'是(Y)'}
                         BtnPress={() => getUploadData()}
                         type={'YellowBtn'}
-                        BTnWidth={135}
+                        BTnWidth={Dimensions.get('window').width * 0.35}
                     />
                     <Button
                         ButtonTitle={'否(N)'}
                         BtnPress={() => props.setEndModalOpen(false)}
                         type={'blueBtn'}
-                        BTnWidth={135}
+                        BTnWidth={Dimensions.get('window').width * 0.35}
                     />
                 </View>
             </View>

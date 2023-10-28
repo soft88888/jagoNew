@@ -67,10 +67,10 @@ const DiffEndModal = (props) => {
         <View style={CStyles.ModalContainer}>
             <View style={CStyles.ModalBack} />
             <View style={CStyles.ModalBoxBack}>
-                <Text style={{ fontSize: 18 }}>{PROGRAM_NAME}</Text>
+                <Text style={{ fontSize: 18, color: "black" }}>{PROGRAM_NAME}</Text>
 
                 <View style={{ alignItems: 'center' }}>
-                    <Text style={{ textAlign: 'center', fontSize: 16, marginVertical: 30 }}>
+                    <Text style={{ textAlign: 'center', fontSize: 16, marginVertical: 30, color: "black" }}>
                         您要关闭此产品差异调查吗？
                     </Text>
                 </View>

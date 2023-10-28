@@ -107,7 +107,6 @@ const InventoryReviewEditList = (props) => {
           var list = [];
           for (let i = 0; i < results.rows.length; i++) {
             let item = {};
-            let result = await pipeiSKU(results.rows.item(i).commodity_sku, user.id);
             item.row = results.rows.item(i).row;
             item.column = results.rows.item(i).column;
             item.commodity_sku = results.rows.item(i).commodity_sku;
@@ -115,8 +114,8 @@ const InventoryReviewEditList = (props) => {
             item.count = results.rows.item(i).count;
             item.delete_flag = results.rows.item(i).delete_flag;
             item.record_id = results.rows.item(i).record_id;
-            item.color = result.color_code;
-            item.size = result.size_code;
+            item.size = results.rows.item(i).size;
+            item.color = results.rows.item(i).color;
             list.push(item);
           }
           setFlatListData(list);
@@ -219,7 +218,7 @@ const InventoryReviewEditList = (props) => {
         {item.row}/{item.column}
       </Text>
       <Text style={[styles.title, { flex: 4, textAlignVertical: 'center' }]}>
-        {item.commodity_sku}{"\n"}{item.commodity_name ?? "不在档"}
+        {item.commodity_sku}{"\n"}{item.commodity_name != null && item.commodity_name != "" ? item.commodity_name : "不在档"}
       </Text>
       <Text style={[styles.title, { flex: 1, textAlignVertical: 'center' }]}>
         {item.color}
@@ -279,7 +278,7 @@ const InventoryReviewEditList = (props) => {
       </View>
 
       <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginVertical: 10 }}>
-        <Text style={{ fontSize: 14 }}>
+        <Text style={{ fontSize: 14, color: 'black' }}>
           SKU: {flatListData[selectedRow].commodity_sku}
         </Text>
       </View>
@@ -340,7 +339,7 @@ const InventoryReviewEditList = (props) => {
               marginRight: 10,
             }}
           />
-          <Text style={{ fontSize: 12 }}>自己责任</Text>
+          <Text style={{ fontSize: 12, color: "black" }}>自己责任</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => setOwnIssues(1)}
@@ -512,13 +511,13 @@ const InventoryReviewEditList = (props) => {
             ButtonTitle={'恢复层'}
             BtnPress={() => setRowRestoreOpen(true)}
             type={'yellowBtn'}
-            BTnWidth={150}
+            BTnWidth={Dimensions.get('window').width * 0.4}
           />
           <Button
             ButtonTitle={'删除层'}
             BtnPress={() => setRowDeleteOpen(true)}
             type={'blueBtn'}
-            BTnWidth={150}
+            BTnWidth={Dimensions.get('window').width * 0.4}
           />
         </View>
 
@@ -735,6 +734,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f8ff',
     fontSize: 10,
     textAlign: 'center',
+    color: "black"
   },
 
   title: {
@@ -744,6 +744,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 10,
     backgroundColor: '#fff',
+    color: "black"
   },
 
   deleteBtn: {
@@ -771,6 +772,7 @@ const styles = StyleSheet.create({
   itemArea: {
     fontSize: 14,
     textAlign: 'center',
+    color: "black"
   },
 
   cell: {
@@ -781,6 +783,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f8ff',
     fontSize: 10,
     textAlign: 'center',
+    color: "black"
   },
 });
 
